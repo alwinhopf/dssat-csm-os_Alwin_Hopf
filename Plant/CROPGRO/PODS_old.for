@@ -412,7 +412,6 @@
           WTSHMY = WTSHM
           WTSHM = 0.0
           DO 800 NPP = 1, NR2TIM
-          !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
             IF (NPP .GT. NCOHORTS) THEN
               WRITE(MESSAGE(1),851)
               WRITE(MESSAGE(2),852)
@@ -430,7 +429,6 @@
 !     Compute physiological age of cohort
 !-----------------------------------------------------------------------
             PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-!            CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
 !-----------------------------------------------------------------------
 !     Prevent seeds from growing until they are older than LAGSD p-t-d
 !-----------------------------------------------------------------------
@@ -452,7 +450,6 @@
 !-----------------------------------------------------------------------
               IF (SDMAX .LE. 0.0) WTSHM = WTSHM + WTSHE(NPP)
             ENDIF
-!          CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP,NR2TIM)    
   800     ENDDO
 !-----------------------------------------------------------------------
 !     Compute cohorts of shell wt. that reach THRESH today
@@ -498,22 +495,18 @@
             IF (PAGE .GE. LAGSD) THEN
               IF (SDDES(NPP) .GT. 0.0) THEN
                 REDSHL = WTSHE(NPP)*SDDES(NPP)/(SDDES(NPP)+SDNO(NPP))
-                !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
               ELSE
                 REDSHL = 0.
-                !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
               ENDIF
               SDMAX = (WTSHE(NPP)-REDSHL)*THRESH/(100.-THRESH)-WTSD(NPP)
               SDMAX = MAX(0.0,SDMAX) * (1. + TURADD)
               WTSD(NPP) = WTSD(NPP)+RSD*MIN(SDGR*SDNO(NPP)*REDPUN,SDMAX)
-              !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
 !-----------------------------------------------------------------------
 !     New Seed Tissue Growth, for updating crop seed mass
 !         in GROW, N Required
 !-----------------------------------------------------------------------
               WSDDTN = WSDDTN + RSD * MIN(SDGR*SDNO(NPP)*REDPUN,SDMAX)
               NGRSD = NGRSD+ANINSD*RSD*MIN(SDGR*SDNO(NPP)*REDPUN,SDMAX)
-              !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
             ENDIF
  1300     ENDDO
 !-----------------------------------------------------------------------
@@ -665,8 +658,6 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
               WTSHE(NPP) = WTSHE(NPP) - WTABR
               WTABRT = WTABRT + WTABR
             ENDIF
-          CALL COHORT(DAS,YRDOY,YRPLT,PAGE,WTSD(NPP),WTSHE(NPP),NPP,
-     &      NR2TIM,SDNO(NPP),SHELN(NPP))  
  2200     ENDDO
 !-----------------------------------------------------------------------
         ENDIF         !End of DAS>NR2 Shell growth section
@@ -805,15 +796,13 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
         CALL FreshWt(DYNAMIC, ISWFWT, NR2TIM, PHTIM, SDNO, SHELN, 
      &       WTSD, WTSHE, YRPLT)
       ENDIF
-      !CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
+
 !***********************************************************************
 !***********************************************************************
 !     END OF DYNAMIC IF CONSTRUCT
 !***********************************************************************
       ENDIF
 !***********************************************************************
-!      CALL QUALITY(DAS,YRDOY,YRPLT,PAGE,WTSD,WTSHE,NPP)    
-
       RETURN
       END SUBROUTINE PODS
 !=======================================================================
@@ -1245,7 +1234,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
 !             (g[N] / g[shell])
 ! FNPDT(I)  Critical values of temperature for function to reduce pod 
 !             addition and seed setting rates under non-optimal temperatures
-!             (ï¿½C)
+!             (°C)
 ! GDMSD     Seed growth demand based on temperature and photoperiod
 !             (g[seed] / m2 / d)
 ! GRRAT1    Maximum growth per individual shell (g / shell / d)
@@ -1393,7 +1382,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
 !             reproductive development temperature function
 !             (photo-thermal days / day)
 ! TEMPOD    Factor for modifying pod setting based on temperature 
-! TGRO(I)   Hourly air temperature (ï¿½C)
+! TGRO(I)   Hourly air temperature (°C)
 ! THETA     Curvature of rectangular hyperbola to limit seed growth rate to 
 !             hold minimum seed N concentration. 
 ! THRESH    The maximum ratio mass of seed to mass of seed plus shell at 
