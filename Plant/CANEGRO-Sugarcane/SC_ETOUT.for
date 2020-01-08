@@ -122,23 +122,23 @@ c         A new file if not existing
           WRITE(ETOUT,'("*MONTHLY EVAPORATION SUMMARY OUTPUT FILE")')
           WRITE(ETOUT,'("! RUNNO - Cumulative irrigation (mm)")')
           WRITE(ETOUT,'("! TRNO-the DSSAT CSM internal TRNO variable")')
-          WRITE(ETOUT,'("! HV_YEAR – harvest year")')
-          WRITE(ETOUT,'("! HV_MON – harvest month")')
-          WRITE(ETOUT,'(A)') "! GRYR_No – the year of growth for this " 
+          WRITE(ETOUT,'("! HV_YEAR ï¿½ harvest year")')
+          WRITE(ETOUT,'("! HV_MON ï¿½ harvest month")')
+          WRITE(ETOUT,'(A)') "! GRYR_No ï¿½ the year of growth for this " 
      &                  //   "month's output "
-          WRITE(ETOUT,'("! GRMON_No – the growth month number, from 1 
+          WRITE(ETOUT,'("! GRMON_No ï¿½ the growth month number, from 1 
      & to n where n is the number of months at harvest.
      &    ")')
-          WRITE(ETOUT,'("! MONTH – month number, 1-12 for Jan- Dec")')
-          WRITE(ETOUT,'("! FI – average canopy cover for that month.")')
-          WRITE(ETOUT,'("! ETc – sum of plant (EP) and soil (ET) 
+          WRITE(ETOUT,'("! MONTH ï¿½ month number, 1-12 for Jan- Dec")')
+          WRITE(ETOUT,'("! FI ï¿½ average canopy cover for that month.")')
+          WRITE(ETOUT,'("! ETc ï¿½ sum of plant (EP) and soil (ET) 
      & evaporation over the course of the month")')
-          WRITE(ETOUT,'("! EToc – sum of potential evaporation, i.e. EO,
+          WRITE(ETOUT,'("! EToc ï¿½ sum of potential evaporation, i.e. EO,
      &     over the course of the month")')
-          WRITE(ETOUT,'("! ETo – sum of FAO-56 shortgrass potential
+          WRITE(ETOUT,'("! ETo ï¿½ sum of FAO-56 shortgrass potential
      & evaporation, over the course of the month")')
-          WRITE(ETOUT,'("! ETc_ETo – monthly average ETc / ETo")')
-          WRITE(ETOUT,'("! ETc_EToc – monthly average ETc / EToc")')
+          WRITE(ETOUT,'("! ETc_ETo ï¿½ monthly average ETc / ETo")')
+          WRITE(ETOUT,'("! ETc_EToc ï¿½ monthly average ETc / EToc")')
           WRITE(ETOUT,'("! RNOFF - Monthly cumulative runoff (mm)")')
           WRITE(ETOUT,'("! DRAIN - Monthly cumulative drainage (mm)")')
           WRITE(ETOUT,'("")')
@@ -332,7 +332,7 @@ c         CALL MTHEND(YR,MTH)
           endif
       
 c         Write summary data to file.
-		  WRITE(ETOUT, '(A8, 1H , ' // !File name1
+		   WRITE(ETOUT, '(A8, 1H , ' // !File name1
      &                 'I5, 1X , '//  !Run number2
      &                 'I4, 1H , ' // !Treatment number3
      &      'I8, 1H '//      !HV_YEAR4

@@ -608,28 +608,16 @@ C=======================================================================
 
       CHARACTER*1  IHARI
       CHARACTER*2  CROP
-
-!      VSH     
-!      CHARACTER*5  HSTG(3),HCOM(3),HSIZ(3)
-      CHARACTER*5  HSTG(35),HCOM(35),HSIZ(35)
-
-            CHARACTER*6  ERRKEY,FINDCH
+      CHARACTER*5  HSTG(3),HCOM(3),HSIZ(3)
+      CHARACTER*6  ERRKEY,FINDCH
       CHARACTER*12 FILEX
       CHARACTER*80 CHARTEST
 
-!      VSH
-!      INTEGER      LNHAR,LUNEXP,ISECT,LINEXP,HDATE(3),NHAR
-      INTEGER      LNHAR,LUNEXP,ISECT,LINEXP,HDATE(35),NHAR
-
+      INTEGER      LNHAR,LUNEXP,ISECT,LINEXP,HDATE(3),NHAR
       INTEGER      ERRNUM,J,IFIND,LN,YRSIM
       INTEGER      HYR, HDAY
 
-!     VSH
-!      REAL         HPC(3),HBPC(3)
-!      REAL         HPC(35),HBPC(35)
-      !previous version below, 2nd below = combined with VSH edits
-!      REAL         HPC(3),HBPC(3),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
-      REAL         HPC(35),HBPC(35),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
+      REAL         HPC(3),HBPC(3),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
 
       PARAMETER   (ERRKEY='IPHAR ')
 
@@ -637,11 +625,9 @@ C=======================================================================
 
       NHAR  = 0
 
-!     VSH      
-!      DO J = 1, 3
-      DO J = 1, 35         
-        HSTG(J)  = '     '
-        HCOM(J)  = '     '
+      DO J = 1, 3
+         HSTG(J)  = '     '
+         HCOM(J)  = '     '
          HSIZ(J)  = '     '
          HPC(J)   = 100.0
          HDATE(J) = -99
@@ -698,9 +684,7 @@ C
            HSIZ(NHAR) = '  -99'
          ENDIF
          NHAR = NHAR + 1
-!        VSH
-!         IF (NHAR .GE. 4) GO TO 120
-         IF (NHAR .GE. 36) GO TO 120
+         IF (NHAR .GE. 4) GO TO 120
        ELSE
          IF (NHAR .EQ. 1) THEN
            CALL ERROR (ERRKEY,2,FILEX,LINEXP)

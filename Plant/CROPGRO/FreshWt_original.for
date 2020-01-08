@@ -10,22 +10,13 @@
 !  Called from:  PODS
 !=======================================================================
 
-      SUBROUTINE FreshWt(DYNAMIC, ISWFWT, 
-     &    NR2TIM,       ! Days since NR2 (first peg) (d), input
-     &    PHTIM,        ! Cumulative photothermal time ages of seeds and shells, input
-     &    SDNO,         ! Number of seeds for cohort J (#/m2)
-     &    SHELN,        ! Number of shells for cohort J (#/m2)
-     &    WTSD,         ! Seed mass  for cohort J (g/m2)
-     &    WTSHE,        ! Shell mass  for cohort J (g/m2)
-     &    YRPLT)
+      SUBROUTINE FreshWt(DYNAMIC, ISWFWT, NR2TIM, PHTIM, SDNO, SHELN, 
+     &    WTSD, WTSHE, YRPLT)
 
 !-----------------------------------------------------------------------
       USE ModuleDefs 
       USE ModuleData
 
-!      VSH
-      Use MultiHar
-      
       IMPLICIT NONE
       SAVE
 
@@ -48,8 +39,6 @@
 
       REAL, DIMENSION(NCOHORTS) :: DMC, DryPodWt, FreshPodWt, PHTIM
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
-      
-      
 
       LOGICAL FEXIST
 
@@ -109,15 +98,11 @@
           CASE ('GB')       ! Snap bean
             WRITE (NOUTPF,231)
         END SELECT
-        
-!       VSH
-!  230 FORMAT('@YEAR DOY   DAS   DAP',
-!     &    '   FPWAD   PDMCD   AFPWD',
-!     &    '   ADPWD   PAGED')
+
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
-     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW')
-     
+     &    '   ADPWD   PAGED')
+
   231 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
      &    '   ADPWD   PAGED',
@@ -132,16 +117,6 @@
       SHELPC = 0.0
       TDPW   = 0.0
       TFPW   = 0.0
-      
-!     VSH initialization at the begining
-      RTDSD   = 0.0 
-      RTDSH   = 0.0
-      RTFPW   = 0.0
-      RTDPW   = 0.0
-!      RTDSW = 0.0 
-      RPODNO  = 0.0
-      RSEEDNO = 0.0
-
 
 !***********************************************************************
 !***********************************************************************
@@ -158,7 +133,6 @@
       TFPW   = 0.0
       TDPW   = 0.0
       TDSW   = 0.0
-      
       DO I = 1, 7
         CLASS(I) = 0.0
       ENDDO
@@ -188,19 +162,19 @@
 
 !       Snap bean quality
         IF (CROP .EQ. 'GB') THEN
-          PodDiam = 8.991 *(1.0-EXP(-0.438*(FreshPodWt(NPP)+0.5)))  !(mm/pod)
-          PodLen  = 14.24 *(1.0-EXP(-0.634*(FreshPodWt(NPP)+0.46))) !(cm/pod)
+!         PodDiam = mm/pod; PodLen = cm/pod
+          PodDiam = 8.991 *(1.0-EXP(-0.438*(FreshPodWt(NPP)+0.5))) 
+          PodLen  = 14.24 *(1.0-EXP(-0.634*(FreshPodWt(NPP)+0.46)))
 
           IF (PodDiam .LT. 4.7625) THEN
 !           Culls
-            CLASS(7) = CLASS(7) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
+            CLASS(7) = CLASS(7) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
           ELSEIF (PodDiam .LT. 5.7547) THEN
 !           Sieve size 1
             CLASS(1) = CLASS(1) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
-
-            ELSEIF (PodDiam .LT. 7.3422) THEN
+          ELSEIF (PodDiam .LT. 7.3422) THEN
 !           Sieve size 2
-            CLASS(2) = CLASS(2) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
+            CLASS(2) = CLASS(2) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
           ELSEIF (PodDiam .LT. 8.3344) THEN
 !           Sieve size 3
             CLASS(3) = CLASS(3) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
@@ -222,26 +196,7 @@
 
         PODNO = PODNO + SHELN(NPP)
         SEEDNO = SEEDNO + SDNO(NPP)
-        
-        ! VSH accumulating in the basket for harvesting
-        If (page >= xmpage) Then
-        
-           RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
-           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP)
-           RTDSD = RTDSD + WTSD(NPP)
-           RTDSH = RTDSH + WTSHE(NPP)
-
-           RPODNO = RPODNO + SHELN(NPP)
-           RSEEDNO = RSEEDNO + SDNO(NPP)      
-               
-        End if
-        
-        ! outputs
-        ! Reset 5 vars to zero after print and initialization
-        ! exect R values for cumulative
-        ! plus average values
-      
-      ENDDO  ! NPP
+      ENDDO
 
       PodAge = XPAGE(1)
       IF (PODNO > 1.E-6) THEN
@@ -285,18 +240,10 @@
         IF (DAP > DAS) DAP = 0
 
         SELECT CASE (CROP)
-        
-        ! add aditional values  for more than one harvest
-        
           CASE ('TM')       ! Tomato
-!          VSH added additional outputs
-!            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-!     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-!     &      PodAge
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
-     
+     &      PodAge
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
@@ -304,29 +251,13 @@
      &      NINT(CLASS(2)*10.),NINT(CLASS(3)*10.),NINT(CLASS(4)*10.),
      &      NINT(CLASS(5)*10.),NINT(CLASS(6)*10.)
         END SELECT
-        
-!        VSH added additional formats
-! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-!     &    I8,F8.3,F8.1,F8.2,F8.1)
+
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8)
-     
+     &    I8,F8.3,F8.1,F8.2,F8.1)
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,
      &    7(1X,I5))
 
-
-!       VSH  removing cohorts when harvesting
-        Do NPP = 1, NR2TIM + 1
-            PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-            if ((page >= xmpage).AND.(HARV==1))then 
-               SDNO(NPP) = 0
-               SHELN(NPP)= 0
-               WTSD(NPP) = 0.0
-               WTSHE(NPP)= 0.0  
-            end if
-        End do     
-      
       ENDIF
 
 !***********************************************************************

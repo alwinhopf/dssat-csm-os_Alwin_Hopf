@@ -115,6 +115,7 @@ set(
     	"${OSDefinitions}"
         "Utilities/CSMVersion.for"
         "Utilities/ModuleDefs.for"
+        "Utilities/multihar.f90"        
         "Utilities/DATES.for"
         "Utilities/ERROR.for"
         "Utilities/Info.for"

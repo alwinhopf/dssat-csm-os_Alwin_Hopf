@@ -40,7 +40,7 @@ C=======================================================================
 
       INTEGER      NLOOP,MENU,YEAR,ISIM,ENDSIM,NYRS,YR,IDUMM,PATHL
       INTEGER      DSSIM,DESIM,JULIAN,YRSIM,IPYRS,YRPLT,ESIM,EPYRS
-      INTEGER      HDATE(3),NHAR,YDOY
+      INTEGER      HDATE(35),NHAR,YDOY
       LOGICAL      FEXIST
       REAL         FLAG,EFF
 

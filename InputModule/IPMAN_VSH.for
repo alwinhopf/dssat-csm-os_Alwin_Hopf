@@ -523,7 +523,7 @@ C
                CALL ERROR (ERRKEY,12,FILEX,LINEXP)
             ENDIF
             READ (IFTYPE(NFERT)(3:5),'(I3)',IOSTAT=ERRNUM) IFFTYP
-            IF (IFFTYP .LT. 1 .OR. IFFTYP .GE. 999 .OR.
+            IF (IFFTYP .LT. 1 .OR. IFFTYP .GE. 60 .OR.
      &          ERRNUM .NE. 0) THEN
                CALL ERROR (ERRKEY,14,FILEX,LINEXP)
             ENDIF
@@ -602,18 +602,18 @@ C  HDLAY  :
 C=======================================================================
 
       SUBROUTINE IPHAR (LUNEXP,FILEX,LNHAR,HDATE,HSTG,HCOM,HSIZ,HPC,
-     &                  NHAR,IHARI,YRSIM,CROP,HBPC,FREQ,CUHT)!NEW FORAGE VARIABLES (DIEGO-2/14/2017)
+     &                  NHAR,IHARI,YRSIM,CROP,HBPC)
 
       IMPLICIT     NONE
 
       CHARACTER*1  IHARI
       CHARACTER*2  CROP
-
+      
 !      VSH     
 !      CHARACTER*5  HSTG(3),HCOM(3),HSIZ(3)
       CHARACTER*5  HSTG(35),HCOM(35),HSIZ(35)
-
-            CHARACTER*6  ERRKEY,FINDCH
+      
+      CHARACTER*6  ERRKEY,FINDCH
       CHARACTER*12 FILEX
       CHARACTER*80 CHARTEST
 
@@ -626,22 +626,19 @@ C=======================================================================
 
 !     VSH
 !      REAL         HPC(3),HBPC(3)
-!      REAL         HPC(35),HBPC(35)
-      !previous version below, 2nd below = combined with VSH edits
-!      REAL         HPC(3),HBPC(3),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
-      REAL         HPC(35),HBPC(35),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
+      REAL         HPC(35),HBPC(35)
 
       PARAMETER   (ERRKEY='IPHAR ')
 
                    FINDCH='*HARVE'
 
       NHAR  = 0
-
+      
 !     VSH      
 !      DO J = 1, 3
-      DO J = 1, 35         
-        HSTG(J)  = '     '
-        HCOM(J)  = '     '
+      DO J = 1, 35
+         HSTG(J)  = '     '
+         HCOM(J)  = '     '
          HSIZ(J)  = '     '
          HPC(J)   = 100.0
          HDATE(J) = -99
@@ -662,9 +659,7 @@ C
 C        Read several lines of harvest details
 C
          READ (CHARTEST,60,IOSTAT=ERRNUM) LN,HDATE(NHAR),HSTG(NHAR),
-     &                  HCOM(NHAR),HSIZ(NHAR),HPC(NHAR),HBPC(NHAR)    !,
-!CHP - Auto-harvest not yet implemented. Probably should go in Sim Controls, anyway.
-!     &                  FREQ, CUHT !New variables for forages (Diego-2/14/2017)
+     &                  HCOM(NHAR),HSIZ(NHAR),HPC(NHAR),HBPC(NHAR)
          IF (ERRNUM .NE. 0) CALL ERROR (ERRKEY,ERRNUM,FILEX,LINEXP)
          IF ((HDATE(NHAR) .LT.  0) .OR.
      &       (IHARI .EQ. 'R' .AND. MOD(HDATE(NHAR),1000) .GT. 366))
@@ -680,12 +675,10 @@ C
            ENDIF
          ENDIF
          IF (IHARI .EQ. 'R' .AND. HDATE(NHAR) .LT. YRSIM) GO TO 50
-!        Harvested product defaults to 100%
-         IF (HPC(NHAR) .LT. -1.E-4) THEN
+         IF (HPC(NHAR) .LT. 0.0) THEN
              HPC(NHAR) = 100.0
          ENDIF
-!        Harvested by-product defaults to 0%
-         IF (HBPC(NHAR) .LT. 1.E-4) THEN
+         IF (HBPC(NHAR) .LT. 0.0) THEN
              HBPC(NHAR) = 0.0
          ENDIF
          IF (HSTG(NHAR) .EQ. '     ') THEN
@@ -733,14 +726,14 @@ C
       IF (IHARI .EQ. 'D' .AND. HDATE(1) .EQ. 0) THEN
          CALL ERROR (ERRKEY,5,FILEX,LINEXP)
       ENDIF
-!      WRITE(7000,'(2F5.0)') FREQ,CUHT
+
       RETURN
 
 C-----------------------------------------------------------------------
 C     Format Strings
 C-----------------------------------------------------------------------
 
- 60   FORMAT (I3,I5,3(1X,A5),2(1X,F5.0),6X,F5.0,F5.0) !editted to read forage variables (Diego-2/14/2017)
+ 60   FORMAT (I3,I5,3(1X,A5),2(1X,F5.0))
 
       END SUBROUTINE IPHAR
 

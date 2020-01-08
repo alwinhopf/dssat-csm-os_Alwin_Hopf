@@ -59,10 +59,6 @@ C=======================================================================
       USE ModuleDefs     !Definitions of constructed variable types, 
                          ! which contain control information, soil
                          ! parameters, hourly weather data.
-                         
-      !      VSH
-      Use MultiHar
-      
       IMPLICIT NONE
       SAVE
 !-----------------------------------------------------------------------
@@ -582,23 +578,6 @@ C-----------------------------------------------------------------------
       PODWT  = PODWT  + WPDOT
       DWNOD  = DWNOD  + WNDOT
       TGROW  = TGROW  + GROWTH
-      
-!     VSH
-      if (HARV==1) Then
-!        removing when harvested
-         SDWT   = SDWT   - RTDSD
-         SHELWT = SHELWT - RTDSH 
-         PODWT  = PODWT  - RTDPW
-         TOPWT  = TOPWT  - RTFPW 
-         
-!        empting baskets after harvesting  
-         RTFPW   = 0.0
-         RTDPW   = 0.0
-         RTDSD   = 0.0 
-         RTDSH   = 0.0
-         RPODNO  = 0.0
-         RSEEDNO = 0.0
-      end if
 
 C-----------------------------------------------------------------------
 C     Cumulative leaf and stem growth
@@ -1128,8 +1107,11 @@ C-----------------------------------------------------------------------
       DO L = 0, NLAYR
         SENESCE % ResE(L,N)  = SenE(L,N)
 !        SENESCE % ResE(L,P)  = SenE(L,P)
-        SENESCE % CumResWt   = SENESCE % CumResWt + SenWt(L)
-        SENESCE % CumResE(N) = SENESCE % CumResE(N) + SenE(L,N)
+
+!        This is being done in OpSoilOrg:
+!        SENESCE % CumResWt   = SENESCE % CumResWt + SenWt(L)
+!        SENESCE % CumResE(N) = SENESCE % CumResE(N) + SenE(L,N)
+
 !        Do this in P module:
 !        SENESCE % CumResE(P) = SENESCE % CumResE(P) + SenE(L,P)
       ENDDO
@@ -1201,14 +1183,13 @@ C-----------------------------------------------------------------------
   110 FORMAT('(DAY : ',I4,1X,I3,'; TURFAC : ',F5.2,'; AGEFAC : ',
      &            F5.2,'  )')
 
-        !Message to screen
-        WRITE (*,275) MESSAGE(1), MESSAGE(2)
-  275   FORMAT(/,2X,A78,/,2X,A78)
-
-        !Message to Overview.out
+!       Message to screen
+!       WRITE (*,275) MESSAGE(1), MESSAGE(2)
+!       Message to Overview.out
         IF (IDETO == 'Y') THEN
           WRITE (NOUTDO,275) MESSAGE(1), MESSAGE(2)
         ENDIF
+  275   FORMAT(/,2X,A78,/,2X,A78)
       ENDIF
 !-----------------------------------------------------------------------
       RETURN
