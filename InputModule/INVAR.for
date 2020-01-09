@@ -38,7 +38,7 @@ C=======================================================================
       INCLUDE     'COMGEN.blk'
 
       CHARACTER*1  LINE(80),ANS,RNMODE,BLANK,UPCASE
-      CHARACTER*6  GNAME(19),VARTY,ECONO
+      CHARACTER*6  GNAME(18),VARTY,ECONO
       CHARACTER*12 FILEG
       CHARACTER*16 VRNAME
       CHARACTER*80 PATHGE
@@ -46,7 +46,7 @@ C=======================================================================
 
       INTEGER      I,IG,PATHL
       LOGICAL      FEXIST
-      REAL         GVALUE(19),GENP,GENNEW,FLAG
+      REAL         GVALUE(18),GENP,GENNEW,FLAG
 
       PARAMETER (BLANK = ' ')
 
@@ -86,8 +86,6 @@ C=======================================================================
       GVALUE(17) = SDPRO
       GNAME (18) = 'SDLIP'
       GVALUE(18) = SDLIP
-      GNAME (19) = 'XMPAGE'
-      GVALUE(19) = XMPAGE
 
   700 CONTINUE
       IF (INDEX('IE',RNMODE) .GT. 0) THEN
@@ -103,7 +101,6 @@ C=======================================================================
          WRITE (*,17000) (I,GNAME(I),GVALUE(I),I = 13,14)
          WRITE (*,17000) (I,GNAME(I),GVALUE(I),I = 15,16)
          WRITE (*,17000) (I,GNAME(I),GVALUE(I),I = 17,18)
-         WRITE (*,17000) (I,GNAME(I),GVALUE(I),I = 19,19)
          WRITE (*,18000) FILEG
       ENDIF
       READ (5,19000) LINE
@@ -152,12 +149,12 @@ C=======================================================================
             GO TO 1000
          ENDIF
       ENDIF
-      OPEN (20,FILE = FILEGG,STATUS = 'UNKNOWN')
+      OPEN (19,FILE = FILEGG,STATUS = 'UNKNOWN')
       VRNAME = 'NEW CULTIVAR    '
 C     VARTY  = 'NEW001'
-      WRITE (20,23500) (I,I=1,15)
-      WRITE (20,24000) VARTY,VRNAME,ECONO,(GVALUE(I),I = 1,15)
-      CLOSE (20)
+      WRITE (19,23500) (I,I=1,15)
+      WRITE (19,24000) VARTY,VRNAME,ECONO,(GVALUE(I),I = 1,15)
+      CLOSE (19)
 
  1000 CONTINUE
 
@@ -179,7 +176,6 @@ C     VARTY  = 'NEW001'
       THRESH     =  GVALUE(16)
       SDPRO      =  GVALUE(17)
       SDLIP      =  GVALUE(18)
-      XMPAGE     =  GVALUE(19)
 
       RETURN
 
@@ -210,10 +206,10 @@ C-----------------------------------------------------------------------
 23500 FORMAT ('*GENETICS PARAMETER INPUT FILE',//,
      &'@VAR#  VAR-NAME........   ECO#  CSDL PPSEN PH2-5 PHT-7',
      &' PHT-8 PHT10 PHT13 LFMAX SLAVR SIZLF  XFRT WTPSD SFDUR',
-     &' SDPDV PODUR THRSH SDPRO SDLIP XMPAGE',/,'!',29X,20(4X,I2))
+     &' SDPDV PODUR THRSH SDPRO SDLIP',/,'!',29X,18(4X,I2))
 24000 FORMAT (A6,1X,A16,1X,A6,F6.2,F6.3,3F6.1,2F6.2,F6.3,
      &        F6.0,F6.1,F6.2,F6.3,F6.1,F6.2,F6.1,
-     &        F6.1,3F6.3)
+     &        F6.1,2F6.3)
 
       END SUBROUTINE INVRLE
 
@@ -475,11 +471,11 @@ C        Branch to menu choice
       CASE ('PTSUB')
         WRITE (*,5700) G2,G3,PD,P2,TC
 5700    FORMAT (12X,'0. End of changes ',//,
-     2  12X,'1. G2 (Leaf expansion rate (cmï¿½/mï¿½/d))..........[',F7.1,/,
-     3  12X,'2. G3 (Tuber growth rate (g/mï¿½/d))..............[',F7.1,/,
+     2  12X,'1. G2 (Leaf expansion rate (cmý/mý/d))..........[',F7.1,/,
+     3  12X,'2. G3 (Tuber growth rate (g/mý/d))..............[',F7.1,/,
      4  12X,'3. PD (Determinancy)............................[',F7.1,/,
      5  12X,'4. P2 (Photoperiod sensitivity (dimensionless)).[',F7.2,/,
-     6  12X,'5. TC (Critical temperature (ï¿½C)................[',F7.1,/)
+     6  12X,'5. TC (Critical temperature (øC)................[',F7.1,/)
 
          WRITE (*,5100)
 C

@@ -609,7 +609,7 @@ C-----------------------------------------------------------------------
             WRITE (LUNIO,1500,IOSTAT=ERRNUM) VARNO,VRNAME,ECONO,CSDVAR,
      &           PPSEN,PH2T5,PHTHRS(6),PHTHRS(8),PHTHRS(10),PHTHRS(13),
      &           LFMAX,SLAVAR,SIZELF,XFRUIT,WTPSD,SFDUR,SDPDVR,PODUR,
-     &           THRESH, SDPRO, SDLIP, XMPAGE
+     &           THRESH, SDPRO, SDLIP
 
 !       Ceres wheat, barley
 !       CropSim - wheat, barley, cassava

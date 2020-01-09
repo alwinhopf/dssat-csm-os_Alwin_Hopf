@@ -139,7 +139,7 @@ C=======================================================================
      &  POALF,  POANO,  POART,  POASD,  POASH,  POAST,
      &  PROLFI, PRONOD, PRORTI, PROSTI,
      &  SDPRO, WTFSD, WTPSD, SDWTPL
-      REAL RMIN, SDLIP, XMPAGE, WLFI, WSTI, WRTI
+      REAL RMIN, SDLIP, WLFI, WSTI, WRTI
       REAL CLW, CSW
 
 !     Surface and soil residue due to daily senescence of plant matter
@@ -194,7 +194,7 @@ C=======================================================================
      &  PROLFF, PROSTF, PRORTF, PROSHF,                 PRONOD, !Output
      &  PROLFI, PROSTI, PRORTI,                                 !Output
      &  PLTPOP, ROWSPC, RMIN,   PLME,   SDWTPL,                 !Output
-     &  SDLIP, XMPAGE, SDPRO,  WTFSD,  WTPSD,   XPODF)                 !Output
+     &  SDLIP,  SDPRO,  WTFSD,  WTPSD,   XPODF)                 !Output
 
       IF (CROP .NE. 'FA') THEN
 !-----------------------------------------------------------------------
@@ -1239,7 +1239,7 @@ C=======================================================================
      &  PROLFF, PROSTF, PRORTF, PROSHF,         PRONOD,   !Output
      &  PROLFI, PROSTI, PRORTI,                           !Output
      &  PLTPOP, ROWSPC, RMIN,   PLME,   SDWTPL,           !Output
-     &  SDLIP, XMPAGE, SDPRO,  WTFSD,  WTPSD,   XPODF)    !Output
+     &  SDLIP,  SDPRO,  WTFSD,  WTPSD,   XPODF)           !Output
 
 !-----------------------------------------------------------------------
       IMPLICIT NONE
@@ -1258,7 +1258,7 @@ C=======================================================================
       INTEGER ERR, LINC, LNUM, FOUND, ISECT
 
       REAL ROWSPC, RMIN, PLTPOP, WTFSD, WTPSD,
-     &  SDPRO, SDLIP, XMPAGE, SDWTPL,
+     &  SDPRO, SDLIP, SDWTPL,
      &  ALPHL,  ALPHS,  ALPHR,  ALPHSH,
      &  PROLFF, PROSTF, PRORTF, PROSHF,                 PRONOD,
      &  PROLFI, PROSTI, PRORTI,
@@ -1307,9 +1307,8 @@ C=======================================================================
         IF (FOUND == 0) THEN
           CALL ERROR(SECTION, 42, FILEIO, LNUM)
         ELSE
-          READ(LUNIO,'(24X,A6,66X,F6.0,24X,3F6.0)',IOSTAT=ERR) 
-          !multiharvest below
-     &        ECONO, WTPSD, SDPRO, SDLIP, XMPAGE
+          READ(LUNIO,'(24X,A6,66X,F6.0,24X,2F6.0)',IOSTAT=ERR) 
+     &        ECONO, WTPSD, SDPRO, SDLIP
           LNUM = LNUM + 1
           IF (ERR .NE. 0) CALL ERROR(ERRKEY,ERR,FILEIO,LNUM)
         ENDIF
@@ -1667,7 +1666,7 @@ C=======================================================================
 ! SDLIP    Maximum lipid composition in seed (fraction)
 ! SDNPL    Seed N (g[N] / m2)
 ! SDPDOT   Daily seed puncture damage (not yet implemented) 
-! SDPRO    Seed protein fraction at 25ï¿½C (g[protein] / g[seed])
+! SDPRO    Seed protein fraction at 25ºC (g[protein] / g[seed])
 ! SDPROR   Ratio to adjust lipid and carbohydrate proportions when seed 
 !            protein differs from protein composition of standard cultivar 
 !            (SDPROS) 
