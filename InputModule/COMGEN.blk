@@ -50,6 +50,8 @@
       INTEGER       LA
       REAL          PBASE, PSAT  !Sorghum
       REAL          THRESH, SDPRO, SDLIP
+      !multiharvest
+      !REAL          XMPAGE
 
       CHARACTER*360 PLAINTXT
 

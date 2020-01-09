@@ -571,6 +571,10 @@ SDPRO  is less than or equal 0.  Please correct file.
 IPVAR    52
 SDLIP  is less than or equal 0.  Please correct file.
 
+!multiharvest
+!IPVAR    53
+!XMPAGE  is less than or equal 0.  Please correct file.
+
 IPWTH     1
 Simulation date must be AFTER first available weather day.  Correct dates.
 
