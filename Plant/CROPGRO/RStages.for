@@ -32,7 +32,7 @@ C=======================================================================
 
       INTEGER DYNAMIC
       INTEGER I, J, NVALP0, DAS, YRDOY, YRPLT, YRSIM
-      INTEGER NDLEAF,  NDSET, NDVST, JPEND  , TIMDIF
+      INTEGER NDLEAF,  NDSET, NDVST, JPEND  !, TIMDIF
       INTEGER RSTAGE,  NVEG0, NVEG1, NR0, NR1, NR2, NR3, NR5, NR7
       INTEGER YRNR1, YRNR2, YRNR3, YRNR5, YRNR7, MDATE, YREMRG
       INTEGER NPRIOR(20), STGDOY(20), NVALPH(20)
@@ -51,10 +51,10 @@ C=======================================================================
 !       and possibly other crops.
 
 !     For output file:
-      CHARACTER*11 OUTRSTG
-      CHARACTER*30 FILEIO
-      INTEGER DAP, DOY, ERRNUM, LUN, RUN, YEAR
-      LOGICAL FEXIST, FOPEN
+!      CHARACTER*11 OUTRSTG
+!      CHARACTER*30 FILEIO
+!      INTEGER DAP, DOY, ERRNUM, LUN, RUN, YEAR
+!      LOGICAL FEXIST, FOPEN
 
       TYPE (ControlType) CONTROL
       DYNAMIC = CONTROL % DYNAMIC
@@ -112,34 +112,34 @@ C=======================================================================
       VegTime = PHTHRS(3) + PHTHRS(4) + PHTHRS(5) + PHTHRS(8)
 
 !     Output file:
-      OUTRSTG = 'Rstages.OUT'
-      CALL GETLUN('OUTRSTG', LUN)
-
-      INQUIRE (FILE = OUTRSTG, EXIST = FEXIST)
-      INQUIRE (FILE = OUTRSTG, OPENED = FOPEN)
-      IF (FEXIST) THEN
-        IF (.NOT. FOPEN) THEN
-          OPEN (UNIT = LUN, FILE = OUTRSTG, STATUS = 'OLD',
-     &      IOSTAT = ERRNUM, POSITION = 'APPEND')
-        ELSE
-          INQUIRE (FILE = OUTRSTG, NUMBER = LUN)
-        ENDIF
-      ELSE
-        OPEN (UNIT = LUN, FILE = OUTRSTG, STATUS = 'NEW',
-     &    IOSTAT = ERRNUM)
-        WRITE(LUN,'("*RSTAGES OUTPUT FILE")')
-      ENDIF
-
-      !For sequenced run, use replicate
-      ! number instead of run number in header.
-      CALL HEADER(SEASINIT, LUN, RUN)
-
-      WRITE (LUN,120)
-  120 FORMAT('@YEAR DOY   DAS   DAP  RSTG  PHTEM',
-     &      '   PHAC1   PHAC2   PHAC3   PHAC4   PHAC5',
-     &      '   PHAC6   PHAC7   PHAC8   PHAC9  PHAC10',
-     &      '  PHAC11  PHAC12  PHAC13  PHAC14  PHAC15',
-     &      '  PHAC16  PHAC17  PHAC18  PHAC19  PHAC20')
+!      OUTRSTG = 'Rstages.OUT'
+!      CALL GETLUN('OUTRSTG', LUN)
+!
+!      INQUIRE (FILE = OUTRSTG, EXIST = FEXIST)
+!      INQUIRE (FILE = OUTRSTG, OPENED = FOPEN)
+!      IF (FEXIST) THEN
+!        IF (.NOT. FOPEN) THEN
+!          OPEN (UNIT = LUN, FILE = OUTRSTG, STATUS = 'OLD',
+!     &      IOSTAT = ERRNUM, POSITION = 'APPEND')
+!        ELSE
+!          INQUIRE (FILE = OUTRSTG, NUMBER = LUN)
+!        ENDIF
+!      ELSE
+!        OPEN (UNIT = LUN, FILE = OUTRSTG, STATUS = 'NEW',
+!     &    IOSTAT = ERRNUM)
+!        WRITE(LUN,'("*RSTAGES OUTPUT FILE")')
+!      ENDIF
+!
+!      !For sequenced run, use replicate
+!      ! number instead of run number in header.
+!      CALL HEADER(SEASINIT, LUN, RUN)
+!
+!      WRITE (LUN,120)
+!  120 FORMAT('@YEAR DOY   DAS   DAP  RSTG  PHTEM',
+!     &      '   PHAC1   PHAC2   PHAC3   PHAC4   PHAC5',
+!     &      '   PHAC6   PHAC7   PHAC8   PHAC9  PHAC10',
+!     &      '  PHAC11  PHAC12  PHAC13  PHAC14  PHAC15',
+!     &      '  PHAC16  PHAC17  PHAC18  PHAC19  PHAC20')
 
 C***********************************************************************
 C***********************************************************************
@@ -505,15 +505,14 @@ C-------------------------------------------------------------------------------
         ENDIF
       ENDIF
 
-
 !      !Daily printout
 !      !Note: just print PHTEM will get rid of debug vs. release problems
-      DAP   = MAX(0,TIMDIF(YRPLT,YRDOY))
-      CALL YR_DOY(YRDOY, YEAR, DOY) 
-
-      WRITE (LUN,300) YEAR, DOY, DAS, DAP, RSTAGE, PHTEM, 
-     &                        (PHZACC(I),I=1,20)
-  300 FORMAT(1X,I4,1X,I3.3,2(1X,I5),1X,I5,1X,F6.2,20(1X,F7.3)) 
+!      DAP   = MAX(0,TIMDIF(YRPLT,YRDOY))
+!      CALL YR_DOY(YRDOY, YEAR, DOY) 
+!
+!      WRITE (LUN,300) YEAR, DOY, DAS, DAP, RSTAGE, PHTEM, 
+!     &                        (PHZACC(I),I=1,20)
+!  300 FORMAT(1X,I4,1X,I3.3,2(1X,I5),1X,I5,1X,F6.2,20(1X,F7.3)) 
    
 !************************************************************************
 !************************************************************************
