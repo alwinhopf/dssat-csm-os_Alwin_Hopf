@@ -316,6 +316,7 @@ set(
         "Plant/CERES-SweetCorn/SW_GROSUB.for"
         "Plant/CROPGRO/CANOPY.for"
         "Plant/CROPGRO/CROPGRO.for"
+        "Plant/CROPGRO/COHORT.for"
         "Plant/CROPGRO/DEMAND.for"
         "Plant/CROPGRO/FREEZE.for"
         "Plant/CROPGRO/FreshWt.for"
