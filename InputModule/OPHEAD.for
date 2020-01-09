@@ -629,7 +629,7 @@ C=======================================================================
            WRITE (HEADER(I),852) WTPSD,SDPDVR,SFDUR,PODUR,XFRUIT; I=I+1
         ENDIF
 
-        WRITE (HEADER(I),853) THRESH, SDPRO, SDLIP; I=I+1
+        WRITE (HEADER(I),853) THRESH, SDPRO, SDLIP, XMPAGE; I=I+1
 
 !-----------------------------------------------------------------------
 !     CSCER - Wheat, barley
@@ -893,7 +893,8 @@ C-----------------------------------------------------------------------
      &         '  EMG-FLW:',F5.2,'  FLW-FSD:',F5.2,'  FSD-PHM :',F6.2)
   851 FORMAT (1X,'WTPSD  :',F5.3,'  SDPDVR :',F5.2,
      &         '  SDFDUR :',F5.2,'  PODDUR :',F5.2,'  XFRUIT  :',F6.2)
-  853 FORMAT (1X,'THRESH :',F5.1,'  SDPRO  :',F5.3,'  SDLIP   :',F6.3)
+  853 FORMAT (1X,'THRESH :',F5.1,'  SDPRO  :',F5.3,'  SDLIP   :',F6.3,
+     &         '  XMPAGE :',F5.1)
 
   852 FORMAT (1X,'WTPSD  :',F5.3,'  SDPDVR :',F5.1,
      &         '  SDFDUR :',F5.2,'  PODDUR :',F5.2,'  XFRUIT  :',F6.2)

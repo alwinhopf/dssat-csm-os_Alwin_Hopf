@@ -49,7 +49,7 @@
       REAL          DTPI,SMAX,SO,GMAX,GO,M1,M2,SLAVR,SIZLF !SC
       INTEGER       LA
       REAL          PBASE, PSAT  !Sorghum
-      REAL          THRESH, SDPRO, SDLIP
+      REAL          THRESH, SDPRO, SDLIP, XMPAGE
 
       CHARACTER*360 PLAINTXT
 

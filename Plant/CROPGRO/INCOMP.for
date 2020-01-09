@@ -47,7 +47,7 @@ C-----------------------------------------------------------------------
      &      POALF , POANO , POART , POASD , POASH , POAST ,
      &              PROLFI, PRORTI,                 PROSHI, PROSTI,
      &      RCH2O , RLIG  , RLIP  , RMIN  , RNO3C , ROA   ,
-     &      SDLIP,  SDPRO , SDPROR, SDPROS
+     &      SDLIP, XMPAGE, SDPRO , SDPROR, SDPROS
 
 !***********************************************************************
 !***********************************************************************
@@ -72,7 +72,7 @@ C-----------------------------------------------------------------------
       IF (FOUND == 0) THEN
         CALL ERROR(SECTION, 42, FILEIO, LNUM)
       ELSE
-        READ(LUNIO,'(126X,2F6.0)',IOSTAT=ERR) SDPRO, SDLIP
+        READ(LUNIO,'(126X,3F6.0)',IOSTAT=ERR) SDPRO, SDLIP, XMPAGE
         LNUM = LNUM + 1
         IF (ERR .NE. 0) CALL ERROR(ERRKEY,ERR,FILEIO,LNUM)
       ENDIF

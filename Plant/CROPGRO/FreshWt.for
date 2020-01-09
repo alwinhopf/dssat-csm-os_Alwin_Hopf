@@ -17,6 +17,7 @@
      &    SHELN,        ! Number of shells for cohort J (#/m2)
      &    WTSD,         ! Seed mass  for cohort J (g/m2)
      &    WTSHE,        ! Shell mass  for cohort J (g/m2)
+     &    XMPAGE,
      &    YRPLT)
 
 !-----------------------------------------------------------------------
@@ -45,6 +46,8 @@
       REAL PAGE, PodAge, PODNO, SEEDNO, SHELPC
       REAL TDPW, TFPW, TDSW
       REAL CLASS(7)
+      !multiharvest below
+      REAL XMPAGE 
 
       REAL, DIMENSION(NCOHORTS) :: DMC, DryPodWt, FreshPodWt, PHTIM
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
@@ -224,6 +227,8 @@
         SEEDNO = SEEDNO + SDNO(NPP)
         
         ! VSH accumulating in the basket for harvesting
+        ! put fruit into basket when above age requirement (xmpage)
+        !xmpage = 12
         If (page >= xmpage) Then
         
            RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)

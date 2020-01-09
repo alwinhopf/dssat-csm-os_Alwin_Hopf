@@ -119,6 +119,7 @@ C-----------------------------------------------------------------------
       REAL PORMIN, RWUEP1, RWUMX, SRFTEMP, SNOW, IRRAMT
       REAL TMAX, TMIN, TRWU
       REAL TRWUP, TWILEN, XLAI, XHLAI
+      REAL XMPAGE !multiharvest
 
       REAL, DIMENSION(2)  :: HARVFRAC
       REAL, DIMENSION(NL) :: NH4, NO3, RLV, UPPM  !, RWU
@@ -312,7 +313,7 @@ C         Variables to run CASUPRO from Alt_PLANT.  FSR 07-23-03
       CASE('CRGRO')
         CALL CROPGRO(CONTROL, ISWITCH,
      &    EOP, HARVFRAC, NH4, NO3, SOILPROP, SPi_AVAIL,   !Input
-     &    ST, SW, TRWUP, WEATHER, YREND, YRPLT,           !Input
+     &    ST, SW, TRWUP, WEATHER, YREND, YRPLT, XMPAGE, !multihar     !Input
      &    CANHT, EORATIO, HARVRES, KSEVAP, KTRANS, MDATE, !Output
      &    NSTRES, PSTRES1,                                !Output
      &    PUptake, PORMIN, RLV, RWUMX, SENESCE,           !Output
