@@ -275,11 +275,7 @@ SG       Grain sorghum                                                        IB
 SI       Switch grass                                                         IB
 SQ       Sequence                                                             IB
 SS       Sesame                                                               IB
-<<<<<<< Updated upstream
-=======
-! strawberry
->>>>>>> Stashed changes
-ST       Strawberry                                                           IB
+SR       Strawberry                                                           IB
 SU       Sunflower                                                            IB
 SW       Sweetcorn                                                            IB
 TF       Teff                                                                 IB
