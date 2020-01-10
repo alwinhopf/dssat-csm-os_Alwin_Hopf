@@ -62,7 +62,8 @@
 
 !     Currently only works for tomato.  Add other crops later. 
 !     Send a message if not available crop
-      IF (INDEX('TM,GB',CROP) < 0) THEN
+      !added strawberry (ST)
+      IF (INDEX('TM,ST,GB',CROP) < 0) THEN
         CALL GET_CROPD(CROP, CROPD)
         WRITE(MSG(1),'(A)') 
      &  "Fresh weight calculations not currently available for "
@@ -94,6 +95,8 @@
 
         SELECT CASE (CROP)
           CASE ('TM')       ! Tomato
+            WRITE (NOUTPF,230)
+          CASE ('ST')       ! Strawberry
             WRITE (NOUTPF,230)
           CASE ('GB')       ! Snap bean
             WRITE (NOUTPF,231)
@@ -146,6 +149,8 @@
         SELECT CASE (CROP)
           CASE ('TM')       ! Tomato
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
+          CASE ('ST')       ! Strawberry
+            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)
@@ -243,7 +248,21 @@
           CASE ('TM')       ! Tomato
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+<<<<<<< Updated upstream
      &      PodAge
+=======
+     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
+
+          CASE ('ST')       ! Strawberry
+      !          VSH added additional outputs
+      !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
+      !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+      !     &      PodAge
+                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
+     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
+     
+>>>>>>> Stashed changes
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 

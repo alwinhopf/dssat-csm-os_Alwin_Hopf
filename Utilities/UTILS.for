@@ -104,7 +104,7 @@ C
          IF (LINE(I) .NE. ' ') GO TO 100
       END DO
       !
-      ! Nothing entered .. spaces or ÄÄÙ .. set FLAG to 1.0 and exit
+      ! Nothing entered .. spaces or ï¿½ï¿½ï¿½ .. set FLAG to 1.0 and exit
       !
       FLAG = 1.0
       GO TO 1300
@@ -544,7 +544,7 @@ C-------------------------------------------------------------------------------
 C     Curve type Q10 - basic Q10 function
 C	XB=Tref, reference temperature
 C	X1=k, te response at Tref
-C	X2= Q10 increase in the response for every 10°K increase in temperature
+C	X2= Q10 increase in the response for every 10ï¿½K increase in temperature
 C	XM is not used
 C-------------------------------------------------------------------------------
       IF(CTYPE .EQ. 'Q10' .OR. CTYPE .EQ. 'q10') THEN
@@ -867,6 +867,7 @@ C-----------------------------------------------------------------------
 !      CASE ('SC'); CROPD = 'SUGARCANE '
 !      CASE ('SG'); CROPD = 'SORGHUM   '
 !      CASE ('SU'); CROPD = 'SUNFLOWER '
+!      CASE ('ST'); CROPD = 'STRAWBERRY '
 !      CASE ('TM'); CROPD = 'TOMATO    '
 !      CASE ('TN'); CROPD = 'TANIER    '
 !      CASE ('TR'); CROPD = 'TARO      '
