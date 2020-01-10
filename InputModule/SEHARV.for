@@ -35,16 +35,16 @@ C=======================================================================
       CHARACTER*1  RNMODE,IHARI,LINE(80)
       CHARACTER*2  CROP
       CHARACTER*3  MFHRV
-      CHARACTER*5  HSTG(3),HCOM(3),HSIZ(3)
+      CHARACTER*5  HSTG(35),HCOM(35),HSIZ(35)
       CHARACTER*6  ERRKEY
       CHARACTER*10 STNAME(20)
       CHARACTER*25 HARMAN
 
       INTEGER      NLOOP,MENU,DFHRV,YFHRV,IFHRV,YEAR,NHAR,YRPLT
-      INTEGER      HDLAY,HLATE,HDATE(3),JULIAN,HSTAGE,HDATT
+      INTEGER      HDLAY,HLATE,HDATE(35),JULIAN,HSTAGE,HDATT
       INTEGER      INCYD,IDUMM
 
-      REAL         HPP,HRP,HPC(3),EFF,FLAG,HBPC(3)
+      REAL         HPP,HRP,HPC(35),EFF,FLAG,HBPC(35)
 
       PARAMETER (ERRKEY = 'SEHARV')
 
@@ -471,7 +471,7 @@ C=======================================================================
       IMPLICIT     NONE
 
       CHARACTER*1  RNMODE
-      CHARACTER*5  HSTG(3)
+      CHARACTER*5  HSTG(35)
       CHARACTER*6  ERRKEY
       CHARACTER*10 STNAME(20)
 

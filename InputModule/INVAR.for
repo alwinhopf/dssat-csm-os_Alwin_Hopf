@@ -86,6 +86,9 @@ C=======================================================================
       GVALUE(17) = SDPRO
       GNAME (18) = 'SDLIP'
       GVALUE(18) = SDLIP
+      !Multiharvest
+      !GNAME (19) = 'XMPAGE'
+      !GVALUE(19) = XMPAGE
 
   700 CONTINUE
       IF (INDEX('IE',RNMODE) .GT. 0) THEN
@@ -176,6 +179,8 @@ C     VARTY  = 'NEW001'
       THRESH     =  GVALUE(16)
       SDPRO      =  GVALUE(17)
       SDLIP      =  GVALUE(18)
+      !multiharvest
+      !XMPAGE     =  GVALUE(19)
 
       RETURN
 
@@ -471,11 +476,11 @@ C        Branch to menu choice
       CASE ('PTSUB')
         WRITE (*,5700) G2,G3,PD,P2,TC
 5700    FORMAT (12X,'0. End of changes ',//,
-     2  12X,'1. G2 (Leaf expansion rate (cmý/mý/d))..........[',F7.1,/,
-     3  12X,'2. G3 (Tuber growth rate (g/mý/d))..............[',F7.1,/,
+     2  12X,'1. G2 (Leaf expansion rate (cmï¿½/mï¿½/d))..........[',F7.1,/,
+     3  12X,'2. G3 (Tuber growth rate (g/mï¿½/d))..............[',F7.1,/,
      4  12X,'3. PD (Determinancy)............................[',F7.1,/,
      5  12X,'4. P2 (Photoperiod sensitivity (dimensionless)).[',F7.2,/,
-     6  12X,'5. TC (Critical temperature (øC)................[',F7.1,/)
+     6  12X,'5. TC (Critical temperature (ï¿½C)................[',F7.1,/)
 
          WRITE (*,5100)
 C

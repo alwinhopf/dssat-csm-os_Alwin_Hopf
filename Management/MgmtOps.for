@@ -54,11 +54,11 @@ C-----------------------------------------------------------------------
       INTEGER NAP, NCHEM, NLAYR, TILLNO          
       INTEGER NHAR, NTIL, RUN, TIMDIF
       INTEGER YRDIF, YRDOY, MDATE, YRO, YRPLT, YRS, YRSIM
-      INTEGER HDATE(3)
+      INTEGER HDATE(35)
       INTEGER STGDOY(20)
 
       REAL IRRAMT, TOTIR, TIL_IRR
-      REAL HPC(3), HBPC(3), HARVFRAC(2)
+      REAL HPC(35), HBPC(35), HARVFRAC(2)
       REAL, DIMENSION(NL) :: DLAYR, DUL, DS, LL, ST, SW
 
 !     Variables added for flooded conditions
@@ -66,7 +66,7 @@ C-----------------------------------------------------------------------
       REAL FLOOD, RAIN
 
       !Variables needed to call IPAHAR for sequenced runs:
-      INTEGER HDLAY, HLATE, HSTG(3)
+      INTEGER HDLAY, HLATE, HSTG(35)
       REAL    SWPLTL, SWPLTH, SWPLTD
 
 !     Arrays which contain data for printing in SUMMARY.OUT file

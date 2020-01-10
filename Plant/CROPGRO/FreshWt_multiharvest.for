@@ -10,6 +10,9 @@
 !  Called from:  PODS
 !=======================================================================
 
+!      SUBROUTINE FreshWt(DYNAMIC, ISWFWT, NR2TIM, PHTIM, SDNO, SHELN, 
+!     &    WTSD, WTSHE, YRPLT)
+
       SUBROUTINE FreshWt(DYNAMIC, ISWFWT, 
      &    NR2TIM,       ! Days since NR2 (first peg) (d), input
      &    PHTIM,        ! Cumulative photothermal time ages of seeds and shells, input
@@ -24,7 +27,7 @@
       USE ModuleData
 
 !      VSH
-      Use MultiHar
+      USE MultiHar
       
       IMPLICIT NONE
       SAVE
@@ -48,8 +51,6 @@
 
       REAL, DIMENSION(NCOHORTS) :: DMC, DryPodWt, FreshPodWt, PHTIM
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
-      
-      
 
       LOGICAL FEXIST
 
@@ -73,8 +74,7 @@
 
 !     Currently only works for tomato.  Add other crops later. 
 !     Send a message if not available crop
-      !added strawberry (ST)
-      IF (INDEX('TM,ST,GB',CROP) < 0) THEN
+      IF (INDEX('TM,GB',CROP) < 0) THEN
         CALL GET_CROPD(CROP, CROPD)
         WRITE(MSG(1),'(A)') 
      &  "Fresh weight calculations not currently available for "
@@ -107,20 +107,14 @@
         SELECT CASE (CROP)
           CASE ('TM')       ! Tomato
             WRITE (NOUTPF,230)
-          CASE ('ST')       ! Strawberry
-            WRITE (NOUTPF,230)
           CASE ('GB')       ! Snap bean
             WRITE (NOUTPF,231)
         END SELECT
-        
-!       VSH
-!  230 FORMAT('@YEAR DOY   DAS   DAP',
-!     &    '   FPWAD   PDMCD   AFPWD',
-!     &    '   ADPWD   PAGED')
+
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
      &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW')
-     
+
   231 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
      &    '   ADPWD   PAGED',
@@ -135,16 +129,6 @@
       SHELPC = 0.0
       TDPW   = 0.0
       TFPW   = 0.0
-      
-!     VSH initialization at the begining
-      RTDSD   = 0.0 
-      RTDSH   = 0.0
-      RTFPW   = 0.0
-      RTDPW   = 0.0
-!      RTDSW = 0.0 
-      RPODNO  = 0.0
-      RSEEDNO = 0.0
-
 
 !***********************************************************************
 !***********************************************************************
@@ -161,7 +145,6 @@
       TFPW   = 0.0
       TDPW   = 0.0
       TDSW   = 0.0
-      
       DO I = 1, 7
         CLASS(I) = 0.0
       ENDDO
@@ -175,8 +158,6 @@
         SELECT CASE (CROP)
           CASE ('TM')       ! Tomato
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
-          CASE ('ST')       ! Strawberry
-            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)
@@ -193,19 +174,19 @@
 
 !       Snap bean quality
         IF (CROP .EQ. 'GB') THEN
-          PodDiam = 8.991 *(1.0-EXP(-0.438*(FreshPodWt(NPP)+0.5)))  !(mm/pod)
-          PodLen  = 14.24 *(1.0-EXP(-0.634*(FreshPodWt(NPP)+0.46))) !(cm/pod)
+!         PodDiam = mm/pod; PodLen = cm/pod
+          PodDiam = 8.991 *(1.0-EXP(-0.438*(FreshPodWt(NPP)+0.5))) 
+          PodLen  = 14.24 *(1.0-EXP(-0.634*(FreshPodWt(NPP)+0.46)))
 
           IF (PodDiam .LT. 4.7625) THEN
 !           Culls
-            CLASS(7) = CLASS(7) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
+            CLASS(7) = CLASS(7) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
           ELSEIF (PodDiam .LT. 5.7547) THEN
 !           Sieve size 1
             CLASS(1) = CLASS(1) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
-
-            ELSEIF (PodDiam .LT. 7.3422) THEN
+          ELSEIF (PodDiam .LT. 7.3422) THEN
 !           Sieve size 2
-            CLASS(2) = CLASS(2) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) 
+            CLASS(2) = CLASS(2) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
           ELSEIF (PodDiam .LT. 8.3344) THEN
 !           Sieve size 3
             CLASS(3) = CLASS(3) + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
@@ -227,26 +208,25 @@
 
         PODNO = PODNO + SHELN(NPP)
         SEEDNO = SEEDNO + SDNO(NPP)
-        
+
         ! VSH accumulating in the basket for harvesting
         If (page >= xmpage) Then
         
-           RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
-           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP)
-           RTDSD = RTDSD + WTSD(NPP)
-           RTDSH = RTDSH + WTSHE(NPP)
+            RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
+            RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP)
+            RTDSD = RTDSD + WTSD(NPP)
+            RTDSH = RTDSH + WTSHE(NPP)
 
-           RPODNO = RPODNO + SHELN(NPP)
-           RSEEDNO = RSEEDNO + SDNO(NPP)      
-               
-        End if
+            RPODNO = RPODNO + SHELN(NPP)
+            RSEEDNO = RSEEDNO + SDNO(NPP)      
+         End if
         
-        ! outputs
+        ! VSH, outputs
         ! Reset 5 vars to zero after print and initialization
         ! exect R values for cumulative
         ! plus average values
-      
-      ENDDO  ! NPP
+
+      ENDDO
 
       PodAge = XPAGE(1)
       IF (PODNO > 1.E-6) THEN
@@ -290,24 +270,13 @@
         IF (DAP > DAS) DAP = 0
 
         SELECT CASE (CROP)
-        
-        ! add aditional values  for more than one harvest
-        
           CASE ('TM')       ! Tomato
 !          VSH added additional outputs
+!            for more than one harvest. below (commented) is previous code, for single harvest
 !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
 !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
 !     &      PodAge
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
-
-          CASE ('ST')       ! Strawberry
-      !          VSH added additional outputs
-      !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-      !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-      !     &      PodAge
-                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
      
@@ -318,29 +287,29 @@
      &      NINT(CLASS(2)*10.),NINT(CLASS(3)*10.),NINT(CLASS(4)*10.),
      &      NINT(CLASS(5)*10.),NINT(CLASS(6)*10.)
         END SELECT
-        
+
 !        VSH added additional formats
 ! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
 !     &    I8,F8.3,F8.1,F8.2,F8.1)
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8)
-     
+             
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,
      &    7(1X,I5))
 
 
 !       VSH  removing cohorts when harvesting
-        Do NPP = 1, NR2TIM + 1
-            PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-            if ((page >= xmpage).AND.(HARV==1))then 
-               SDNO(NPP) = 0
-               SHELN(NPP)= 0
-               WTSD(NPP) = 0.0
-               WTSHE(NPP)= 0.0  
-            end if
-        End do     
-      
+      Do NPP = 1, NR2TIM + 1
+         PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
+         if ((page >= xmpage).AND.(HARV==1))then 
+            SDNO(NPP) = 0
+            SHELN(NPP)= 0
+            WTSD(NPP) = 0.0
+            WTSHE(NPP)= 0.0  
+         end if
+      End do    
+
       ENDIF
 
 !***********************************************************************
