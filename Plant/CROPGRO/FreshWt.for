@@ -231,10 +231,10 @@
         ! VSH accumulating in the basket for harvesting
         If (page >= xmpage) Then
         
-           RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP)
-           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP)
-           RTDSD = RTDSD + WTSD(NPP)
-           RTDSH = RTDSH + WTSHE(NPP)
+           RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) !fresh weight of mature fruits
+           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP) !dry weight of mature fruits 
+           RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort
+           RTDSH = RTDSH + WTSHE(NPP) !shell mass of mature fruits - wtshe = shell mass for cohort
 
            RPODNO = RPODNO + SHELN(NPP)
            RSEEDNO = RSEEDNO + SDNO(NPP)      

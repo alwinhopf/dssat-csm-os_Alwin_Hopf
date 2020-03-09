@@ -585,7 +585,7 @@ C-----------------------------------------------------------------------
       
 !     VSH
       if (HARV==1) Then
-!        removing when harvested
+!        removing when harvested, seed / shell / pod / top
          SDWT   = SDWT   - RTDSD
          SHELWT = SHELWT - RTDSH 
          PODWT  = PODWT  - RTDPW
@@ -1666,7 +1666,7 @@ C=======================================================================
 ! SDLIP    Maximum lipid composition in seed (fraction)
 ! SDNPL    Seed N (g[N] / m2)
 ! SDPDOT   Daily seed puncture damage (not yet implemented) 
-! SDPRO    Seed protein fraction at 25ºC (g[protein] / g[seed])
+! SDPRO    Seed protein fraction at 25ï¿½C (g[protein] / g[seed])
 ! SDPROR   Ratio to adjust lipid and carbohydrate proportions when seed 
 !            protein differs from protein composition of standard cultivar 
 !            (SDPROS) 
