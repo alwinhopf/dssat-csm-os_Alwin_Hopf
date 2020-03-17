@@ -12,7 +12,7 @@ Implicit None
    Integer, save :: iHARV = 1
    
    !  cultivar parameter from cultivar file --> move to cultivar file. xmpage = required age for harvest
-   Real    :: xmpage = 12.0
+   Real    :: xmpage = 7.5
    
    Real    :: RTDSD 
    Real    :: RTDSH

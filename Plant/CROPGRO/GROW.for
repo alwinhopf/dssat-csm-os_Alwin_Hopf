@@ -584,12 +584,28 @@ C-----------------------------------------------------------------------
       TGROW  = TGROW  + GROWTH
       
 !     VSH
-      if (HARV==1) Then
+      !if (HARV==1) Then
 !        removing when harvested, seed / shell / pod / top
-         SDWT   = SDWT   - RTDSD
-         SHELWT = SHELWT - RTDSH 
-         PODWT  = PODWT  - RTDPW
-         TOPWT  = TOPWT  - RTFPW 
+         !SDWT   = SDWT   - RTDSD
+         !SHELWT = SHELWT - RTDSH 
+         !PODWT  = PODWT  - RTDPW
+         !PODWT  = PODWT - RTDPW
+         !AH = correction 2
+         !TOPWT  = TOPWT - RTDPW 
+         !TOPWT  = TOPWT - RTDPW
+
+
+         !original VSH
+         !     VSH
+      if (HARV==1) Then
+            !        removing when harvested
+                     SDWT   = SDWT   - RTDSD
+                     SHELWT = SHELWT - RTDSH 
+                     PODWT  = PODWT  - RTDPW
+                     TOPWT  = TOPWT  - RTDPW 
+                     !PODWT  = PODWT - RTDPW
+                     !TOPWT  = TOPWT  - RTDPW
+
          
 !        empting baskets after harvesting  
          RTFPW   = 0.0

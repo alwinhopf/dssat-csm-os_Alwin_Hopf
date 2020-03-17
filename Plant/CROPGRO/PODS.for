@@ -23,6 +23,7 @@
 !  11/26/2007 CHP THRESH, SDPRO, SDLIP moved from eco to cul file
 !-----------------------------------------------------------------------
 !  Called from:  PLANT
+!called from CROPGRO.for
 !  Calls:        PODCOMP
 !                ERROR, FIND, IGNORE
 !=======================================================================

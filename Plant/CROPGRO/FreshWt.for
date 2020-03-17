@@ -146,6 +146,16 @@
       RSEEDNO = 0.0
 
 
+            !alwin new
+      RTFPW =  0
+      RTDPW =   0
+      RTDSD =   0
+      RTDSH =   0
+
+      RPODNO =  0
+      RSEEDNO =  0
+      !alwin new end 
+
 !***********************************************************************
 !***********************************************************************
 !     DAILY RATE/INTEGRATION
@@ -161,11 +171,14 @@
       TFPW   = 0.0
       TDPW   = 0.0
       TDSW   = 0.0
+      RTDPW = 0.0
       
       DO I = 1, 7
         CLASS(I) = 0.0
       ENDDO
 !-----------------------------------------------------------------------
+      
+      !RTDPW = 0.0 
       DO NPP = 1, NR2TIM + 1
         PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
         XPAGE(NPP) = PAGE
@@ -230,15 +243,22 @@
         
         ! VSH accumulating in the basket for harvesting
         If (page >= xmpage) Then
-        
+
+        !AH = correction 2
+        !PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
+        !If ((page >= xmpage).AND.(HARV==1)) Then 
+            If (HARV==1) Then 
+              RTDPW = 111
+            End if
+
            RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) !fresh weight of mature fruits
-           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP) !dry weight of mature fruits 
+           RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP) + 10 !dry weight of mature fruits (seed and shell)
            RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort
            RTDSH = RTDSH + WTSHE(NPP) !shell mass of mature fruits - wtshe = shell mass for cohort
 
            RPODNO = RPODNO + SHELN(NPP)
            RSEEDNO = RSEEDNO + SDNO(NPP)      
-               
+   
         End if
         
         ! outputs
@@ -309,7 +329,8 @@
       !     &      PodAge
                   WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
+               &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
+               RTDPW = 0.0
      
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
@@ -335,14 +356,16 @@
             PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
             if ((page >= xmpage).AND.(HARV==1))then 
                SDNO(NPP) = 0
-               SHELN(NPP)= 0
+               !AH: correction multiharvest. Shell number should not be resetted to 0
+               !otherwise total pod number is not correct
+               !SHELN(NPP)= 0
                WTSD(NPP) = 0.0
                WTSHE(NPP)= 0.0  
             end if
         End do     
-      
+      !RTDPW = 0.0
       ENDIF
-
+      !RTDPW = 0 
 !***********************************************************************
 !***********************************************************************
 !     SEASONAL SUMMARY
