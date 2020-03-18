@@ -160,6 +160,12 @@ C-----------------------------------------------------------------------
             iHARV = iHARV + 1
          end if  
        ENDIF
+
+
+       HARV_AH = 0
+       IF (YRDOY+1 .GE. HDATE1(iHARV)) THEN
+        HARV_AH = 1
+       ENDIF
        
 !      VSH
 

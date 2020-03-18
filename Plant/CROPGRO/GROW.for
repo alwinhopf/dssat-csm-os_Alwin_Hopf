@@ -583,6 +583,15 @@ C-----------------------------------------------------------------------
       DWNOD  = DWNOD  + WNDOT
       TGROW  = TGROW  + GROWTH
       
+      if (HARV_AH==0) Then
+         RTFPW   = 0.0
+         RTDPW   = 0.0
+         RTDSD   = 0.0 
+         RTDSH   = 0.0
+         RPODNO  = 0.0
+         RSEEDNO = 0.0
+      end if
+
 !     VSH
       !if (HARV==1) Then
 !        removing when harvested, seed / shell / pod / top
@@ -597,7 +606,7 @@ C-----------------------------------------------------------------------
 
          !original VSH
          !     VSH
-      if (HARV==1) Then
+      if (HARV_AH==1) Then
             !        removing when harvested
                      SDWT   = SDWT   - RTDSD
                      SHELWT = SHELWT - RTDSH 
@@ -608,12 +617,12 @@ C-----------------------------------------------------------------------
 
          
 !        empting baskets after harvesting  
-         RTFPW   = 0.0
-         RTDPW   = 0.0
-         RTDSD   = 0.0 
-         RTDSH   = 0.0
-         RPODNO  = 0.0
-         RSEEDNO = 0.0
+         !RTFPW   = 0.0
+         !RTDPW   = 0.0
+         !RTDSD   = 0.0 
+         !RTDSH   = 0.0
+         !RPODNO  = 0.0
+         !RSEEDNO = 0.0
       end if
 
       !if (HARV==0) Then

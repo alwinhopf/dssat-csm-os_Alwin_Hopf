@@ -119,7 +119,7 @@
 !     &    '   ADPWD   PAGED')
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
-     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW')
+     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
      
   231 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
@@ -297,14 +297,16 @@
 
 !     DAS = MAX(0,TIMDIF(YRSIM,YRDOY))
       DAS = CONTROL % DAS
-
+        
+      RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort
+      RTDSH = RTDSH + WTSHE(NPP) !shell mass of mature fruits - wtshe = shell mass for cohort
 !     Daily output every FROP days
       IF (MOD(DAS,CONTROL%FROP) == 0) THEN  
 
         CALL YR_DOY(YRDOY, YEAR, DOY) 
         DAP = MAX(0,TIMDIF(YRPLT,YRDOY))
         IF (DAP > DAS) DAP = 0
-
+      
         SELECT CASE (CROP)
         
         ! add aditional values  for more than one harvest
@@ -325,7 +327,7 @@
       !     &      PodAge
                   WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
+     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
      
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
@@ -339,7 +341,7 @@
 ! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
 !     &    I8,F8.3,F8.1,F8.2,F8.1)
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8)
+     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
      
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,
@@ -353,7 +355,7 @@
                SDNO(NPP) = 0
                !AH: correction multiharvest. Shell number should not be resetted to 0
                !otherwise total pod number is not correct
-               SHELN(NPP)= 0
+               !SHELN(NPP)= 0
                WTSD(NPP) = 0.0
                WTSHE(NPP)= 0.0  
             end if

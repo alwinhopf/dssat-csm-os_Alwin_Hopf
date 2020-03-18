@@ -8,11 +8,11 @@ Implicit None
    Character     :: symbol
    Integer, Dimension(:), Allocatable :: HDATE1
    Integer       :: Lindex
-   Integer       :: HARV            ! triger true or false for harvesting
+   Integer       :: HARV, HARV_AH            ! triger true or false for harvesting
    Integer, save :: iHARV = 1
    
    !  cultivar parameter from cultivar file --> move to cultivar file. xmpage = required age for harvest
-   Real    :: xmpage = 7.5
+   Real    :: xmpage = 4.5
    
    Real    :: RTDSD 
    Real    :: RTDSH
