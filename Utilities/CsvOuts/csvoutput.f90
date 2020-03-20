@@ -54,6 +54,13 @@ Character(:), allocatable, Target :: vCsvlineWth
 Character (:), Pointer :: vpCsvlineWth
 Integer :: vlngthWth
 !--------------------------------------------------------------------
+!Alwin Hopf - Fresh Weight CSV Output
+! for FreshWt
+Character(:), allocatable, Target :: vCsvlineWth2
+Character (:), Pointer :: vpCsvlineWth2
+Integer :: vlngthWth2
+!Alwin Hopf - end
+!--------------------------------------------------------------------
 ! for PlantGr2.out
 Character(:), allocatable, Target :: vCsvlinePlGr2
 Character (:), Pointer :: vpCsvlinePlGr2
@@ -1969,7 +1976,7 @@ Subroutine CsvOutputs(CropModel, numelem, nlayers)
          Select case (CropModel)
              Case('CRGRO')
                  Call ListtofilePlantgrCrGro(nlayers) ! plantgro.csv
-                 Call ListtofileFreshWtCrGro(nlayers) ! freshwt.csv
+                 !Call ListtofileFreshWtCrGro(nlayers)          ! freshwt.csv
                  Call ListtofilePlNCrGro              ! plantn.csv
                  Call ListtofilePlCCrGro              ! plantc.csv
                  Call ListtofileEvOpsum               ! evaluate.csv            
@@ -1996,6 +2003,7 @@ Subroutine CsvOutputs(CropModel, numelem, nlayers)
          End Select
 
          Call ListtofileSW(nlayers)         ! SoilWat.csv
+         Call ListtofileFW        ! FreshWt.csv
          Call ListtofileTemp(nlayers)       ! SoilTemp.csv
          Call ListtofileET(nlayers)         ! et.csv
          Call ListtoFileSoilNi(nlayers)     ! SoilNi.csv

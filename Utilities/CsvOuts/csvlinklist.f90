@@ -162,6 +162,20 @@ Character(Len=6),  Dimension(40) :: csvOLAP    !Labels
     
     Integer :: istatWth                          
 !------------------------------------------------------------------------------
+!Alwin Hopf - addition for Fresh Weight CSV Output    
+!   for PlNMzCer2
+    Type :: lin_valueWth2
+       Character(:), Allocatable :: pclineWth2
+       Type (lin_valueWth2), Pointer :: pWth2
+    End Type
+
+    Type (lin_valueWth2), Pointer :: headWth2      
+    Type (lin_valueWth2), Pointer :: tailWth2      
+    Type (lin_valueWth2), Pointer :: ptrWth2       
+    
+    Integer :: istatWth2
+!Alwin Hopf - end                              
+!------------------------------------------------------------------------------
 !  for PlantGr2
     Type :: lin_valuePlGr2
        Character(:), Allocatable :: pclinePlGr2
@@ -684,6 +698,34 @@ Contains
     End If
 
  End Subroutine LinklstWth
+ !------------------------------------------------------------------------------
+ !Alwin Hopf - Fresh Weight CSV Output
+ Subroutine LinklstWth2(ptxtlineWth2)
+
+  Character(:), Allocatable :: ptxtlineWth2            
+      
+  If(.Not. Associated(headWth2)) Then        
+    Allocate(headWth2, Stat=istatWth2)        
+    If(istatWth2==0) Then                    
+      tailWth2 => headWth2                    
+      Nullify(tailWth2%pWth2)                 
+      tailWth2%pclineWth2 = ptxtlineWth2       
+    Else
+      ! Error message
+    End If
+  Else
+    Allocate(tailWth2%pWth2, Stat=istatWth2)      
+    If(istatWth2==0) Then                       
+      tailWth2=> tailWth2%pWth2                   
+      Nullify(tailWth2%pWth2)                    
+      tailWth2%pclineWth2 = ptxtlineWth2          
+    Else
+    ! Error message
+    End If
+  End If
+
+End Subroutine LinklstWth2
+!Alwin Hopf - end
 !------------------------------------------------------------------------------
  Subroutine LinklstPlGr2(ptxtlinePlGr2)
 
@@ -873,61 +915,41 @@ Contains
 
   !Alwin Hopf - add FreshWt.OUT
   !------------------------------------------------------------------------------
-  Subroutine ListtofileFreshWtCrGro(nlayers)
-    Integer          :: nf       ! Number for growth output file  #
-    Character(Len=12):: fn       ! Growth output file code  
-    Character(Len=14) :: fmt
-    Character(Len=2) :: numtoch1, numtoch2 
-    Character(Len=220) :: tmp
-    Character(:),Allocatable :: Header 
-    Integer :: ErrNum, length, nlayers, i, nl
+  Subroutine ListtofileFW
+    Integer          :: nf, ErrNum, length       
+    Character(Len=12):: fn         
+    Character(:),Allocatable :: Header
     
-    If(.Not. Associated(head)) Return
-
-    nl = MIN(10, MAX(4,nlayers))
-
-    Write(numtoch1,'(I2)') nl - 1  
-     
-    fmt = '('//Trim(Adjustl(numtoch1))//'(A2,I1,A2))'
-    fmt = Trim(Adjustl(fmt))
- 
-    Write (tmp,fmt) ("RL",i,"D,",i=1,nl - 1)
-    tmp = Trim(Adjustl(tmp)) 
-    Write(numtoch2,'(I2)') nl  
-    tmp = Trim(Adjustl(tmp)) // "RL" // Trim(Adjustl(numtoch2)) // "D" 
-     
-length= Len('RUN,EXP,TRTNUM,ROTNUM,REPNO,YEAR,DOY,DAS,DAP,L#SD,GSTD,LAID,' &
-//'LWAD,SWAD,GWAD,RWAD,VWAD,CWAD,G#AD,GWGD,HIAD,PWAD,P#AD,WSPD,WSGD,NSTD,' &
-//'PST1A,PST2A,KSTD,EWSD,LN%D,SH%D,HIPD,PWDD,PWTD,SLAD,CHTD,CWID,NWAD,RDPD,')&
-+ Len('SNW0C,SNW1C,') + Len(Trim(Adjustl(tmp)))
+    If(.Not. Associated(headWth2)) Return
+    
+length= Len('RUN,EXP,TR,RN,REP,YEAR,DOY,DAS,PRED,DAYLD,TWLD,SRAD,' &
+//'PARD,CLDD,TMXD,TMND,TAVD,TDYD,TDWD,TGAD,TGRD,WDSD,CO2D,VPDF,VPD') 
 
     Allocate(character(LEN=length) :: Header)
 
-Header = 'RUN,EXP,TRTNUM,ROTNUM,REPNO,YEAR,DOY,DAS,DAP,L#SD,GSTD,LAID,' &
-//'LWAD,SWAD,GWAD,RWAD,VWAD,CWAD,G#AD,GWGD,HIAD,PWAD,P#AD,WSPD,WSGD,NSTD,' &
-//'PST1A,PST2A,KSTD,EWSD,LN%D,SH%D,HIPD,PWDD,PWTD,SLAD,CHTD,CWID,NWAD,RDPD,'&
-// 'SNW0C,SNW1C,' // Trim(Adjustl(tmp))
-       
-    fn = 'freshwt.csv'
-    Call GETLUN (fn,nf)
+Header = 'RUN,EXP,TR,RN,REP,YEAR,DOY,DAS,PRED,DAYLD,TWLD,SRAD,' &
+//'PARD,CLDD,TMXD,TMND,TAVD,TDYD,TDWD,TGAD,TGRD,WDSD,CO2D,VPDF,VPD' 
 
-    Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE',  &
-        Action='Write', IOSTAT = ErrNum)
+    fn = 'weather2.csv'
+    Call GETLUN (fn,nf)
+ 
+    Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE', &
+       Action='Write', IOSTAT = ErrNum)
       
     Write(nf,'(A)')Header
     Deallocate(Header)
 
-    ! write out the data
-    ptr => head
+    ptrWth2 => headWth2
     Do
-      If(.Not. Associated(ptr)) Exit           ! Pointer valid?
-      Write(nf,'(A)') ptr % pcline             ! Yes: Write value
-      ptr => ptr % p                           ! Get next pointer
+      If(.Not. Associated(ptrWth2)) Exit              
+      Write(nf,'(A)') ptrWth2 % pclineWth2             
+      ptrWth2 => ptrWth2 % pWth2                       
     End Do
 
-    Nullify(ptr, head, tail)
+    Nullify(ptrWth2, headWth2, tailWth2)
     Close(nf)
-End Subroutine ListtofileFreshWtCrGro
+End Subroutine ListtofileFW
+
 !end Alwin Hopf
   !------------------------------------------------------------------------------
 

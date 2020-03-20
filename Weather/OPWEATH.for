@@ -149,6 +149,19 @@ C       Generate output for file Weather.OUT
      
          CALL LinklstWth(vCsvlineWth)
       END IF
+
+      !Alwin Hopf
+      IF (FMOPT == 'C') THEN 
+         CALL CsvOutWth(EXPNAME, RUN, CONTROL%TRTNUM, 
+     &CONTROL%ROTNUM, CONTROL%REPNO, YEAR, DOY, DAS,  
+     &RAIN, DAYL, TWILEN, SRAD, PAR, CLOUDS, TMAX,  
+     &TMIN, TAVG, TDAY, TDEW, TGROAV, TGRODY, WINDSP, CO2,
+     &VPDF, vpd_transp,   
+     &vCsvlineWth2, vpCsvlineWth2, vlngthWth2)
+        
+         CALL LinklstWth2(vCsvlineWth2)
+      END IF
+         !Alwin Hopf - end
       
         ENDIF
 
