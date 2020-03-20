@@ -870,7 +870,66 @@ Contains
       Nullify(ptr, head, tail)
       Close(nf)
   End Subroutine ListtofilePlantgrCrGro
-!------------------------------------------------------------------------------
+
+  !Alwin Hopf - add FreshWt.OUT
+  !------------------------------------------------------------------------------
+  Subroutine ListtofileFreshWtCrGro(nlayers)
+    Integer          :: nf       ! Number for growth output file  #
+    Character(Len=12):: fn       ! Growth output file code  
+    Character(Len=14) :: fmt
+    Character(Len=2) :: numtoch1, numtoch2 
+    Character(Len=220) :: tmp
+    Character(:),Allocatable :: Header 
+    Integer :: ErrNum, length, nlayers, i, nl
+    
+    If(.Not. Associated(head)) Return
+
+    nl = MIN(10, MAX(4,nlayers))
+
+    Write(numtoch1,'(I2)') nl - 1  
+     
+    fmt = '('//Trim(Adjustl(numtoch1))//'(A2,I1,A2))'
+    fmt = Trim(Adjustl(fmt))
+ 
+    Write (tmp,fmt) ("RL",i,"D,",i=1,nl - 1)
+    tmp = Trim(Adjustl(tmp)) 
+    Write(numtoch2,'(I2)') nl  
+    tmp = Trim(Adjustl(tmp)) // "RL" // Trim(Adjustl(numtoch2)) // "D" 
+     
+length= Len('RUN,EXP,TRTNUM,ROTNUM,REPNO,YEAR,DOY,DAS,DAP,L#SD,GSTD,LAID,' &
+//'LWAD,SWAD,GWAD,RWAD,VWAD,CWAD,G#AD,GWGD,HIAD,PWAD,P#AD,WSPD,WSGD,NSTD,' &
+//'PST1A,PST2A,KSTD,EWSD,LN%D,SH%D,HIPD,PWDD,PWTD,SLAD,CHTD,CWID,NWAD,RDPD,')&
++ Len('SNW0C,SNW1C,') + Len(Trim(Adjustl(tmp)))
+
+    Allocate(character(LEN=length) :: Header)
+
+Header = 'RUN,EXP,TRTNUM,ROTNUM,REPNO,YEAR,DOY,DAS,DAP,L#SD,GSTD,LAID,' &
+//'LWAD,SWAD,GWAD,RWAD,VWAD,CWAD,G#AD,GWGD,HIAD,PWAD,P#AD,WSPD,WSGD,NSTD,' &
+//'PST1A,PST2A,KSTD,EWSD,LN%D,SH%D,HIPD,PWDD,PWTD,SLAD,CHTD,CWID,NWAD,RDPD,'&
+// 'SNW0C,SNW1C,' // Trim(Adjustl(tmp))
+       
+    fn = 'freshwt.csv'
+    Call GETLUN (fn,nf)
+
+    Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE',  &
+        Action='Write', IOSTAT = ErrNum)
+      
+    Write(nf,'(A)')Header
+    Deallocate(Header)
+
+    ! write out the data
+    ptr => head
+    Do
+      If(.Not. Associated(ptr)) Exit           ! Pointer valid?
+      Write(nf,'(A)') ptr % pcline             ! Yes: Write value
+      ptr => ptr % p                           ! Get next pointer
+    End Do
+
+    Nullify(ptr, head, tail)
+    Close(nf)
+End Subroutine ListtofileFreshWtCrGro
+!end Alwin Hopf
+  !------------------------------------------------------------------------------
 
    Subroutine ListtofileSW(nlayers)
       Integer          :: nf, ErrNum, length, nlayers, i, nl       

@@ -319,6 +319,85 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    
    return
 end Subroutine CsvOut_crgro
+!Alwin Hopf
+! Sub for freshwt.csv output CRGRO
+Subroutine CsvOutFW_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
+   VSTAGE, RSTAGE, XLAI, WTLF, STMWT, SDWT, RTWT, VWAD, TOPWT, SEEDNO, SDSIZE, HI, &
+   PODWT, PODNO, SWF_AV, TUR_AV, NST_AV, PS1_AV, PS2_AV, KST_AV, EXW_AV, PCNLP, & 
+   SHELPC, HIP, PODWTD, SLAP, CANHT, CANWH, DWNOD, RTDEP, N_LYR, RLV, CUMSENSURF, & 
+   CUMSENSOIL, Csvline, pCsvline, lngth) 
+
+!  Input vars
+   Character(8),Intent(IN):: EXCODE    
+   Integer, Intent(IN) :: RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP      
+!   INTEGER,Intent(in)      :: SN         ! Sequence number,crop rotation  #
+!   INTEGER,Intent(in)      :: ON         ! Option number (sequence runs)  #
+!   INTEGER,Intent(in)      :: CN         ! Crop component (multicrop)     #
+   Real,Intent(IN) :: VSTAGE, XLAI, WTLF, STMWT, SDWT, RTWT, TOPWT, SEEDNO     
+   Real,Intent(in) :: SDSIZE, HI, PODWT, PODNO, SWF_AV, TUR_AV, NST_AV, PS1_AV
+   Real,Intent(IN) :: PS2_AV, KST_AV, EXW_AV, PCNLP, SHELPC, HIP, PODWTD, SLAP
+   Real,Intent(IN) :: CANHT, CANWH, DWNOD, RTDEP, CUMSENSURF, CUMSENSOIL     
+   Integer,Intent(IN) :: RSTAGE, VWAD
+
+   Integer,Intent(IN) :: N_LYR
+   Real, Dimension(N_LYR), Intent(IN) :: RLV 
+  
+!  Recalculated vars
+   Integer :: cWTLF1, cSTMWT1, cSDWT1, cRTWT1, cTOPWT1, cSEEDNO1, cPODWT1
+   Integer :: cPODNO1, cPODWTD1, cPodSum, cCUMSENSURF1, cCUMSENSOIL1 
+   Real :: cDWNOD1, cRTDEP1
+  
+   Integer :: i, size
+  
+   Character(:), allocatable, Target, Intent(Out) :: Csvline
+   Character(:), Pointer, Intent(Out) :: pCsvline
+   Integer, Intent(Out) :: lngth
+   Character(Len = 900) :: tmp 
+   Character(Len = 200) :: tmp1  
+   Character(Len = 20)  :: fmt   
+!  End of vars
+          
+!  Recalculation
+   cWTLF1 = NINT(WTLF * 10.0)
+   cSTMWT1 = NINT(STMWT * 10.0)
+   cSDWT1 = NINT(SDWT * 10.0)
+   cRTWT1 = NINT(RTWT * 10.0)
+   cTOPWT1 = NINT(TOPWT * 10.0)
+   cSEEDNO1 = NINT(SEEDNO)
+   cPODWT1 = NINT(PODWT * 10.0)
+   cPODNO1 = NINT(PODNO)
+   cPODWTD1 = NINT(PODWTD * 10.0)
+   cPodSum = NINT((PODWTD + PODWT) * 10.0)
+   cDWNOD1 = DWNOD * 10.0
+   cRTDEP1 = RTDEP / 100.0
+   cCUMSENSURF1 = NINT(CUMSENSURF)  
+   cCUMSENSOIL1 = NINT(CUMSENSOIL) 
+   
+   ! Unformatted string output
+   Write(tmp,'(42(g0,","))') RUN, EXCODE, TN, ROTNUM, REPNO, YEAR, DOY, DAS,DAP,&
+      VSTAGE, RSTAGE, XLAI, cWTLF1, cSTMWT1, cSDWT1, cRTWT1, VWAD, cTOPWT1, &
+      cSEEDNO1, SDSIZE, HI, cPODWT1, cPODNO1, SWF_AV, TUR_AV, NST_AV, PS1_AV, &
+      PS2_AV, KST_AV, EXW_AV, PCNLP, SHELPC, HIP, cPODWTD1, cPodSum, SLAP, &
+      CANHT, CANWH, cDWNOD1, cRTDEP1, cCUMSENSURF1, cCUMSENSOIL1 
+   
+   Write(fmt,'(I2)') N_LYR - 1
+   fmt = '('//Trim(Adjustl(fmt))//'(g0,","),g0)'
+   fmt = Trim(Adjustl(fmt))
+   
+   Write(tmp1,fmt) (RLV(i), i = 1, N_LYR)  
+   
+     
+   tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
+   
+   lngth = Len(Trim(Adjustl(tmp)))
+   size = lngth
+   Allocate(Character(Len = size)::Csvline)
+   Csvline = Trim(Adjustl(tmp))
+   pCsvline => Csvline
+   
+   return
+end Subroutine CsvOutFW_crgro
+!Alwin Hopf End
 !---------------------------------------------------------------------------------
 !  Sub for soilwat.csv output
 Subroutine CsvOutSW_crgro(EXCODE, RUN, TN, ROTNUM,  REPNO, YEAR, DOY, DAS, TSW, &
@@ -1890,6 +1969,7 @@ Subroutine CsvOutputs(CropModel, numelem, nlayers)
          Select case (CropModel)
              Case('CRGRO')
                  Call ListtofilePlantgrCrGro(nlayers) ! plantgro.csv
+                 Call ListtofileFreshWtCrGro(nlayers) ! freshwt.csv
                  Call ListtofilePlNCrGro              ! plantn.csv
                  Call ListtofilePlCCrGro              ! plantc.csv
                  Call ListtofileEvOpsum               ! evaluate.csv            
