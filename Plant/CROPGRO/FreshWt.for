@@ -25,6 +25,9 @@
 
 !      VSH
       Use MultiHar
+
+!Alwin Hopf - Fresh Weight CSV Output
+      USE CsvOutput
       
       IMPLICIT NONE
       SAVE
@@ -147,13 +150,13 @@
 
 
             !alwin new
-      RTFPW =  0
-      RTDPW =   0
-      RTDSD =   0
-      RTDSH =   0
+      !RTFPW =  0
+      !RTDPW =   0
+      !RTDSD =   0
+      !RTDSH =   0
 
-      RPODNO =  0
-      RSEEDNO =  0
+      !RPODNO =  0
+      !RSEEDNO =  0
       !alwin new end 
 
 !***********************************************************************
@@ -346,7 +349,16 @@
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,
      &    7(1X,I5))
-
+   
+ !    Alwin Hopf - CSV output corresponding to FreshWt.OUT
+      IF (FMOPT == 'C') THEN    
+      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, TFPW, AvgDMC,
+     &AvgFPW, AvgDPW, PodAge, RTFPW, HARV, RTDPW, HARV_AH,  
+     &vCsvlineFreshWt, vpCsvlineFreshWt, vlngthFreshWt)
+ 
+      CALL LinklstFreshWt(vCsvlineFreshWt)
+      END IF
+      !Alwin Hopf - ned
 
 !       VSH  removing cohorts when harvesting
         Do NPP = 1, NR2TIM + 1

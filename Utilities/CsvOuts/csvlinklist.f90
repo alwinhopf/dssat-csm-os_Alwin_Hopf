@@ -174,6 +174,17 @@ Character(Len=6),  Dimension(40) :: csvOLAP    !Labels
     Type (lin_valueWth2), Pointer :: ptrWth2       
     
     Integer :: istatWth2
+    !
+    Type :: lin_valueFreshWt
+    Character(:), Allocatable :: pclineFreshWt
+    Type (lin_valueFreshWt), Pointer :: pFreshWt
+    End Type
+
+    Type (lin_valueFreshWt), Pointer :: headFreshWt     
+    Type (lin_valueFreshWt), Pointer :: tailFreshWt      
+    Type (lin_valueFreshWt), Pointer :: ptrFreshWt       
+ 
+    Integer :: istatFreshWt
 !Alwin Hopf - end                              
 !------------------------------------------------------------------------------
 !  for PlantGr2
@@ -725,6 +736,32 @@ Contains
   End If
 
 End Subroutine LinklstWth2
+!
+Subroutine LinklstFreshWt(ptxtlineFreshWt)
+
+  Character(:), Allocatable :: ptxtlineFreshWt           
+      
+  If(.Not. Associated(headFreshWt)) Then        
+    Allocate(headFreshWt, Stat=istatFreshWt)        
+    If(istatFreshWt==0) Then                    
+      tailFreshWt => headFreshWt                    
+      Nullify(tailFreshWt%pFreshWt)                 
+      tailFreshWt%pclineFreshWt = ptxtlineFreshWt     
+    Else
+      ! Error message
+    End If
+  Else
+    Allocate(tailFreshWt%pFreshWt, Stat=istatFreshWt)      
+    If(istatFreshWt==0) Then                       
+      tailFreshWt=> tailFreshWt%pFreshWt                 
+      Nullify(tailFreshWt%pFreshWt)                    
+      tailFreshWt%pclineFreshWt = ptxtlineFreshWt        
+    Else
+    ! Error message
+    End If
+  End If
+
+End Subroutine LinklstFreshWt
 !Alwin Hopf - end
 !------------------------------------------------------------------------------
  Subroutine LinklstPlGr2(ptxtlinePlGr2)
@@ -915,7 +952,7 @@ End Subroutine LinklstWth2
 
   !Alwin Hopf - add FreshWt.OUT
   !------------------------------------------------------------------------------
-  Subroutine ListtofileFW
+  Subroutine ListtofileFW_old
     Integer          :: nf, ErrNum, length       
     Character(Len=12):: fn         
     Character(:),Allocatable :: Header
@@ -948,10 +985,50 @@ Header = 'RUN,EXP,TR,RN,REP,YEAR,DOY,DAS,PRED,DAYLD,TWLD,SRAD,' &
 
     Nullify(ptrWth2, headWth2, tailWth2)
     Close(nf)
-End Subroutine ListtofileFW
+End Subroutine ListtofileFW_old
 
 !end Alwin Hopf
   !------------------------------------------------------------------------------
+  !Alwin Hopf - add FreshWt.OUT
+  !------------------------------------------------------------------------------
+Subroutine ListtofileFW
+  Integer          :: nf, ErrNum, length       
+  Character(Len=12):: fn         
+  Character(:),Allocatable :: Header
+  
+  If(.Not. Associated(headFreshWt)) Return
+  
+length= Len('YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+//'HARV_AH') 
+
+  Allocate(character(LEN=length) :: Header)
+
+Header = 'YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+//'HARV_AH'
+
+
+  fn = 'freshwt.csv'
+  Call GETLUN (fn,nf)
+
+  Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE', &
+     Action='Write', IOSTAT = ErrNum)
+    
+  Write(nf,'(A)')Header
+  Deallocate(Header)
+
+  ptrFreshWt => headFreshWt
+  Do
+    If(.Not. Associated(ptrFreshWt)) Exit              
+    Write(nf,'(A)') ptrFreshWt % pclineFreshWt             
+    ptrFreshWt => ptrFreshWt % pFreshWt                       
+  End Do
+
+  Nullify(ptrFreshWt, headFreshWt, tailFreshWt)
+  Close(nf)
+End Subroutine ListtofileFW
+
+!end Alwin Hopf
+!------------------------------------------------------------------------------
 
    Subroutine ListtofileSW(nlayers)
       Integer          :: nf, ErrNum, length, nlayers, i, nl       
