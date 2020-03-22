@@ -94,9 +94,11 @@ C=======================================================================
             LAST_DAY = 0
       End IF
 
-      If ((page >= xmpage).AND.(HARV==1).AND.(WTSD==0))then
+      !If ((page >= xmpage).AND.(HARV==1).AND.(WTSD==0))then
+      If ((page >= xmpage)AND.(WTSD==0))then
             HARVESTED = 1
       Else
+            HARVESTED = 0
       End IF
       !Alwin Hopf - end
       
