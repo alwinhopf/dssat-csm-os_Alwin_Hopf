@@ -5,6 +5,7 @@ C  Output of fruit cohort data.
 C-----------------------------------------------------------------------
 C  REVISION HISTORY
 C  09/01/2019 Written by AH, KB
+C  03/22/2020 included "Multihar" to have harvest indicator in output file
 C-----------------------------------------------------------------------
 !     Called from: PODS
 !     Calls:       None
@@ -18,11 +19,14 @@ C=======================================================================
       USE ModuleDefs     !Definitions of constructed variable types, 
                          ! which contain control information, soil
                          ! parameters, hourly weather data.
+      !Alwin Hopf - for cohort output
+      USE Multihar
+      !Alwin Hopf - end
       IMPLICIT NONE
       SAVE
 
 
-      INTEGER DYNAMIC, I, J
+      INTEGER DYNAMIC, I, J, LAST_DAY, HARVESTED
       INTEGER DAS, YRDOY, YRPLT, DAP, DOY, YEAR, TIMDIF, NPP, NR2TIM
       REAL PAGE, WTSD, WTSHE
       REAL SDNO, SHELN
@@ -81,10 +85,24 @@ C=======================================================================
        !DAS       Day after start of simulation
        !NPP       Cohort number used as index in loops 
        !
+
+       !Alwin Hopf - indicator for las tday of fruit cohort.
+       !if Last_Day = 1, means that next day this fruit will be gone 
+      If ((page >= xmpage).AND.(HARV_AH==1).AND.(WTSD>0))then
+            LAST_DAY = 1
+      Else
+            LAST_DAY = 0
+      End IF
+
+      If ((page >= xmpage).AND.(HARV==1).AND.(WTSD==0))then
+            HARVESTED = 1
+      Else
+      End IF
+      !Alwin Hopf - end
       
       IF (NPP .EQ. 1) THEN
       WRITE (LUN,120)
-  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE   WTSD   WTSHE    NR2TIM')
+  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE    WTSD   WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
       ENDIF
 
        !
@@ -96,8 +114,18 @@ C=======================================================================
 !  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE   WTSD   WTSHE    DAS')
 
       WRITE (LUN,300) YEAR, DOY, DAP, NPP, PAGE, WTSD, WTSHE, 
-     &                        NR2TIM
-  300 FORMAT(1X,I4,1X,I3.2,I6,1X,I4,1X,F6.3,1X,F6.3,1X,F6.3,1X,I4)
+     &                        NR2TIM, HARV_AH, HARVESTED, Last_Day
+  300 FORMAT(1X,
+     &I4,1X, !YEAR
+     &I3.2,I6,1X, !DOY and DAP
+     &I4,2X, !NPP
+     &F6.3,1X, !PAGE
+     &F6.3,1X, !WTSD
+     &F6.3,1X, !WTSHE
+     &I4,1X, !NR2TIM
+     &I4,4X, !HARV_AH
+     &I4,6X, !HARVESTED
+     &I4) !Last_Day
    
       RETURN
 
