@@ -50,6 +50,7 @@ Storage.OUT        Forage storage organ characteristics daily output
 !Daily csv format files:
 plantgro.csv       Daily plant growth output file in CSV format
 freshwt.csv        Daily fresh weight output file in CSV format
+cohort.csv         Daily fruit cohort output file in CSV format
 plantn.csv         Daily plant nitrogen output file in CSV format
 evaluate.csv       Evaluation output file (simulated vs. measured)
 plantc.csv         Daily plant carbon output file in CSV format

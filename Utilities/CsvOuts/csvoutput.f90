@@ -68,6 +68,13 @@ Character (:), Pointer :: vpCsvlineFreshWt
 Integer :: vlngthFreshWt
 !Alwin Hopf - end
 !--------------------------------------------------------------------
+!Alwin Hopf - Cohort CSV Output
+! for Cohort
+Character(:), allocatable, Target :: vCsvlineCohort
+Character (:), Pointer :: vpCsvlineCohort
+Integer :: vlngthCohort
+!Alwin Hopf - end
+!--------------------------------------------------------------------
 ! for PlantGr2.out
 Character(:), allocatable, Target :: vCsvlinePlGr2
 Character (:), Pointer :: vpCsvlinePlGr2
@@ -333,6 +340,7 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    
    return
 end Subroutine CsvOut_crgro
+
 !Alwin Hopf freshwt.csv output CRGRO
 Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, FPWAD, PDMCD,&
    AFPWD, ADPWD, PAGED, RTFPW, HARV, RTDPW, HARV_AH, Csvline, pCsvline, lngth) 
@@ -351,51 +359,78 @@ Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, FPWAD, PDMCD,&
 !   INTEGER,Intent(in)      :: ON         ! Option number (sequence runs)  #
 !   INTEGER,Intent(in)      :: CN         ! Crop component (multicrop)     #
    !Real,Intent(IN) :: VSTAGE, XLAI, WTLF, STMWT, SDWT, RTWT, TOPWT, SEEDNO   
- !  Integer,Intent(IN) :: N_LYR
- !  Real, Dimension(N_LYR), Intent(IN) :: RLV 
+   !Integer,Intent(IN) :: N_LYR
+   !Real, Dimension(N_LYR), Intent(IN) :: RLV 
 
-   Character(Len = 900) :: tmp 
+   Character(Len = 250) :: tmp 
    Character(Len = 200) :: tmp1  
-   Character(Len = 20)  :: fmt 
+   !Character(Len = 20)  :: fmt 
 
 !  Recalculated vars
    Integer :: cFPWAD, cRTFPW, cRTDPW
 !  Recalculation
-   cFPWAD = NINT(FPWAD*10.)
+   cFPWAD = NINT(FPWAD*10.0)
    cRTFPW = NINT(RTFPW * 10.0)
-   cRTDPW = NINT(RTDPW*10.)
+   cRTDPW = NINT(RTDPW*10.0)
   
-!  End of vars
-!Alwin Hopf - end   
-          
-!  Recalculation
-   !cWTLF1 = NINT(WTLF * 10.0)
-
-   
-   ! Unformatted string output
-   !Write(tmp,'(42(g0,","))') YEAR, DOY, DAS, DAP, cFPWAD, PDMCD, &
-   !AFPWD, ADPWD, PAGED, cRTFPW, HARV, cRTDPW, HARV_AH, Csvline, pCsvline, lngth
-   
    Write(tmp,'(13(g0,","))') YEAR, DOY, DAS, DAP, cFPWAD, PDMCD, & 
    AFPWD, ADPWD, PAGED, cRTFPW, HARV, cRTDPW, HARV_AH
-
-   !Write(fmt,'(I2)') N_LYR - 1
-   fmt = '('//Trim(Adjustl(fmt))//'(g0,","),g0)'
-   fmt = Trim(Adjustl(fmt))
-   
-   !Write(tmp1,fmt) (RLV(i), i = 1, N_LYR)  
    
      
    tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
-   
+
    lngth = Len(Trim(Adjustl(tmp)))
    size = lngth
    Allocate(Character(Len = size)::Csvline)
    Csvline = Trim(Adjustl(tmp))
-   pCsvline => Csvline
    
    return
 end Subroutine CsvOut_FreshWt
+!Alwin Hopf End
+
+!Alwin Hopf cohort.csv output CRGRO
+Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, WTSD, &
+   WTSHE, NR2TIM, Csvline, pCsvline, lngth) 
+
+!  Input vars
+!   Character(8),Intent(IN):: EXCODE    
+   Integer, Intent(IN) :: YEAR, DOY, DAP, NPP   
+   Real,Intent(IN) :: PAGE, WTSD, WTSHE, NR2TIM
+
+   Integer :: i, size
+   Character(:), allocatable, Target, Intent(Out) :: Csvline
+   Character(:), Pointer, Intent(Out) :: pCsvline
+   Integer, Intent(Out) :: lngth
+!   INTEGER,Intent(in)      :: SN         ! Sequence number,crop rotation  #
+!   INTEGER,Intent(in)      :: ON         ! Option number (sequence runs)  #
+!   INTEGER,Intent(in)      :: CN         ! Crop component (multicrop)     #
+   !Real,Intent(IN) :: VSTAGE, XLAI, WTLF, STMWT, SDWT, RTWT, TOPWT, SEEDNO   
+   !Integer,Intent(IN) :: N_LYR
+   !Real, Dimension(N_LYR), Intent(IN) :: RLV 
+
+   Character(Len = 250) :: tmp 
+   Character(Len = 200) :: tmp1  
+   !Character(Len = 20)  :: fmt 
+
+!  Recalculated vars
+   !Integer :: cFPWAD, cRTFPW, cRTDPW
+!  Recalculation
+   !cFPWAD = NINT(FPWAD*10.0)
+   !cRTFPW = NINT(RTFPW * 10.0)
+   !cRTDPW = NINT(RTDPW*10.0)
+  
+   Write(tmp,'(8(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
+   WTSHE, NR2TIM
+     
+   tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
+
+   lngth = Len(Trim(Adjustl(tmp)))
+   size = lngth
+   Allocate(Character(Len = size)::Csvline)
+   Csvline = Trim(Adjustl(tmp))
+   
+   return
+end Subroutine CsvOut_Cohort
 !Alwin Hopf End
 
 !---------------------------------------------------------------------------------
@@ -1997,6 +2032,7 @@ Subroutine CsvOutputs(CropModel, numelem, nlayers)
 
          Call ListtofileSW(nlayers)         ! SoilWat.csv
          Call ListtofileFW                  ! FreshWt.csv
+         Call ListtofileCohort              ! cohort.csv
          Call ListtofileTemp(nlayers)       ! SoilTemp.csv
          Call ListtofileET(nlayers)         ! et.csv
          Call ListtoFileSoilNi(nlayers)     ! SoilNi.csv

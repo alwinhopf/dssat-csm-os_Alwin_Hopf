@@ -174,7 +174,8 @@ Character(Len=6),  Dimension(40) :: csvOLAP    !Labels
     Type (lin_valueWth2), Pointer :: ptrWth2       
     
     Integer :: istatWth2
-    !
+
+    !for FreshWt
     Type :: lin_valueFreshWt
     Character(:), Allocatable :: pclineFreshWt
     Type (lin_valueFreshWt), Pointer :: pFreshWt
@@ -185,6 +186,20 @@ Character(Len=6),  Dimension(40) :: csvOLAP    !Labels
     Type (lin_valueFreshWt), Pointer :: ptrFreshWt       
  
     Integer :: istatFreshWt
+
+    !###########
+    !for Cohort
+
+    Type :: lin_valueCohort
+    Character(:), Allocatable :: pclineCohort
+    Type (lin_valueCohort), Pointer :: pCohort
+    End Type
+
+    Type (lin_valueCohort), Pointer :: headCohort    
+    Type (lin_valueCohort), Pointer :: tailCohort     
+    Type (lin_valueCohort), Pointer :: ptrCohort      
+ 
+    Integer :: istatCohort
 !Alwin Hopf - end                              
 !------------------------------------------------------------------------------
 !  for PlantGr2
@@ -736,7 +751,7 @@ Contains
   End If
 
 End Subroutine LinklstWth2
-!
+!Fresh Weight
 Subroutine LinklstFreshWt(ptxtlineFreshWt)
 
   Character(:), Allocatable :: ptxtlineFreshWt           
@@ -762,6 +777,32 @@ Subroutine LinklstFreshWt(ptxtlineFreshWt)
   End If
 
 End Subroutine LinklstFreshWt
+!Cohort
+Subroutine LinklstCohort(ptxtlineCohort)
+
+  Character(:), Allocatable :: ptxtlineCohort           
+      
+  If(.Not. Associated(headCohort)) Then        
+    Allocate(headCohort, Stat=istatCohort)        
+    If(istatCohort==0) Then                    
+      tailCohort => headCohort                    
+      Nullify(tailCohort%pCohort)                 
+      tailCohort%pclineCohort = ptxtlineCohort    
+    Else
+      ! Error message
+    End If
+  Else
+    Allocate(tailCohort%pCohort, Stat=istatCohort)      
+    If(istatCohort==0) Then                       
+      tailCohort=> tailCohort%pCohort                 
+      Nullify(tailCohort%pCohort)                    
+      tailCohort%pclineCohort = ptxtlineCohort        
+    Else
+    ! Error message
+    End If
+  End If
+
+End Subroutine LinklstCohort
 !Alwin Hopf - end
 !------------------------------------------------------------------------------
  Subroutine LinklstPlGr2(ptxtlinePlGr2)
@@ -1029,6 +1070,48 @@ End Subroutine ListtofileFW
 
 !end Alwin Hopf
 !------------------------------------------------------------------------------
+  !------------------------------------------------------------------------------
+  !Alwin Hopf - add cohort.csv
+  !------------------------------------------------------------------------------
+Subroutine ListtofileCohort
+  Integer          :: nf, ErrNum, length       
+  Character(Len=12):: fn         
+  Character(:),Allocatable :: Header
+  
+  If(.Not. Associated(headCohort)) Return
+  
+length= Len('YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+//'HARV_AH') 
+
+  Allocate(character(LEN=length) :: Header)
+
+Header = 'YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+//'HARV_AH'
+
+
+  fn = 'cohort.csv'
+  Call GETLUN (fn,nf)
+
+  Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE', &
+     Action='Write', IOSTAT = ErrNum)
+    
+  Write(nf,'(A)')Header
+  Deallocate(Header)
+
+  ptrCohort => headCohort
+  Do
+    If(.Not. Associated(ptrCohort)) Exit              
+    Write(nf,'(A)') ptrCohort % pclineCohort            
+    ptrCohort => ptrCohort % pCohort                       
+  End Do
+
+  Nullify(ptrCohort, headCohort, tailCohort)
+  Close(nf)
+End Subroutine ListtofileCohort
+
+!end Alwin Hopf
+!------------------------------------------------------------------------------
+
 
    Subroutine ListtofileSW(nlayers)
       Integer          :: nf, ErrNum, length, nlayers, i, nl       
