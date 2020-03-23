@@ -56,13 +56,6 @@ Integer :: vlngthWth
 !--------------------------------------------------------------------
 !Alwin Hopf - Fresh Weight CSV Output
 ! for FreshWt
-Character(:), allocatable, Target :: vCsvlineWth2
-Character (:), Pointer :: vpCsvlineWth2
-Integer :: vlngthWth2
-!Alwin Hopf - end
-!--------------------------------------------------------------------
-!Alwin Hopf - Fresh Weight CSV Output
-! for FreshWt
 Character(:), allocatable, Target :: vCsvlineFreshWt
 Character (:), Pointer :: vpCsvlineFreshWt
 Integer :: vlngthFreshWt

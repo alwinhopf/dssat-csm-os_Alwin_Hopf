@@ -991,43 +991,6 @@ End Subroutine LinklstCohort
       Close(nf)
   End Subroutine ListtofilePlantgrCrGro
 
-  !Alwin Hopf - add FreshWt.OUT
-  !------------------------------------------------------------------------------
-  Subroutine ListtofileFW_old
-    Integer          :: nf, ErrNum, length       
-    Character(Len=12):: fn         
-    Character(:),Allocatable :: Header
-    
-    If(.Not. Associated(headWth2)) Return
-    
-length= Len('RUN,EXP,TR,RN,REP,YEAR,DOY,DAS,PRED,DAYLD,TWLD,SRAD,' &
-//'PARD,CLDD,TMXD,TMND,TAVD,TDYD,TDWD,TGAD,TGRD,WDSD,CO2D,VPDF,VPD') 
-
-    Allocate(character(LEN=length) :: Header)
-
-Header = 'RUN,EXP,TR,RN,REP,YEAR,DOY,DAS,PRED,DAYLD,TWLD,SRAD,' &
-//'PARD,CLDD,TMXD,TMND,TAVD,TDYD,TDWD,TGAD,TGRD,WDSD,CO2D,VPDF,VPD' 
-
-    fn = 'weather2.csv'
-    Call GETLUN (fn,nf)
- 
-    Open (UNIT = nf, FILE = fn, FORM='FORMATTED', STATUS = 'REPLACE', &
-       Action='Write', IOSTAT = ErrNum)
-      
-    Write(nf,'(A)')Header
-    Deallocate(Header)
-
-    ptrWth2 => headWth2
-    Do
-      If(.Not. Associated(ptrWth2)) Exit              
-      Write(nf,'(A)') ptrWth2 % pclineWth2             
-      ptrWth2 => ptrWth2 % pWth2                       
-    End Do
-
-    Nullify(ptrWth2, headWth2, tailWth2)
-    Close(nf)
-End Subroutine ListtofileFW_old
-
 !end Alwin Hopf
   !------------------------------------------------------------------------------
   !Alwin Hopf - add FreshWt.OUT

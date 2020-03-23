@@ -12,8 +12,8 @@ C-----------------------------------------------------------------------
 C=======================================================================
 
 
-      SUBROUTINE COHORT(DAS,YRDOY, YRPLT,PAGE,WTSD,WTSHE,NPP,NR2TIM,
-     & SDNO,SHELN)
+      SUBROUTINE COHORT(DAS,YRDOY, YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
+     & NR2TIM,SDNO,SHELN)
 
 !-----------------------------------------------------------------------
       USE ModuleDefs     !Definitions of constructed variable types, 
@@ -27,7 +27,7 @@ C=======================================================================
 
 
       INTEGER DYNAMIC, I, J, LAST_DAY, HARVESTED
-      INTEGER DAS, YRDOY, YRPLT, DAP, DOY, YEAR, TIMDIF, NPP, NR2TIM
+      INTEGER DAS, YRDOY, YRPLT, DAP, DOY, YEAR, TIMDIF, NPP, NR2TIM, NAGE
       REAL PAGE, WTSD, WTSHE
       REAL SDNO, SHELN
 
@@ -63,7 +63,7 @@ C=======================================================================
       ELSE
         OPEN (UNIT = LUN, FILE = Filename, STATUS = 'NEW',
      &    IOSTAT = ERRNUM)
-        WRITE(LUN,'("*Filename OUTPUT FILE")')
+        !WRITE(LUN,'("*Filename OUTPUT FILE")')
       ENDIF
 
       !For sequenced run, use replicate
@@ -88,23 +88,23 @@ C=======================================================================
 
        !Alwin Hopf - indicator for las tday of fruit cohort.
        !if Last_Day = 1, means that next day this fruit will be gone 
-      If ((page >= xmpage).AND.(HARV_AH==1).AND.(WTSD>0))then
+      If ((page >= xmpage).AND.(HARV_AH==1).AND.(WTSD>0)) THEN
             LAST_DAY = 1
       Else
             LAST_DAY = 0
       End IF
 
       !If ((page >= xmpage).AND.(HARV==1).AND.(WTSD==0))then
-      If ((page >= xmpage)AND.(WTSD==0))then
-            HARVESTED = 1
+      If ((page >= xmpage).AND.(WTSD==0)) THEN
+            HARVESTED = 1            !HARVESTED = DAP 
       Else
             HARVESTED = 0
       End IF
       !Alwin Hopf - end
       
-      IF (NPP .EQ. 1) THEN
+      IF (NR2TIM .EQ. 1) THEN
       WRITE (LUN,120)
-  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE    WTSD   WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
+  120 FORMAT('YEAR  DOY  DAP  NPP   PAGE  NAGE  WTSD  WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
       ENDIF
 
        !
@@ -115,13 +115,14 @@ C=======================================================================
 !             WRITE (LUN,120)
 !  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE   WTSD   WTSHE    DAS')
 
-      WRITE (LUN,300) YEAR, DOY, DAP, NPP, PAGE, WTSD, WTSHE, 
+      WRITE (LUN,300) YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
      &                        NR2TIM, HARV_AH, HARVESTED, Last_Day
-  300 FORMAT(1X,
-     &I4,1X, !YEAR
-     &I3.2,I6,1X, !DOY and DAP
-     &I4,2X, !NPP
-     &F6.3,1X, !PAGE
+  300 FORMAT(
+     &I4,2X, !YEAR
+     &I3.2,I6, !DOY DAP
+     &I4,1X, !NPP
+     &F6.2,X, !PAGE
+     &I4,1X, !NAGE
      &F6.3,1X, !WTSD
      &F6.3,1X, !WTSHE
      &I4,1X, !NR2TIM
