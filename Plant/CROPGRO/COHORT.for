@@ -22,6 +22,7 @@ C=======================================================================
       !Alwin Hopf - for cohort output
       USE Multihar
       !Alwin Hopf - end
+      USE CsvOutput !for csv output
       IMPLICIT NONE
       SAVE
 
@@ -130,6 +131,17 @@ C=======================================================================
      &I4,6X, !HARVESTED
      &I4) !Last_Day
    
+
+      !    Alwin Hopf - CSV output corresponding to Cohort.OUT
+      IF (FMOPT == 'C') THEN    
+      CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
+     &NR2TIM, HARV_AH, HARVESTED, Last_Day,  
+     &vCsvlineCohort, vpCsvlineCohort, vlngthCohort)
+ 
+      CALL LinklstCohort(vCsvlineCohort)
+      END IF
+      !Alwin Hopf - end
+
       RETURN
 
 

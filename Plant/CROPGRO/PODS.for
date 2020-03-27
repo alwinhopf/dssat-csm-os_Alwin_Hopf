@@ -26,6 +26,7 @@
 !called from CROPGRO.for
 !  Calls:        PODCOMP
 !                ERROR, FIND, IGNORE
+!                COHORT
 !=======================================================================
 
       SUBROUTINE PODS(DYNAMIC,  

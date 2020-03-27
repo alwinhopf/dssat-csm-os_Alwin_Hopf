@@ -382,13 +382,15 @@ end Subroutine CsvOut_FreshWt
 !Alwin Hopf End
 
 !Alwin Hopf cohort.csv output CRGRO
-Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, WTSD, &
-   WTSHE, NR2TIM, Csvline, pCsvline, lngth) 
+Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
+   WTSD, WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day, &
+   Csvline, pCsvline, lngth) 
 
 !  Input vars
 !   Character(8),Intent(IN):: EXCODE    
-   Integer, Intent(IN) :: YEAR, DOY, DAP, NPP   
-   Real,Intent(IN) :: PAGE, WTSD, WTSHE, NR2TIM
+   Integer, Intent(IN) :: YEAR, DOY, DAP, NPP, HARV_AH, HARVESTED, Last_Day
+   Integer, Intent(IN) :: NAGE, NR2TIM
+   Real,Intent(IN) :: PAGE, WTSD, WTSHE
 
    Integer :: i, size
    Character(:), allocatable, Target, Intent(Out) :: Csvline
@@ -412,8 +414,8 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, WTSD, &
    !cRTFPW = NINT(RTFPW * 10.0)
    !cRTDPW = NINT(RTDPW*10.0)
   
-   Write(tmp,'(8(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
-   WTSHE, NR2TIM
+   Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
+   WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
      
    tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
 
