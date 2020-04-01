@@ -414,9 +414,11 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !cRTFPW = NINT(RTFPW * 10.0)
    !cRTDPW = NINT(RTDPW*10.0)
   
+   !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
+   !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
    Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
-     
+   
    tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
 
    lngth = Len(Trim(Adjustl(tmp)))
