@@ -192,7 +192,7 @@
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
           CASE ('SR')       ! Strawberry
             !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  !original
-            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 33.  !changed Alwin Hopf. Fresh Weight was about 3 times too high
+            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 34.  !changed Alwin Hopf. Ratio Dry:Fresh Weight was about 3 times too high
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)
@@ -368,7 +368,7 @@
                SDNO(NPP) = 0
                !AH: correction multiharvest. Shell number should not be resetted to 0
                !otherwise total pod number is not correct
-               SHELN(NPP)= 0
+               !SHELN(NPP)= 0
                WTSD(NPP) = 0.0
                WTSHE(NPP)= 0.0  
             end if
