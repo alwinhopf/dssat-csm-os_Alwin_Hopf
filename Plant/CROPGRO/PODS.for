@@ -579,9 +579,17 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
             PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
             ADDSHL = 0.0
             SUPDAY = 1.0
+            !new alwin
+            SELECT CASE (CROP)
+            CASE ('SR')       ! Strawberry
+              LNGPEG = 3.0
+            END SELECT
+            !
             IF (PAGE .LE. LNGSH) THEN
               IF (SHELN(NPP) .GE. 0.001 .AND. GRRAT1 .GE. 0.001) THEN
                 IF (PAGE .GE. LNGPEG) THEN
+                  ! LNGPEG    Time between start of peg (full flower) and shell formation 
+                  !             (for peanuts only).  Defines slow growth period.
                   ADDSHL = MIN(PGLEFT/AGRSH1,GRRAT1 * SHELN(NPP),
      &              NLEFT/(FNINSH*CNSTRES**0.5))
                   SUPDAY = MIN((PGLEFT/AGRSH1)/(GRRAT1*SHELN(NPP)),
@@ -590,6 +598,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
                   IF (SUPDAY .GE. 1.0) SUPDAY = 1.0
                 ELSE
                   IF (SHLAG .LT. 0.001) SHLAG = 0.001
+                  ! GRRAT1    Maximum growth per individual shell (g / shell / d)
                   ADDSHL = MIN(PGLEFT/AGRSH1 ,GRRAT1*SHELN(NPP)*SHLAG,
      &                     NLEFT/(FNINSH*CNSTRES**0.5))
                   SUPDAY = MIN(

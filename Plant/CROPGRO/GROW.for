@@ -534,6 +534,10 @@ C     Net shell growth rate
 C-----------------------------------------------------------------------
       WSHIDT = MIN(WSHIDT,SHELWT)     ! pest damage to shells
       WSHDOT = WSHDTN - WSHIDT - WTABRT - NRUSSH / 0.16 - CRUSSH
+
+            !      VSH
+      If (HARV==1) WSHDOT = WSHDOT - RTDSH
+
       ShelMob = (NRUSSH / 0.16 + CRUSSH) * 10.    !kg/ha
 
 C-----------------------------------------------------------------------
@@ -541,6 +545,10 @@ C     Net seed growth rate
 C-----------------------------------------------------------------------
       SWIDOT = MIN(SWIDOT,SDWT)       ! pest damage to seeds
       WSDDOT = WSDDTN - SWIDOT        
+
+            !      VSH
+      If (HARV==1) WSDDOT = WSDDOT - RTDSD  
+
       WTLSD  = WTLSD + WSDDOT * POTLIP    !lipids in seed
       WTCSD  = WTCSD + WSDDOT * POTCAR    !carbohydrates in seed
 
