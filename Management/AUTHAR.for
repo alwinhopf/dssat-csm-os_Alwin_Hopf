@@ -41,11 +41,13 @@ C=======================================================================
       INTEGER MULTI, TIMDIF, YRPLT, YRDIF, YRSIM
       INTEGER YRDOY, MDATE, DAP, NOUTDO
       INTEGER DYNAMIC, RUN
+      !     VSH
       INTEGER HDATE(35), HSTG(35) 
       INTEGER STGDOY(20) 
 
       REAL AVGSW, CUMSW, DTRY, SWPLTD
       REAL SWPLTH, SWPLTL, XDEP, XDEPL
+      !     VSH
       REAL HPC(35), HBPC(35)
       REAL HARVFRAC(2)
       REAL DLAYR(NL), DUL(NL), LL(NL), SW(NL)
@@ -310,6 +312,7 @@ C-----------------------------------------------------------------------
       
       IMPLICIT NONE
 
+      !     VSH
       CHARACTER*5 HCOM(35), HSIZ(35)
       CHARACTER*6 SECTION, ERRKEY 
       PARAMETER (ERRKEY = 'IPAHAR')
@@ -317,6 +320,7 @@ C-----------------------------------------------------------------------
       CHARACTER*90 CHAR
 
       INTEGER ERRNUM
+      !     VSH
       INTEGER HDLAY, HLATE, I, NHAR, HDATE(35), HSTG(35)
       INTEGER LINC, LNUM, FOUND
       INTEGER LUNIO

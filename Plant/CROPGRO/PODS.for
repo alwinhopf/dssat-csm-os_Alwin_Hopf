@@ -45,6 +45,10 @@
 !-----------------------------------------------------------------------
       USE ModuleDefs
       USE ModuleData
+
+      ! VSH
+      !Use MultiHar
+
       IMPLICIT NONE
       SAVE
 
@@ -580,10 +584,10 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
             ADDSHL = 0.0
             SUPDAY = 1.0
             !new alwin
-            SELECT CASE (CROP)
-            CASE ('SR')       ! Strawberry
-              LNGPEG = 3.0
-            END SELECT
+            !SELECT CASE (CROP)
+            !CASE ('SR')       ! Strawberry
+            !  LNGPEG = 3.0
+            !END SELECT
             !
             IF (PAGE .LE. LNGSH) THEN
               IF (SHELN(NPP) .GE. 0.001 .AND. GRRAT1 .GE. 0.001) THEN
@@ -597,7 +601,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
      &              SWADD1)
                   IF (SUPDAY .GE. 1.0) SUPDAY = 1.0
                 ELSE
-                  IF (SHLAG .LT. 0.001) SHLAG = 0.001
+                  IF (SHLAG .LT. 0.001) SHLAG = 0.001 !set SHLAG to 0.001 if below 0.001
                   ! GRRAT1    Maximum growth per individual shell (g / shell / d)
                   ADDSHL = MIN(PGLEFT/AGRSH1 ,GRRAT1*SHELN(NPP)*SHLAG,
      &                     NLEFT/(FNINSH*CNSTRES**0.5))
