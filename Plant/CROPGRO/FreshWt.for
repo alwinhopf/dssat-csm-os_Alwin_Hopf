@@ -123,20 +123,9 @@
 !  230 FORMAT('@YEAR DOY   DAS   DAP',
 !     &    '   FPWAD   PDMCD   AFPWD',
 !     &    '   ADPWD   PAGED')
-!Alwin Multiharvest Output
-!  230 FORMAT('@YEAR DOY   DAS   DAP',
-!     &    '   FPWAD   PDMCD   AFPWD',
-!     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
-!Alwin Multiharvest Output End
-! Additional vars print
-
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
-     &    '   ADPWD   PAGED   HARV   P#AD     G#AD   TWTSH    TDSW', 
-     &    '    TDPW  RPODNO  RSEEDN   RTDSH   RTDSD   RTDPW',
-     &    '   RUDPW   RTFPW      HRVF     CHRVF'   
-     &    '    HRVD   CHRVD ARFPW ARDPW ARDSD ',
-     &    'PRDSH PRDSD ARDSP ARSNP   HRSN   HRPN  HRDSD  HRDSH  NR2TIM')
+     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
      
   231 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
@@ -170,6 +159,26 @@
       HRPN = 0.0
       HRDSD = 0.0
       HRDSH = 0.0
+
+!     VSH initialization at the begining
+!      RTDSD   = 0.0 
+!      RTDSH   = 0.0
+!      RTFPW   = 0.0
+!      RTDPW   = 0.0
+!      RTDSW = 0.0 
+!      RPODNO  = 0.0
+!      RSEEDNO = 0.0
+
+
+            !alwin new
+      !RTFPW =  0
+      !RTDPW =   0
+      !RTDSD =   0
+      !RTDSH =   0
+
+      !RPODNO =  0
+      !RSEEDNO =  0
+      !alwin new end 
 
 !***********************************************************************
 !***********************************************************************
@@ -386,8 +395,8 @@
 !     DAS = MAX(0,TIMDIF(YRSIM,YRDOY))
       DAS = CONTROL % DAS
         
-!      RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort
-!      RTDSH = RTDSH + WTSHE(NPP) !shell mass of mature fruits - wtshe = shell mass for cohort
+      RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort
+      RTDSH = RTDSH + WTSHE(NPP) !shell mass of mature fruits - wtshe = shell mass for cohort
 !     Daily output every FROP days
       IF (MOD(DAS,CONTROL%FROP) == 0) THEN  
 
@@ -407,28 +416,16 @@
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
- 
+
           CASE ('SR')       ! Strawberry
-            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, HARV, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
-     &      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10.,  
-     &      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0,
-     &      HRVD*10.0, CHRVD*10.0, AvgRFPW, 
-     &      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, 
-     &      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
-      !    CASE ('SR')       ! Strawberry
       !          VSH added additional outputs
       !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
       !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
       !     &      PodAge
-      !Alwin Hopf Output old
-      !     WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-      !&      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-      !&      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
-      !Alwin Hopf Output old end
-      !
-      !    
+                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
+     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
+    
 !          VSH added additional outputs
  !              CASE ('SR')       ! Tomato
  !           WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
@@ -451,14 +448,8 @@
 !        VSH added additional formats
 ! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
 !     &    I8,F8.3,F8.1,F8.2,F8.1)
-!Alwin Hopf old
-! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-!     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
-!Alwin Hopf old end
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-     &    I8,F8.3,F8.1,F8.2,F8.1,I7,F7.2,F9.2,3(F8.1),7(F8.2),
-     &    2(F10.2),2(F8.2),2(F6.1),
-     &    F6.1, 2(F6.1), 2(F6.1), 2(F7.1), 2(F7.1), I8)
+     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
      
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,
@@ -483,7 +474,7 @@
                      RTDSH   = 0.0
                      RPODNO  = 0.0
                      RSEEDNO = 0.0
-      end if
+                 end if
 
 !       VSH  removing cohorts when harvesting
 !        Do NPP = 1, NR2TIM + 1
