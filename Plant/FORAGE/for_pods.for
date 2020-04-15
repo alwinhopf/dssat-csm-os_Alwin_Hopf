@@ -1169,7 +1169,7 @@ C=======================================================================
 !             (g[N] / g[shell])
 ! FNPDT(I)  Critical values of temperature for function to reduce pod 
 !             addition and seed setting rates under non-optimal temperatures
-!             (ï¿½C)
+!             (°C)
 ! GDMSD     Seed growth demand based on temperature and photoperiod
 !             (g[seed] / m2 / d)
 ! GRRAT1    Maximum growth per individual shell (g / shell / d)
@@ -1317,7 +1317,7 @@ C=======================================================================
 !             reproductive development temperature function
 !             (photo-thermal days / day)
 ! TEMPOD    Factor for modifying pod setting based on temperature 
-! TGRO(I)   Hourly air temperature (ï¿½C)
+! TGRO(I)   Hourly air temperature (°C)
 ! THETA     Curvature of rectangular hyperbola to limit seed growth rate to 
 !             hold minimum seed N concentration. 
 ! THRESH    The maximum ratio mass of seed to mass of seed plus shell at 

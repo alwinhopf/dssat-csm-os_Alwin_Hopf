@@ -52,10 +52,7 @@
       REAL, DIMENSION(NCOHORTS) :: DMC, DryPodWt, FreshPodWt, PHTIM
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
       
-      ! VSH
-      Real :: TWTSH
-      Real :: AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP
-      Real :: HRSN, HRDSD, HRDSH 
+      
 
       LOGICAL FEXIST
 
@@ -143,31 +140,13 @@
       TFPW   = 0.0
       
 !     VSH initialization at the begining
-      TWTSH  = 0.0
       RTDSD   = 0.0 
       RTDSH   = 0.0
       RTFPW   = 0.0
       RTDPW   = 0.0
+!      RTDSW = 0.0 
       RPODNO  = 0.0
       RSEEDNO = 0.0
-
-      HRVD = 0.0
-      HRVF = 0.0
-      CHRVD = 0.0
-      CHRVF = 0.0
-      HRSN = 0.0
-      HRPN = 0.0
-      HRDSD = 0.0
-      HRDSH = 0.0
-
-!     VSH initialization at the begining
-!      RTDSD   = 0.0 
-!      RTDSH   = 0.0
-!      RTFPW   = 0.0
-!      RTDPW   = 0.0
-!      RTDSW = 0.0 
-!      RPODNO  = 0.0
-!      RSEEDNO = 0.0
 
 
             !alwin new
@@ -195,16 +174,7 @@
       TFPW   = 0.0
       TDPW   = 0.0
       TDSW   = 0.0
-    
-!      VSH initialization at the begining
-      TWTSH = 0.0
-      RTDSD   = 0.0 
-      RTDSH   = 0.0
-      RTFPW   = 0.0
-      RTDPW   = 0.0
-      RPODNO  = 0.0
-      RSEEDNO = 0.0
-
+      
       DO I = 1, 7
         CLASS(I) = 0.0
       ENDDO
@@ -221,7 +191,8 @@
           CASE ('TM')       ! Tomato
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
           CASE ('SR')       ! Strawberry
-            DMC(NPP) = 0.16
+            !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  !original
+            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 34.  !changed Alwin Hopf. Ratio Dry:Fresh Weight was about 3 times too high
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)
@@ -270,9 +241,6 @@
         TDPW = TDPW + WTSD(NPP) + WTSHE(NPP)
         TDSW = TDSW + WTSD(NPP)
 
-        ! VSH
-        TWTSH = TWTSH + WTSHE(NPP)
-
         PODNO = PODNO + SHELN(NPP)
         SEEDNO = SEEDNO + SDNO(NPP)
         
@@ -319,67 +287,6 @@
         ShelPC = 0.0
       ENDIF
 
-!     VSH
-      IF (RPODNO > 1.E-6) THEN
-        AvgRFPW = RTFPW / RPODNO
-        AvgRDPW = RTDPW / RPODNO
-        AvgRDSP = RTDSD / RPODNO
-        AvgRSNP = RSEEDNO / RPODNO
-      ELSE
-        AvgRFPW = 0.0
-        AvgRDPW = 0.0
-        AvgRDSP = 0.0
-        AvgRSNP = 0.0
-      ENDIF
-      IF (RSEEDNO > 1.E-6) THEN
-        AvgRDSD = 1000.0* RTDSD / RSEEDNO
-      ELSE
-        AvgRDSD = 0.0
-      ENDIF
-      IF (RTDPW > 1.E-6) THEN
-        PRDSH = 100.0* RTDSH / RTDPW
-        PRDSD = 100.0* RTDSD / RTDPW
-      ELSE
-        PRDSH = 0.0
-        PRDSD = 0.0
-      ENDIF
-
-!       VSH
-!       VSH  removing cohorts when harvesting
-        Do NPP = 1, NR2TIM + 1
-            PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-            if ((page >= xmpage).AND.(HARV==1))then 
-               SDNO(NPP) = 0
-               SHELN(NPP)= 0
-               WTSD(NPP) = 0.0
-               WTSHE(NPP)= 0.0  
-            end if
-        End do     
-
-!     VSH
-      if (HARV==1) Then
-         HRVD = RTDPW 
-         HRVF = RTFPW 
-         CHRVD = CHRVD + HRVD
-         CHRVF = CHRVF + HRVF
-         HRSN = RSEEDNO
-         HRPN = RPODNO
-         HRDSD = RTDSD
-         HRDSH = RTDSH
-      else
-         HRVD = 0.0
-         HRVF = 0.0
-!         RTDPW = 0
-         HRSN = 0.0
-         HRPN = 0.0
-         HRDSD = 0.0
-         HRDSH = 0.0
-      end if
-      RUDPW = TDPW - RTDPW
-
-      
-
-
 !***********************************************************************
 !***********************************************************************
 !     DAILY OUTPUT
@@ -425,17 +332,6 @@
                   WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
-    
-!          VSH added additional outputs
- !              CASE ('SR')       ! Tomato
- !           WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-!     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-!     &      PodAge, HARV, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
-!     &      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10.,  
-!     &      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0,
-!     &      HRVD*10.0, CHRVD*10.0, AvgRFPW, 
-!     &      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, 
-!     &      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
      
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
@@ -465,29 +361,18 @@
       END IF
       !Alwin Hopf - end
 
-      !VSH
-      if (HARV==1) Then 
-        !        empting baskets after harvesting  
-                     RTFPW   = 0.0
-                     RTDPW   = 0.0
-                     RTDSD   = 0.0 
-                     RTDSH   = 0.0
-                     RPODNO  = 0.0
-                     RSEEDNO = 0.0
-                 end if
-
 !       VSH  removing cohorts when harvesting
-!        Do NPP = 1, NR2TIM + 1
-!            PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-!            if ((page >= xmpage).AND.(HARV==1))then 
-!               SDNO(NPP) = 0
+        Do NPP = 1, NR2TIM + 1
+            PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
+            if ((page >= xmpage).AND.(HARV==1))then 
+               SDNO(NPP) = 0
                !AH: correction multiharvest. Shell number should not be resetted to 0
                !otherwise total pod number is not correct
                !SHELN(NPP)= 0
-!               WTSD(NPP) = 0.0
-!               WTSHE(NPP)= 0.0  
-!            end if
-!        End do     
+               WTSD(NPP) = 0.0
+               WTSHE(NPP)= 0.0  
+            end if
+        End do     
       
       ENDIF
 
