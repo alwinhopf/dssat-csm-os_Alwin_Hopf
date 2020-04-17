@@ -52,7 +52,11 @@
       REAL, DIMENSION(NCOHORTS) :: DMC, DryPodWt, FreshPodWt, PHTIM
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
       
-      
+      ! VSH
+      !new variables for FreshWt.out file 
+      Real :: TWTSH
+      Real :: AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP
+      Real :: HRSN, HRDSD, HRDSH 
 
       LOGICAL FEXIST
 
@@ -191,8 +195,9 @@
           CASE ('TM')       ! Tomato
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
           CASE ('SR')       ! Strawberry
-            !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  !original
-            DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 34.  !changed Alwin Hopf. Ratio Dry:Fresh Weight was about 3 times too high
+                        !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  !original
+            !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 34.  !changed Alwin Hopf. Ratio Dry:Fresh Weight was about 3 times too high
+            DMC(NPP) = 0.16 !fixed value for Strwawberry. From Code from Ken Boote / VSH
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)
@@ -287,6 +292,55 @@
         ShelPC = 0.0
       ENDIF
 
+!     VSH
+!     for new FreshWt.for output
+      IF (RPODNO > 1.E-6) THEN
+        AvgRFPW = RTFPW / RPODNO
+        AvgRDPW = RTDPW / RPODNO
+        AvgRDSP = RTDSD / RPODNO
+        AvgRSNP = RSEEDNO / RPODNO
+      ELSE
+        AvgRFPW = 0.0
+        AvgRDPW = 0.0
+        AvgRDSP = 0.0
+        AvgRSNP = 0.0
+      ENDIF
+      IF (RSEEDNO > 1.E-6) THEN
+        AvgRDSD = 1000.0* RTDSD / RSEEDNO
+      ELSE
+        AvgRDSD = 0.0
+      ENDIF
+      IF (RTDPW > 1.E-6) THEN
+        PRDSH = 100.0* RTDSH / RTDPW
+        PRDSD = 100.0* RTDSD / RTDPW
+      ELSE
+        PRDSH = 0.0
+        PRDSD = 0.0
+      ENDIF
+
+!     VSH
+! Alwin Hopf new
+      if (HARV==1) Then
+        HRVD = RTDPW 
+        HRVF = RTFPW 
+        CHRVD = CHRVD + HRVD
+        CHRVF = CHRVF + HRVF
+        HRSN = RSEEDNO
+        HRPN = RPODNO
+        HRDSD = RTDSD
+        HRDSH = RTDSH
+      else
+        HRVD = 0.0
+        HRVF = 0.0
+!         RTDPW = 0
+        HRSN = 0.0
+        HRPN = 0.0
+        HRDSD = 0.0
+        HRDSH = 0.0
+      end if
+      RUDPW = TDPW - RTDPW
+! Alwin Hopf new
+
 !***********************************************************************
 !***********************************************************************
 !     DAILY OUTPUT
@@ -324,14 +378,29 @@
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
 
-          CASE ('SR')       ! Strawberry
+!          CASE ('SR')       ! Strawberry
       !          VSH added additional outputs
       !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
       !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
       !     &      PodAge
-                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
+
+!            !old output - Alwin Hopf
+!                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
+!     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+!     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
+!            !old output - Alwin Hopf
+
+!           new Strawberry output - from DSSAT 4.6 files from VSH
+          CASE ('SR')       ! Strawberry
+            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
+     &      PodAge, HARV, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
+     &      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10.,  
+     &      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0,
+     &      HRVD*10.0, CHRVD*10.0, AvgRFPW, 
+     &      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, 
+     &      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
+!           new output end - from DSSAT 4.6 files from VSH
      
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
@@ -344,8 +413,16 @@
 !        VSH added additional formats
 ! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
 !     &    I8,F8.3,F8.1,F8.2,F8.1)
+
+! old FreshWt output
+! 1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
+!     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
+
+! Alwin Hopf / VSH - for FreshWt output
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
+     &    I8,F8.3,F8.1,F8.2,F8.1,I7,F7.2,F9.2,3(F8.1),7(F8.2),
+     &    2(F10.2),2(F8.2),2(F6.1),
+     &    F6.1, 2(F6.1), 2(F6.1), 2(F7.1), 2(F7.1), I8)
      
  2000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,

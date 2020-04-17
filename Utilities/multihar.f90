@@ -16,11 +16,31 @@ Implicit None
    
    Real    :: RTDSD 
    Real    :: RTDSH
+   !for FreshWt.for output
+   Real    :: HRPN, AvgRFPW, AvgRDPW
    
+   !Alwim Hopf - old
+!   Real    :: RTFPW
+!   Real    :: RTDPW  
+!   Integer :: RPODNO 
+!   Integer :: RSEEDNO
+!   Integer :: NPP0
+   !Alwim Hopf - old
+
+   !new format - changed Integer to Real. Otherwise error later on
    Real    :: RTFPW
    Real    :: RTDPW  
-   Integer :: RPODNO 
-   Integer :: RSEEDNO
+   Real    :: RPODNO 
+   Real    :: RSEEDNO
    Integer :: NPP0
+   !end
+
+   !for FreshWt.for output
+   Real :: HRVD   ! dry weight of harvested fruit
+   Real :: HRVF   ! harvest fresh weight of mature fruit 
+   Real :: DIFR
+   Real :: RUDPW
+   Real :: CHRVD   ! Cumulative dry weight of harvested fruit 
+   Real :: CHRVF   ! Cumulative fresh weight of harvested fruit 
      
 End Module MultiHar
