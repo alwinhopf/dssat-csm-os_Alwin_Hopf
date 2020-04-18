@@ -334,17 +334,44 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    return
 end Subroutine CsvOut_crgro
 
+
+
+!Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, FPWAD, PDMCD,&
+!   AFPWD, ADPWD, PAGED, RTFPW, HARV, RTDPW, HARV_AH, Csvline, pCsvline, lngth) 
+
+!call from other function - for variables
 !Alwin Hopf freshwt.csv output CRGRO
-Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, FPWAD, PDMCD,&
-   AFPWD, ADPWD, PAGED, RTFPW, HARV, RTDPW, HARV_AH, Csvline, pCsvline, lngth) 
+!      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, TFPW, AvgDMC,
+!     &AvgFPW, AvgDPW, PodAge, RTFPW, HARV, RTDPW, HARV_AH,  
+!     &vCsvlineFreshWt, vpCsvlineFreshWt, vlngthFreshWt)
+Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, & 
+   TFPW, AvgDMC, AvgFPW, AvgDPW, & 
+   PodAge, HARV, HARV_AH, PODNO, SEEDNO, TWTSH, TDSW,TDPW, &
+   RPODNO, RSEEDNO, RTDSH, RTDSD, RTDPW, &
+   RUDPW, RTFPW, HRVF, CHRVF, &
+   HRVD, CHRVD, AvgRFPW, &
+   AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
+   HRSN, HRPN, HRDSD, HRDSH, NR2TIM, &
+   Csvline, pCsvline, lngth)
+
 
 !  Input vars
 !   Character(8),Intent(IN):: EXCODE    
    Integer, Intent(IN) :: YEAR, DOY, DAS, DAP, HARV, HARV_AH   
-   Real,Intent(IN) :: FPWAD, PDMCD, AFPWD, ADPWD, PAGED, RTDPW
-   Real :: RTFPW
-
-   Integer :: i, size
+!   Real,Intent(IN) :: FPWAD, PDMCD, AFPWD, ADPWD, PAGED, RTDPW
+   Real,Intent(IN) :: RTDPW
+   Real,Intent(IN) :: PodAge, RPODNO, RSEEDNO, HRVF, CHRVF
+   !Real,Intent(IN) :: TFPW, AvgDMC, AvgRFPW, AvgFPW, AvgDPW
+   Real,Intent(IN) :: HRVD, CHRVD, AvgRFPW
+   Real :: RTFPW, RTDSH, RTDSD, RUDPW
+   Real :: PODNO, SEEDNO, TWTSH, TDSW,TDPW
+   Real :: AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP
+   !Real :: AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP
+   Real :: HRSN, HRPN, HRDSD, HRDSH
+   Real :: AvgDMC, AvgFPW, AvgDPW
+   Integer :: i, size, NR2TIM
+   Integer :: TFPW
+   !Integer :: AvgRSNP
    Character(:), allocatable, Target, Intent(Out) :: Csvline
    Character(:), Pointer, Intent(Out) :: pCsvline
    Integer, Intent(Out) :: lngth
@@ -362,14 +389,34 @@ Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, FPWAD, PDMCD,&
 !  Recalculated vars
    Integer :: cFPWAD, cRTFPW, cRTDPW
 !  Recalculation
-   cFPWAD = NINT(FPWAD*10.0)
+!   cFPWAD = NINT(FPWAD*10.0)
    cRTFPW = NINT(RTFPW * 10.0)
    cRTDPW = NINT(RTDPW*10.0)
   
-   Write(tmp,'(13(g0,","))') YEAR, DOY, DAS, DAP, cFPWAD, PDMCD, & 
-   AFPWD, ADPWD, PAGED, cRTFPW, HARV, cRTDPW, HARV_AH
+!   Write(tmp,'(13(g0,","))') YEAR, DOY, DAS, DAP, cFPWAD, PDMCD, & 
+!   AFPWD, ADPWD, PAGED, cRTFPW, HARV, cRTDPW, HARV_AH
    
-     
+!   Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP, & 
+!      TFPW, AvgDMC, AvgFPW, AvgDPW, PodAge, & 
+!      HARV, HARV_AH, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., &
+!      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10., &
+!      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0, &
+!      HRVD*10.0, CHRVD*10.0, AvgRFPW, &
+!      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
+!      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
+
+   Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP, & 
+      TFPW, AvgDMC, AvgFPW, AvgDPW, PodAge, & 
+      HARV, HARV_AH, PODNO, SEEDNO, TWTSH,TDSW,TDPW, &
+      RPODNO, RSEEDNO, RTDSH, RTDSD, RTDPW, &
+      RUDPW, RTFPW, HRVF, &
+      HRVD, CHRVD, NR2TIM
+      !, AvgRFPW, &
+      !AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
+      !HRSN, HRPN, HRDSD, HRDSH, NR2TIM
+   
+   !Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP
+
    tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
 
    lngth = Len(Trim(Adjustl(tmp)))

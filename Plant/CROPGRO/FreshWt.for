@@ -124,9 +124,17 @@
 !  230 FORMAT('@YEAR DOY   DAS   DAP',
 !     &    '   FPWAD   PDMCD   AFPWD',
 !     &    '   ADPWD   PAGED')
+! Alwin Hopf - previous .out output version
+!  230 FORMAT('@YEAR DOY   DAS   DAP',
+!     &    '   FPWAD   PDMCD   AFPWD',
+!     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
-     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
+     &    '   ADPWD   PAGED   HARV   HARV_AH   P#AD     G#AD   TWTSH    TDSW', 
+     &    '    TDPW  RPODNO  RSEEDN   RTDSH   RTDSD   RTDPW',
+     &    '   RUDPW   RTFPW      HRVF     CHRVF'   
+     &    '    HRVD   CHRVD ARFPW ARDPW ARDSD ',
+     &    'PRDSH PRDSD ARDSP ARSNP   HRSN   HRPN  HRDSD  HRDSH  NR2TIM')
      
   231 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
@@ -144,13 +152,22 @@
       TFPW   = 0.0
       
 !     VSH initialization at the begining
+      TWTSH  = 0.0
       RTDSD   = 0.0 
       RTDSH   = 0.0
       RTFPW   = 0.0
       RTDPW   = 0.0
-!      RTDSW = 0.0 
       RPODNO  = 0.0
       RSEEDNO = 0.0
+
+      HRVD = 0.0
+      HRVF = 0.0
+      CHRVD = 0.0
+      CHRVF = 0.0
+      HRSN = 0.0
+      HRPN = 0.0
+      HRDSD = 0.0
+      HRDSH = 0.0
 
 
             !alwin new
@@ -178,7 +195,15 @@
       TFPW   = 0.0
       TDPW   = 0.0
       TDSW   = 0.0
-      
+
+      !      VSH initialization at the begining
+      TWTSH = 0.0
+      RTDSD   = 0.0 
+      RTDSH   = 0.0
+      RTFPW   = 0.0
+      RTDPW   = 0.0
+      RPODNO  = 0.0
+      RSEEDNO = 0.0
       DO I = 1, 7
         CLASS(I) = 0.0
       ENDDO
@@ -246,6 +271,8 @@
         TDPW = TDPW + WTSD(NPP) + WTSHE(NPP)
         TDSW = TDSW + WTSD(NPP)
 
+        ! VSH
+        TWTSH = TWTSH + WTSHE(NPP)
         PODNO = PODNO + SHELN(NPP)
         SEEDNO = SEEDNO + SDNO(NPP)
         
@@ -320,7 +347,7 @@
 
 !     VSH
 ! Alwin Hopf new
-      if (HARV==1) Then
+      if (HARV_AH==1) Then
         HRVD = RTDPW 
         HRVF = RTFPW 
         CHRVD = CHRVD + HRVD
@@ -394,7 +421,7 @@
           CASE ('SR')       ! Strawberry
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-     &      PodAge, HARV, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
+     &      PodAge, HARV, HARV_AH, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
      &      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10.,  
      &      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0,
      &      HRVD*10.0, CHRVD*10.0, AvgRFPW, 
@@ -420,7 +447,7 @@
 
 ! Alwin Hopf / VSH - for FreshWt output
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
-     &    I8,F8.3,F8.1,F8.2,F8.1,I7,F7.2,F9.2,3(F8.1),7(F8.2),
+     &    I8,F8.3,F8.1,F8.2,F8.1,I7,I7,F7.2,F9.2,3(F8.1),7(F8.2),
      &    2(F10.2),2(F8.2),2(F6.1),
      &    F6.1, 2(F6.1), 2(F6.1), 2(F7.1), 2(F7.1), I8)
      
@@ -430,8 +457,18 @@
    
  !    Alwin Hopf - CSV output corresponding to FreshWt.OUT
       IF (FMOPT == 'C') THEN    
-      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, TFPW, AvgDMC,
-     &AvgFPW, AvgDPW, PodAge, RTFPW, HARV, RTDPW, HARV_AH,  
+!      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, TFPW, AvgDMC,
+!     &AvgFPW, AvgDPW, PodAge, RTFPW, HARV, RTDPW, HARV_AH,  
+!     &vCsvlineFreshWt, vpCsvlineFreshWt, vlngthFreshWt)
+!
+      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, 
+     &NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
+     &PodAge, HARV, HARV_AH, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
+     &RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10.,  
+     &RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0,
+     &HRVD*10.0, CHRVD*10.0, AvgRFPW, 
+     &AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, 
+     &HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM,
      &vCsvlineFreshWt, vpCsvlineFreshWt, vlngthFreshWt)
  
       CALL LinklstFreshWt(vCsvlineFreshWt)
