@@ -110,7 +110,8 @@ C  Calls:     None
 !***********************************************************************
       IF (DYNAMIC .EQ. RUNINIT) THEN
 !-----------------------------------------------------------------------
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN !Alwin Hopf
         OUTG  = 'PlantGro.OUT'
         CALL GETLUN('OUTG',  NOUTDG)
 
@@ -127,7 +128,8 @@ C  Calls:     None
 !***********************************************************************
       ELSEIF (DYNAMIC .EQ. SEASINIT) THEN
 !-----------------------------------------------------------------------
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN    ! Alwin Hopf
 !       Initialize daily growth output file      
         INQUIRE (FILE = OUTG, EXIST = FEXIST)
         IF (FEXIST) THEN
@@ -147,7 +149,8 @@ C  Calls:     None
         
         N_LYR = MIN(10, MAX(4,SOILPROP%NLAYR))
 
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN    ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN    ! Alwin Hopf
 !        IF (ISWPHO .NE. 'N') THEN
           WRITE (NOUTDG, 100) "Root Dens. (cm/cm3) by soil ",
      &      "depth (cm):",(SoilProp%LayerText(L), L=1,N_LYR)
@@ -359,7 +362,8 @@ C-----------------------------------------------------------------------
 
           VWAD = NINT(WTLF*10. + STMWT*10.)
 
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
           WRITE (NOUTDG,310, ADVANCE='NO')
      &        YEAR, DOY, DAS, DAP, VSTAGE, RSTAGE, XLAI,
      &        NINT(WTLF*10.), NINT(STMWT*10.), NINT(SDWT*10.),
@@ -449,7 +453,8 @@ C-----------------------------------------------------------------------
             PCNVEG = 0.
           ENDIF
 
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN       ! VSH
+!          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN       ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN    ! Alwin Hopf
           WRITE (NOUTPN,410) YEAR, DOY, DAS, DAP, (WTNCAN*10), 
      &       (WTNSD*10), (WTNVEG*10), PCNSDP, PCNVEG, (WTNFX*10),
      &       (WTNUP*10), (WTNLF*10), (WTNST*10), PCNLP, PCNSTP,
@@ -480,7 +485,8 @@ C-----------------------------------------------------------------------
          CALL LinklstPlCCrGro(vCsvlinePlCCrGro)    
       END IF
 C-----------------------------------------------------------------------
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN ! VSH
+!          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN    ! Alwin Hopf
           WRITE (NOUTPC,510) YEAR, DOY, DAS, DAP,
      &        NINT(TOTWT*10), PG, CMINEA, GROWTH,
      &        GRWRES, MAINR, (CADLF + CADST), RHOLP, RHOSP,
@@ -499,7 +505,8 @@ C       changed from 12 to TS/2 on 9Jul17 by Bruce Kimball
 !***********************************************************************
       ELSE IF (DYNAMIC .EQ. SEASEND) THEN
 C-----------------------------------------------------------------------
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN    ! Alwin Hopf
         !Close daily output files.
         CLOSE (NOUTDG)
         CLOSE (NOUTPN)
