@@ -418,6 +418,11 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !     XFRT = XFRUIT * RNIT * TEMXFR   !NEED TO FIX FOR DAYLENGTH EFFECT
       XFRT = MIN(XFRT,1.0)
       XFRT = MAX(XFRT,0.0)
+!Alwin Hopf - adjustemnt of XFRUIT for Strawberry
+!      IF ( XFRT .LE. 75) THEN
+!            XFRT = 0.7
+!          ENDIF
+!Alwin Hopf - adjustemnt of XFRUIT for Strawberry - end
 !-----------------------------------------------------------------------
 !    Total Potential Available CH2O for Reprod Growth (CAVTOT)
 !    and total CH2O needed for potential reproductive growth (CDMREP)
@@ -1012,7 +1017,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 ! FNINSH    Maximum fraction of N for growing shell tissue
 !            (g[N] / g[shell])
 ! FNSDT(I)  Temperature values which describe function for modifying seed 
-!             growth rate with temperature (°C)
+!             growth rate with temperature (ï¿½C)
 ! FOUND     Indicator that good data was read from file by subroutine FIND 
 !             (0 - End-of-file encountered, 1 - NAME was found) 
 ! FRACDN    Relative time between flowering (NR1) and last leaf appearance 
@@ -1062,8 +1067,8 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 ! LAGSD     Time required between shell growth and seed growth, per cohort
 !            (Photo-thermal days)
 ! LINC      Line number of input file 
-! LIPOPT    Temperature above which lipid composition is at a maximum (°C)
-! LIPTB     Temperature below which lipid composition is zero (°C)
+! LIPOPT    Temperature above which lipid composition is at a maximum (ï¿½C)
+! LIPTB     Temperature below which lipid composition is zero (ï¿½C)
 ! LNGPEG    Time between start of peg (full flower) and shell formation 
 !             (for peanuts only).  Defines slow growth period.
 !             (Photo-thermal days)
@@ -1166,7 +1171,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 ! SDLIP     Maximum lipid composition in seed (fraction)
 ! SDMAX     A maximum amount of remaining growth for each cohort (g/m2)
 ! SDNO(J)   Number of seeds for cohort J (#/m2)
-! SDPRO     Seed protein fraction at 25ºC (g[protein] / g[seed])
+! SDPRO     Seed protein fraction at 25ï¿½C (g[protein] / g[seed])
 ! SDVAR     Maximum cultivar-dependent seed growth rate, per seed
 !            (g / seed / d)
 ! SECTION   Section name in input file 
@@ -1202,14 +1207,14 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !             growth for the standard cultivar. (cm2/g)
 ! SLAVAR    Specific leaf area (SLA) for new leaves during peak vegetative 
 !             growth for cultivar I, modified by environmental factor (cm2/g)
-! SLOSUM    Slope of temperature vs. SUMTEM line (1/ºC)
+! SLOSUM    Slope of temperature vs. SUMTEM line (1/ï¿½C)
 ! SRMAX     Maximum fraction change in seed growth rate for long day 
 !             lengths 
 ! STMWT     Dry mass of stem tissue, including C and N
 !            (g[stem] / m2[ground)
 ! SWFAC     Effect of soil-water stress on photosynthesis, 1.0=no stress, 
 !             0.0=max stress 
-! TAVG      Average daily temperature (°C)
+! TAVG      Average daily temperature (ï¿½C)
 ! TDUMX     Photo-thermal time that occurs in a real day based on early 
 !             reproductive development temperature function
 !             (photo-thermal days / day)
@@ -1218,7 +1223,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !             (photo-thermal days / day)
 ! TEMXFR    Temperature effect on partitioning to pods, high temp. 
 !             increases fraction of growth to vegetative tissue (0-1) 
-! TGRO(I)   Hourly canopy temperature (°C)
+! TGRO(I)   Hourly canopy temperature (ï¿½C)
 ! THRESH    The maximum ratio mass of seed to mass of seed plus shell at 
 !             maturity.  Causes seed to stop growing as their dry weights 
 !             increase until shells are filled in a cohort. 
@@ -1268,7 +1273,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 ! XPOD      Growth partitioning to pods which slows node appearance
 !            (fraction)
 ! XSLATM(I) Temperature values for function that reduces specific leaf area 
-!             (SLA) (°C)
+!             (SLA) (ï¿½C)
 ! XTRFAC(I) Values of TURFAC for function which reduces reproductive growth 
 !             based on water stress 
 ! XVGROW(I) V-stage at which maximum leaf area growth per plant since 
@@ -1277,7 +1282,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !             bloom (R1) and at the day on which the maximum number of 
 !             V-stages occurs (NDLEAF) 
 ! XXFTEM(I) Array of temperature values in table lookup describing effect 
-!             of temperature on partitioning to pods (YXFTEM = 0 TO 1). (°C)
+!             of temperature on partitioning to pods (YXFTEM = 0 TO 1). (ï¿½C)
 ! YLEAF(I)  Partitioning fraction to leaves at V-stage XLEAF(I)
 !            (g[leaf] / g[veg. plant])
 ! YSLATM(I) Array which describes the effect of temperature on specific 
