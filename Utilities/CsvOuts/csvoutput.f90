@@ -382,8 +382,8 @@ Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, &
    !Integer,Intent(IN) :: N_LYR
    !Real, Dimension(N_LYR), Intent(IN) :: RLV 
 
-   Character(Len = 250) :: tmp 
-   Character(Len = 200) :: tmp1  
+   Character(Len = 500) :: tmp 
+   Character(Len = 400) :: tmp1  
    !Character(Len = 20)  :: fmt 
 
 !  Recalculated vars
@@ -396,21 +396,22 @@ Subroutine CsvOut_FreshWt(YEAR, DOY, DAS, DAP, &
 !   Write(tmp,'(13(g0,","))') YEAR, DOY, DAS, DAP, cFPWAD, PDMCD, & 
 !   AFPWD, ADPWD, PAGED, cRTFPW, HARV, cRTDPW, HARV_AH
    
-!   Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP, & 
-!      TFPW, AvgDMC, AvgFPW, AvgDPW, PodAge, & 
-!      HARV, HARV_AH, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., &
-!      RPODNO, RSEEDNO, RTDSH*10., RTDSD*10., RTDPW*10., &
-!      RUDPW*10., RTFPW*10., HRVF*10.0, CHRVF*10.0, &
-!      HRVD*10.0, CHRVD*10.0, AvgRFPW, &
-!      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
-!      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
-
    Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP, & 
       TFPW, AvgDMC, AvgFPW, AvgDPW, PodAge, & 
       HARV, HARV_AH, PODNO, SEEDNO, TWTSH,TDSW,TDPW, &
       RPODNO, RSEEDNO, RTDSH, RTDSD, RTDPW, &
-      RUDPW, RTFPW, HRVF, &
-      HRVD, CHRVD, NR2TIM
+      RUDPW, RTFPW, HRVF, CHRVF, &
+      HRVD, CHRVD, AvgRFPW, &
+      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
+      HRSN, HRPN, HRDSD, HRDSH, NR2TIM
+
+!   Write(tmp,'(39(g0,","))') YEAR, DOY, DAS, DAP, & 
+!      TFPW, AvgDMC, AvgFPW, AvgDPW, PodAge, & 
+!      HARV, HARV_AH, PODNO, SEEDNO, TWTSH,TDSW,TDPW, &
+!      RPODNO, RSEEDNO, RTDSH, RTDSD, RTDPW, &
+!      RUDPW, RTFPW, HRVF, CHRVF, &
+!      HRVD, CHRVD, NR2TIM
+
       !, AvgRFPW, &
       !AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, &
       !HRSN, HRPN, HRDSD, HRDSH, NR2TIM

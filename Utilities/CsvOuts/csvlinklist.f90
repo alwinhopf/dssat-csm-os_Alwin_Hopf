@@ -993,7 +993,7 @@ End Subroutine LinklstCohort
 
 !end Alwin Hopf
   !------------------------------------------------------------------------------
-  !Alwin Hopf - add FreshWt.OUT
+  !Alwin Hopf - add FreshWt.csv
   !------------------------------------------------------------------------------
 Subroutine ListtofileFW
   Integer          :: nf, ErrNum, length       
@@ -1002,14 +1002,21 @@ Subroutine ListtofileFW
   
   If(.Not. Associated(headFreshWt)) Return
   
-length= Len('YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
-//'HARV_AH') 
+!length= Len('YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+!//'HARV_AH') 
+length= Len('YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,HARV,HARV_AH,' &
+//'P#AD,G#AD,TWTSH,TDSW,TDPW,RPODNO,RSEEDN,RTDSH,RTDSD,RTDPW,RUDPW,RTFPW,' &
+//'HRVF,CHRVF,HRVD,CHRVD,ARFPW,ARDPW,ARDSD,PRDSH,PRDSD,ARDSP,ARSNP,HRSN,' &
+//'HRPN,HRDSD,HRDSH,NR2TIM') 
 
   Allocate(character(LEN=length) :: Header)
 
-Header = 'YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
-//'HARV_AH'
-
+!Header = 'YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,RTFPW,HARV,RTDPW,' &
+!//'HARV_AH'
+Header = 'YEAR,DOY,DAS,DAP,FPWAD,PDMCD,AFPWD,ADPWD,PAGED,HARV,HARV_AH,' &
+//'P#AD,G#AD,TWTSH,TDSW,TDPW,RPODNO,RSEEDN,RTDSH,RTDSD,RTDPW,RUDPW,RTFPW,' &
+//'HRVF,CHRVF,HRVD,CHRVD,ARFPW,ARDPW,ARDSD,PRDSH,PRDSD,ARDSP,ARSNP,HRSN,' &
+//'HRPN,HRDSD,HRDSH,NR2TIM'
 
   fn = 'freshwt.csv'
   Call GETLUN (fn,nf)
