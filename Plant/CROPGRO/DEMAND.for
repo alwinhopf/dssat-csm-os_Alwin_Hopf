@@ -414,15 +414,26 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !     Night length and temperature are multiplicative
 !     but turgor effect adds to the partitioning
 !-----------------------------------------------------------------------
+!Alwin Hopf - adjustemnt of XFRUIT for Strawberry
+!      IF ( DAS .LE. 79) THEN
+!            XFRUIT = 0.32
+!          ENDIF
+!      IF ( DAS .GE. 80 .AND. DAS .LE. 140) THEN
+!            XFRUIT = 0.79
+!          ENDIF
+
+
+      !IF ( DAS .GE. 141) THEN
+      !      XFRUIT = 0.95
+      !    ENDIF
+      !IF ( DAS .LE. 120) THEN
+      !      XFRT = 0.85
+      !    ENDIF
+!Alwin Hopf - adjustemnt of XFRUIT for Strawberry - end
       XFRT = XFRUIT * TEMXFR + XFRUIT * TURXFR
 !     XFRT = XFRUIT * RNIT * TEMXFR   !NEED TO FIX FOR DAYLENGTH EFFECT
       XFRT = MIN(XFRT,1.0)
       XFRT = MAX(XFRT,0.0)
-!Alwin Hopf - adjustemnt of XFRUIT for Strawberry
-!      IF ( XFRT .LE. 75) THEN
-!            XFRT = 0.7
-!          ENDIF
-!Alwin Hopf - adjustemnt of XFRUIT for Strawberry - end
 !-----------------------------------------------------------------------
 !    Total Potential Available CH2O for Reprod Growth (CAVTOT)
 !    and total CH2O needed for potential reproductive growth (CDMREP)

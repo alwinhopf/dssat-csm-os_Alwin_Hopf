@@ -615,10 +615,7 @@ C-----------------------------------------------------------------------
                      SDWT   = SDWT   - RTDSD
                      SHELWT = SHELWT - RTDSH 
                      PODWT  = PODWT  - RTDPW
-                     TOPWT  = TOPWT  - RTDPW 
-                     !PODWT  = PODWT - RTDPW
-                     !TOPWT  = TOPWT  - RTDPW
-
+                     TOPWT  = TOPWT  - RTDPW
          
 !        empting baskets after harvesting  
          !RTFPW   = 0.0
