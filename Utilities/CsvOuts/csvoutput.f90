@@ -432,7 +432,7 @@ end Subroutine CsvOut_FreshWt
 !Alwin Hopf cohort.csv output CRGRO
 Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    WTSD, WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day, &
-   Csvline, pCsvline, lngth) 
+   Csvline, pCsvline, lngth)
 
 !  Input vars
 !   Character(8),Intent(IN):: EXCODE    
@@ -451,8 +451,8 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !Integer,Intent(IN) :: N_LYR
    !Real, Dimension(N_LYR), Intent(IN) :: RLV 
 
-   Character(Len = 250) :: tmp 
-   Character(Len = 200) :: tmp1  
+   Character(Len = 300) :: tmp 
+   Character(Len = 250) :: tmp1  
    !Character(Len = 20)  :: fmt 
 
 !  Recalculated vars
@@ -461,12 +461,20 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !cFPWAD = NINT(FPWAD*10.0)
    !cRTFPW = NINT(RTFPW * 10.0)
    !cRTDPW = NINT(RTDPW*10.0)
-  
+   !Calculation
+   Integer :: COHAGE
+   COHAGE = NR2TIM - NPP !age of cohort in calendar days, add +1 if 0 is a problem
+   
    !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
-   Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
-   WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
+   !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
+   !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
+   Write(tmp,'(13(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
+   WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day, COHAGE
    
+   !CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
+   !  &NR2TIM, HARV_AH, HARVESTED, Last_Day,  
+
    tmp = Trim(Adjustl(tmp)) // Trim(Adjustl(tmp1))
 
    lngth = Len(Trim(Adjustl(tmp)))

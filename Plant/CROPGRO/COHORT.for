@@ -12,7 +12,7 @@ C-----------------------------------------------------------------------
 C=======================================================================
 
 
-      SUBROUTINE COHORT(DAS,YRDOY, YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
+      SUBROUTINE COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
      & NR2TIM,SDNO,SHELN)
 
 !-----------------------------------------------------------------------
@@ -105,7 +105,7 @@ C=======================================================================
       
       IF (NR2TIM .EQ. 1) THEN
       WRITE (LUN,120)
-  120 FORMAT('YEAR  DOY  DAP  NPP   PAGE  NAGE  WTSD  WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
+  120 FORMAT('YEAR  DOY  DAS  DAP  NPP  PAGE  NAGE  WTSD  WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
       ENDIF
 
        !
@@ -116,11 +116,13 @@ C=======================================================================
 !             WRITE (LUN,120)
 !  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE   WTSD   WTSHE    DAS')
 
-      WRITE (LUN,300) YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
+      WRITE (LUN,300) YEAR, DOY, DAS, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
      &                        NR2TIM, HARV_AH, HARVESTED, Last_Day
   300 FORMAT(
      &I4,2X, !YEAR
-     &I3.2,I6, !DOY DAP
+     &I3.2,  !DOY 
+     &I5,  !DAS
+     &I5, !DAP
      &I4,1X, !NPP
      &F6.2,X, !PAGE
      &I4,1X, !NAGE
@@ -135,7 +137,7 @@ C=======================================================================
       !    Alwin Hopf - CSV output corresponding to Cohort.OUT
       IF (FMOPT == 'C') THEN    
       CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
-     &NR2TIM, HARV_AH, HARVESTED, Last_Day,  
+     &NR2TIM, HARV_AH, HARVESTED, Last_Day, 
      &vCsvlineCohort, vpCsvlineCohort, vlngthCohort)
  
       CALL LinklstCohort(vCsvlineCohort)

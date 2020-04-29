@@ -279,10 +279,6 @@
         ! VSH accumulating in the basket for harvesting
         If (page >= xmpage) Then
 
-        !AH = correction 2
-        !PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
-        !If ((page >= xmpage).AND.(HARV==1)) Then 
-
            RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) !fresh weight of mature fruits
            RTDPW = RTDPW + WTSD(NPP) + WTSHE(NPP) !dry weight of mature fruits (seed and shell)
            RTDSD = RTDSD + WTSD(NPP) !seed mass of mature fruits - wtsd = seed mass for cohort

@@ -74,7 +74,7 @@ C-----------------------------------------------------------------------
 !***********************************************************************
       IF (DYNAMIC .EQ. SEASINIT) THEN
 !-----------------------------------------------------------------------
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == ' ' .OR. FMOPT == 'C') THEN   ! VSH
         CALL GETLUN('OUTWTH', LUN)
         INQUIRE (FILE = OUTWTH, EXIST = FEXIST)
         IF (FEXIST) THEN
@@ -88,7 +88,7 @@ C-----------------------------------------------------------------------
         END IF   ! VSH
         
         IF (RNMODE .NE. 'Q' .OR. RUN .EQ. 1) THEN
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == ' ' .OR. FMOPT == 'C') THEN   ! VSH
           !For first run of a sequenced run, use replicate
           ! number instead of run number in header.
           IF (RNMODE .EQ. 'Q') THEN
@@ -125,7 +125,7 @@ C       Generate output for file Weather.OUT
 
       
           CALL YR_DOY(YRDOY, YEAR, DOY)
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == ' ' .OR. FMOPT == 'C') THEN   ! VSH
           !Daily printout
           WRITE (LUN,300) YEAR, DOY, DAS, 
      &        RAIN, DAYL, TWILEN, SRAD, PAR, CLOUDS, 

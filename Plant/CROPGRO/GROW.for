@@ -587,14 +587,14 @@ C-----------------------------------------------------------------------
       DWNOD  = DWNOD  + WNDOT
       TGROW  = TGROW  + GROWTH
       
-      if (HARV_AH==0) Then
-         RTFPW   = 0.0
-         RTDPW   = 0.0
-         RTDSD   = 0.0 
-         RTDSH   = 0.0
-         RPODNO  = 0.0
-         RSEEDNO = 0.0
-      end if
+      !if (HARV_AH==0) Then
+      !   RTFPW   = 0.0
+      !   RTDPW   = 0.0
+      !   RTDSD   = 0.0 
+      !   RTDSH   = 0.0
+      !   RPODNO  = 0.0
+      !   RSEEDNO = 0.0
+      !end if
 
 !     VSH
       !if (HARV==1) Then

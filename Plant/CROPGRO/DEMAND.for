@@ -91,7 +91,7 @@
      &  TURADD, TURFAC, TURSLA, TURXFR,
      &  VSSINK, VSTAGE, WCRLF, WCRRT, WCRST, WNRLF,
      &  WNRRT, WNRSH, WNRST, WTLF, XFRMAX,
-     &  XFRT, XFRUIT, XPOD
+     &  XFRT, XFRUIT, XPOD, XFRUIT2
 
       REAL FNSDT(4)
       REAL XVGROW(6), YVGROW(6), YVREF(6)
@@ -187,6 +187,7 @@
       ELSEIF (DYNAMIC .EQ. EMERG) THEN
 !-----------------------------------------------------------------------
         XFRT   = XFRUIT
+        XFRUIT2 = XFRUIT
         ADDSHL = 0.0
         TURXFR = 0.0
         GDMSD  = 0.0
@@ -415,21 +416,47 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !     but turgor effect adds to the partitioning
 !-----------------------------------------------------------------------
 !Alwin Hopf - adjustemnt of XFRUIT for Strawberry
-!      IF ( DAS .LE. 79) THEN
-!            XFRUIT = 0.32
+!      IF ( DAS .LE. 90) THEN
+!            XFRUIT = 0.40
 !          ENDIF
-!      IF ( DAS .GE. 80 .AND. DAS .LE. 140) THEN
-!            XFRUIT = 0.79
+!      IF ( DAS .GE. 90 .AND. DAS .LE. 135) THEN
+!            XFRUIT = 0.65
 !          ENDIF
-
-
-      !IF ( DAS .GE. 141) THEN
-      !      XFRUIT = 0.95
-      !    ENDIF
-      !IF ( DAS .LE. 120) THEN
-      !      XFRT = 0.85
-      !    ENDIF
 !Alwin Hopf - adjustemnt of XFRUIT for Strawberry - end
+!based on days after first flower NR1TIM
+!V1
+!      IF ( (DAS-NR1) .LE. 99) THEN
+!            XFRUIT = ((XFRUIT2/99)*(DAS-NR1))
+!        ENDIF
+!V2
+!      IF ( (DAS-NR1) .LE. 66) THEN
+!            XFRUIT = ((XFRUIT2/99)*(DAS-NR1))+0.33*XFRUIT2
+!        ENDIF
+!V3
+!      IF ( (DAS-NR1) .LE. 100) THEN
+!          XFRUIT = ((XFRUIT2/100)*(DAS-NR1)*0.90)+0.10*XFRUIT2
+!      ENDIF
+!V4
+!      IF ( (DAS-NR1) .LE. 160) THEN
+!            XFRUIT = ((XFRUIT2/160)*(DAS-NR1))
+!        ENDIF
+!V5
+!      IF (PHTIM(DAS - NR2) .LE. 50) THEN
+!            XFRUIT = XFRUIT2/100*PHTIM(DAS - NR2)*2
+!        ENDIF
+      !IF (PHTIM(NPP) .GE. 0 .AND. PHTIM(NPP) .LE. 50) THEN
+      !IF (NPP .LE. 299 .AND. PHTIM(NPP) .LE. 50) THEN
+!V5
+!      IF (NPP .LE. 300) THEN
+!            IF (PHTIM(NPP) .LE. 65) THEN
+!            XFRUIT = XFRUIT2/65*PHTIM(NPP)
+!            ENDIF
+!      ENDIF
+        
+!Alwin Hopf - dynamic adjustment of XFRUIT for Strawberry
+
+!Alwin Hopf - dynamic adjustment of XFRUIT for Strawberry - end
+
       XFRT = XFRUIT * TEMXFR + XFRUIT * TURXFR
 !     XFRT = XFRUIT * RNIT * TEMXFR   !NEED TO FIX FOR DAYLENGTH EFFECT
       XFRT = MIN(XFRT,1.0)
