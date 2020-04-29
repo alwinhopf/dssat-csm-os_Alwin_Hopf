@@ -431,14 +431,15 @@ end Subroutine CsvOut_FreshWt
 
 !Alwin Hopf cohort.csv output CRGRO
 Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
-   WTSD, WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day, &
-   Csvline, pCsvline, lngth)
+   WTSD, WTSHE, SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, &
+   RAPID_GROWTH, Csvline, pCsvline, lngth)
 
 !  Input vars
 !   Character(8),Intent(IN):: EXCODE    
    Integer, Intent(IN) :: YEAR, DOY, DAP, NPP, HARV_AH, HARVESTED, Last_Day
    Integer, Intent(IN) :: NAGE, NR2TIM
-   Real,Intent(IN) :: PAGE, WTSD, WTSHE
+   Real,Intent(IN) :: PAGE, WTSD, WTSHE, SDNO, SHELN
+   Real :: WTFRT
 
    Integer :: i, size
    Character(:), allocatable, Target, Intent(Out) :: Csvline
@@ -462,15 +463,29 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !cRTFPW = NINT(RTFPW * 10.0)
    !cRTDPW = NINT(RTDPW*10.0)
    !Calculation
-   Integer :: COHAGE
+   Integer :: COHAGE, RAPID_GROWTH
    COHAGE = NR2TIM - NPP !age of cohort in calendar days, add +1 if 0 is a problem
+   !Alwin Hopf - WTFRT
+   !weight of 1 fruit. divide shell weight / shell number. 1 cohort can have less than one shell
+   IF (SHELN .GT. 0 .AND. WTSHE .GT. 0 .AND. SDNO .GT. 0 .AND. WTSD .GT. 0) Then
+   WTFRT = (WTSHE/SHELN)+(WTSD/SDNO) !=1 works
+   ELSEIF ((SDNO == 0 .OR. WTSD == 0) .AND. (SHELN .GT. 0 .AND. WTSHE .GT. 0)) Then
+   WTFRT = (WTSHE/SHELN)
+   else
+   WTFRT = 0
+   End IF
+   !Alwin Hopf - end
+   !Real,Intent(IN) :: WTFRT
+   !weight of 1 fruit. divide shell weight / shell number. 1 cohort can have less than one shell
+   !WTFRT = WTSHE / SHELN 
    
    !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
    !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
-   Write(tmp,'(13(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
-   WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day, COHAGE
+   Write(tmp,'(17(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
+   WTSHE, SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, COHAGE, & 
+   RAPID_GROWTH, WTFRT
    
    !CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
    !  &NR2TIM, HARV_AH, HARVESTED, Last_Day,  

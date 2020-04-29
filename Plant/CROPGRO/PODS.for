@@ -668,7 +668,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
               WTABRT = WTABRT + WTABR
             ENDIF
           CALL COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD(NPP),WTSHE(NPP),
-     &      NPP,NR2TIM,SDNO(NPP),SHELN(NPP))  
+     &      NPP,NR2TIM,SDNO(NPP),SHELN(NPP),LNGPEG)  
  2200     ENDDO
 !-----------------------------------------------------------------------
         ENDIF         !End of DAS>NR2 Shell growth section

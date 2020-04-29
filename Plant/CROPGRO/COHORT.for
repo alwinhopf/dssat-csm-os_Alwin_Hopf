@@ -13,7 +13,7 @@ C=======================================================================
 
 
       SUBROUTINE COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
-     & NR2TIM,SDNO,SHELN)
+     & NR2TIM,SDNO,SHELN,LNGPEG)
 
 !-----------------------------------------------------------------------
       USE ModuleDefs     !Definitions of constructed variable types, 
@@ -27,11 +27,12 @@ C=======================================================================
       SAVE
 
 
-      INTEGER DYNAMIC, I, J, LAST_DAY, HARVESTED
+      INTEGER DYNAMIC, I, J, LAST_DAY, HARVESTED, RAPID_GROWTH
       INTEGER DAS, YRDOY, YRPLT, DAP, DOY, YEAR, TIMDIF, NPP, NR2TIM, NAGE
       REAL PAGE, WTSD, WTSHE
       REAL SDNO, SHELN
-
+      !Alwin Hopf - new variable
+      REAL LNGPEG
 
       !output array
       !seed numer, shell numer, page, 
@@ -101,11 +102,17 @@ C=======================================================================
       Else
             HARVESTED = 0
       End IF
+
+      If ((page >= LNGPEG)) THEN
+            RAPID_GROWTH = 1            !HARVESTED = DAP 
+      Else
+            RAPID_GROWTH = 0
+      End IF
       !Alwin Hopf - end
       
       IF (NR2TIM .EQ. 1) THEN
       WRITE (LUN,120)
-  120 FORMAT('YEAR  DOY  DAS  DAP  NPP  PAGE  NAGE  WTSD  WTSHE  NR2TIM HARV_AH HARVESTED LAST_DAY')
+  120 FORMAT('YEAR  DOY  DAS  DAP  NPP  PAGE  NAGE  WTSD  WTSHE  SDNO  SHELN  NR2TIM HARV_AH HARVESTED LAST_DAY')
       ENDIF
 
        !
@@ -116,8 +123,8 @@ C=======================================================================
 !             WRITE (LUN,120)
 !  120 FORMAT('@YEAR  DOY  DAP  NPP  PAGE   WTSD   WTSHE    DAS')
 
-      WRITE (LUN,300) YEAR, DOY, DAS, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
-     &                        NR2TIM, HARV_AH, HARVESTED, Last_Day
+      WRITE (LUN,300) YEAR, DOY, DAS, DAP, NPP, PAGE, NAGE, WTSD, WTSHE,
+     &             SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day
   300 FORMAT(
      &I4,2X, !YEAR
      &I3.2,  !DOY 
@@ -128,6 +135,8 @@ C=======================================================================
      &I4,1X, !NAGE
      &F6.3,1X, !WTSD
      &F6.3,1X, !WTSHE
+     &F6.3,1X, !SDNO
+     &F6.3,1X, !SHELN
      &I4,1X, !NR2TIM
      &I4,4X, !HARV_AH
      &I4,6X, !HARVESTED
@@ -137,7 +146,7 @@ C=======================================================================
       !    Alwin Hopf - CSV output corresponding to Cohort.OUT
       IF (FMOPT == 'C') THEN    
       CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
-     &NR2TIM, HARV_AH, HARVESTED, Last_Day, 
+     &SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, RAPID_GROWTH,
      &vCsvlineCohort, vpCsvlineCohort, vlngthCohort)
  
       CALL LinklstCohort(vCsvlineCohort)

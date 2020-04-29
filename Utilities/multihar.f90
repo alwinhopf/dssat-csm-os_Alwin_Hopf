@@ -12,7 +12,7 @@ Implicit None
    Integer, save :: iHARV = 1
    
    !  cultivar parameter from cultivar file --> move to cultivar file. xmpage = required age for harvest
-   Real    :: xmpage = 9 !6 seems to be better? depend on experiment - not sure
+   Real    :: xmpage = 12.5 !6 seems to be better? depend on experiment - not sure
    
    Real    :: RTDSD 
    Real    :: RTDSH
