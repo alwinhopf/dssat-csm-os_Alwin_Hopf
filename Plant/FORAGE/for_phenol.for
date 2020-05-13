@@ -487,7 +487,7 @@ C-----------------------------------------------------------------------
 !-----------------------------------------------------------------------
 !     PHENOLOGY VARIABLES LIST
 !-----------------------------------------------------------------------
-! ATEMP     Temperature of transplant environment (°C)
+! ATEMP     Temperature of transplant environment (ï¿½C)
 ! CLDVAR    Critical daylength above which development rate remains at min 
 !             value (prior to flowering) (hours)
 ! CLDVRR    Critical daylength above which development rate remains at min 
@@ -525,7 +525,7 @@ C-----------------------------------------------------------------------
 !             (NDLEAF) 
 ! FSW(I)    Water stress function (0.0 to 1.0) for phase I 
 ! FT(I)     Temperature function (0-1) for phase I 
-! FTHR      Used to calculate hourly air temperature (°C)
+! FTHR      Used to calculate hourly air temperature (ï¿½C)
 ! FUDAY(I)  Effect of daylength on development progress (0-1) for phase I 
 ! ISIMI      Start of simulation code
 !               E = On reported emergence day
@@ -562,7 +562,7 @@ C-----------------------------------------------------------------------
 ! NVEG1     1st day with 50% of plants w/ completely unrolled leaf at 
 !             unifoliate node (days)
 ! OPTBI     Temperature below which growth rate is slowed from emergence to 
-!             flowering (°C)
+!             flowering (ï¿½C)
 ! PHTHRS      Time that must accumulate (by phase) for the next
 !                 stage to occur (thermal or photo-thermal days)
 !                 under optimal temp. and daylength
@@ -591,7 +591,7 @@ C-----------------------------------------------------------------------
 ! SDEPTH    Planting depth (cm)
 ! SLOBI     Sensitivity of growth rate to minimum temperatures from 
 !             emergence to flowering 
-! ST(L)     Soil temperature in soil layer L (°C)
+! ST(L)     Soil temperature in soil layer L (ï¿½C)
 ! STGDOY(I) Day when stage I occurred (YYDDD)
 ! STNAME    Output headings for specified crops 
 ! SW(L)     Volumetric soil water content in layer L
@@ -607,13 +607,13 @@ C-----------------------------------------------------------------------
 ! TDUMX2    Photo-thermal time that occurs in a real day based on late 
 !             reproductive development temperature function
 !             (photo-thermal days / day)
-! TGRO(I)   Hourly air temperature (°C)
-! TGROAV    Average daily air temperature (°C)
+! TGRO(I)   Hourly air temperature (ï¿½C)
+! TGROAV    Average daily air temperature (ï¿½C)
 ! THVAR     Minimum relative rate of reproductive development under long 
 !             days and optimal temperature 
 ! TIMDIF    Integer function which calculates the number of days between 
 !             two Julian dates (da)
-! TMIN      Minimum daily temperature (°C)
+! TMIN      Minimum daily temperature (ï¿½C)
 ! TNTFAC    Thermal time that occurs in a single real day based on early 
 !             reproductive development temperature function
 !             (thermal days / day)
@@ -623,7 +623,7 @@ C-----------------------------------------------------------------------
 ! TRIFOL    Rate of appearance on leaves on mainstem. Maximum rate of 
 !             V-stage formation (leaves per thermal day)
 ! TSDEP     Average temperature in top 10 cm of soil. Used to modify 
-!             emergence rate of development. (°C)
+!             emergence rate of development. (ï¿½C)
 ! TSELC      Number of temperature curve (by phase)
 !                 1 = vegetative
 !                 2 = early reproductive

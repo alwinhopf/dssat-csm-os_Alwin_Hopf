@@ -448,8 +448,8 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
       !IF (NPP .LE. 299 .AND. PHTIM(NPP) .LE. 50) THEN
 !V5
       IF (NPP .LE. 300) THEN
-            IF (PHTIM(NPP) .LE. 45) THEN
-            XFRUIT = XFRUIT2/45*PHTIM(NPP)
+            IF (PHTIM(NPP) .LE. 60) THEN
+            XFRUIT = XFRUIT2/60*PHTIM(NPP)*0.80+0.20*XFRUIT2
             ENDIF
       ENDIF
         

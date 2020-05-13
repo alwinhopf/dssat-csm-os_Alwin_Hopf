@@ -98,7 +98,8 @@ C-----------------------------------------------------------------------
 !-----------------------------------------------------------------------
 C   Generate headings for output file
 C-----------------------------------------------------------------------
-      IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!      IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
       CALL GETLUN('OUTWAT', NOUTDW)
       INQUIRE (FILE = OUTWAT, EXIST = FEXIST)
       IF (FEXIST) THEN
@@ -114,7 +115,8 @@ C-----------------------------------------------------------------------
 C     Variable heading for WATER.OUT
 C-----------------------------------------------------------------------
       IF (RNMODE .NE. 'Q' .OR. RUN .EQ. 1) THEN
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
         IF (RNMODE .EQ. 'Q') THEN
           CALL HEADER(SEASINIT, NOUTDW, REPNO)
         ELSE
@@ -124,7 +126,8 @@ C-----------------------------------------------------------------------
         
         N_LYR = MIN(10, MAX(4,SOILPROP%NLAYR))
 
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
 !       IF (INDEX('RSN',MEINF) <= 0) THEN   
         IF (INDEX('RSM',MEINF) > 0) THEN   
 !         New print format includes mulch, tiledrain and runoff info
@@ -165,7 +168,8 @@ C-----------------------------------------------------------------------
           PESW = 0.0
         ENDIF
 
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+        !IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
         IF (INDEX('RSM',MEINF) > 0) THEN   
 !         New print format includes mulch, tiledrain and runoff info
           WRITE (NOUTDW,1300)YEAR,DOY,DAS, NINT(TSW), 
@@ -265,7 +269,8 @@ C-----------------------------------------------------------------------
             AVWTD = WTDEP
           ENDIF
 
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
 !         IF (INDEX('RSN',MEINF) <= 0) THEN   
           IF (INDEX('RSM',MEINF) > 0) THEN   
 !           New print format includes mulch, tiledrain and runoff info

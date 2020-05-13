@@ -13,7 +13,7 @@ C=======================================================================
 
 
       SUBROUTINE COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
-     & NR2TIM,SDNO,SHELN,LNGPEG)
+     & NR2TIM,SDNO,SHELN,LNGPEG,EO,EOP)
 
 !-----------------------------------------------------------------------
       USE ModuleDefs     !Definitions of constructed variable types, 
@@ -33,6 +33,7 @@ C=======================================================================
       REAL SDNO, SHELN
       !Alwin Hopf - new variable
       REAL LNGPEG
+      REAL EO,EOP
 
       !output array
       !seed numer, shell numer, page, 
@@ -147,7 +148,7 @@ C=======================================================================
       IF (FMOPT == 'C') THEN    
       CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
      &SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, RAPID_GROWTH,
-     &vCsvlineCohort, vpCsvlineCohort, vlngthCohort)
+     &EO, EOP, vCsvlineCohort, vpCsvlineCohort, vlngthCohort)
  
       CALL LinklstCohort(vCsvlineCohort)
       END IF

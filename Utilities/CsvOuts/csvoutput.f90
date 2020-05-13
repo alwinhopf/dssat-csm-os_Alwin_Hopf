@@ -432,14 +432,14 @@ end Subroutine CsvOut_FreshWt
 !Alwin Hopf cohort.csv output CRGRO
 Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    WTSD, WTSHE, SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, &
-   RAPID_GROWTH, Csvline, pCsvline, lngth)
+   RAPID_GROWTH, EO, EOP, Csvline, pCsvline, lngth)
 
 !  Input vars
 !   Character(8),Intent(IN):: EXCODE    
    Integer, Intent(IN) :: YEAR, DOY, DAP, NPP, HARV_AH, HARVESTED, Last_Day
    Integer, Intent(IN) :: NAGE, NR2TIM
    Real,Intent(IN) :: PAGE, WTSD, WTSHE, SDNO, SHELN
-   Real :: WTFRT
+   Real :: WTFRT, EO, EOP
 
    Integer :: i, size
    Character(:), allocatable, Target, Intent(Out) :: Csvline
@@ -483,9 +483,9 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
    !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
-   Write(tmp,'(17(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
+   Write(tmp,'(19(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
    WTSHE, SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, COHAGE, & 
-   RAPID_GROWTH, WTFRT
+   RAPID_GROWTH, WTFRT, EO, EOP
    
    !CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
    !  &NR2TIM, HARV_AH, HARVESTED, Last_Day,  

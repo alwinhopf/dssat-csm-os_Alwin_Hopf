@@ -63,8 +63,9 @@ C=======================================================================
       TYPE (FloodWatType) FLOODWAT
       TYPE (SoilType) SOILPROP
 
-      ISWWAT  = ISWITCH % ISWWAT
-      IF (ISWWAT == 'N') RETURN
+      !Alwin Hopf: Stop routine when simulating water = off? Thats why ET = always 0
+      !ISWWAT  = ISWITCH % ISWWAT
+      !IF (ISWWAT == 'N') RETURN
 
       DAS     = CONTROL % DAS
       DYNAMIC = CONTROL % DYNAMIC
@@ -95,7 +96,8 @@ C=======================================================================
 !***********************************************************************
       IF (DYNAMIC .EQ. SEASINIT) THEN
 !-----------------------------------------------------------------------
-        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!        IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+        IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
           OUTET = 'ET.OUT'
           CALL GETLUN('OUTET', LUN)
 
@@ -117,7 +119,8 @@ C     Variable heading for ET.OUT
 C-----------------------------------------------------------------------
         IF (RNMODE .NE. 'Q' .OR. RUN .EQ. 1) THEN
 
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
             !For sequenced run, use replicate
             ! number instead of run number in header.
             IF (RNMODE .EQ. 'Q') THEN
@@ -130,7 +133,8 @@ C-----------------------------------------------------------------------
           IF (ISWITCH % MESEV == 'S') THEN
 !           Include soil evap by soil layer for Suleiman-Ritchie method
 
-            IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+!            IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+            IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
             WRITE(LUN,'("!",T186,
      &        "Soil evaporation (mm/d) by soil depth (cm):"
      &        ,/,"!",T181,10A8)') (SoilProp%LayerText(L), L=1,N_LYR)
@@ -155,7 +159,8 @@ C-----------------------------------------------------------------------
             ENDIF
             END IF   ! VSH
           ELSE
-            IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+            !IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+            IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
               WRITE (LUN,120)
             END IF   ! VSH
           ENDIF
@@ -239,7 +244,8 @@ C-----------------------------------------------------------------------
 
           CALL YR_DOY(YRDOY, YEAR, DOY) 
 
-          IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          !IF (FMOPT == 'A' .OR. FMOPT == ' ') THEN   ! VSH
+          IF (FMOPT == 'A' .OR. FMOPT == 'C' .OR. FMOPT == ' ') THEN   ! Alwin Hopf
             !Daily printout
             FMT = "(1X,I4,1X,I3.3,1X,I5,3(1X,F6.2),12(F8.3),"
             IF (CEO > 1000. .OR. CET > 1000. .OR. CEP > 1000. .OR. 

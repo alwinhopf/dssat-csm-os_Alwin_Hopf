@@ -311,7 +311,7 @@ C         Variables to run CASUPRO from Alt_PLANT.  FSR 07-23-03
 !     CROPGRO model
       CASE('CRGRO')
         CALL CROPGRO(CONTROL, ISWITCH,
-     &    EOP, HARVFRAC, NH4, NO3, SOILPROP, SPi_AVAIL,   !Input
+     &    EO, EOP, HARVFRAC, NH4, NO3, SOILPROP, SPi_AVAIL,   !Input
      &    ST, SW, TRWUP, WEATHER, YREND, YRPLT,           !Input
      &    CANHT, EORATIO, HARVRES, KSEVAP, KTRANS, MDATE, !Output
      &    NSTRES, PSTRES1,                                !Output

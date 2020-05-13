@@ -260,6 +260,8 @@ C=======================================================================
 !-----------------------------------------------------------------------
 !     POTENTIAL ROOT WATER UPTAKE
 !-----------------------------------------------------------------------
+      !Alwin Hopf - this if is preventing all folloing calculations 
+      !when ISWWAT (water simulation) is not turned on (incl. pot. evapotrans)
       IF (ISWWAT .EQ. 'Y') THEN
 !       Calculate the availability of soil water for use in SOILEV.
         DO L = 1, NLAYR
@@ -614,7 +616,7 @@ C-----------------------------------------------------------------------
 ! CET         Cumulative evapotranspiration (mm)
 ! CLOUDS      Relative cloudiness factor (0-1) 
 ! CO2         Atmospheric carbon dioxide concentration
-!              (µmol[CO2] / mol[air])
+!              (ï¿½mol[CO2] / mol[air])
 ! CONTROL     Composite variable containing variables related to control 
 !               and/or timing of simulation.    See Appendix A. 
 ! CROP        Crop identification code 
@@ -665,8 +667,8 @@ C-----------------------------------------------------------------------
 !               density, drained upper limit, lower limit, pH, saturation 
 !               water content.  Structure defined in ModuleDefs. 
 ! SRAD        Solar radiation (MJ/m2-d)
-! SRFTEMP     Temperature of soil surface litter (°C)
-! ST(L)       Soil temperature in soil layer L (°C)
+! SRFTEMP     Temperature of soil surface litter (ï¿½C)
+! ST(L)       Soil temperature in soil layer L (ï¿½C)
 ! SUMES1      Cumulative soil evaporation in stage 1 (mm)
 ! SUMES2      Cumulative soil evaporation in stage 2 (mm)
 ! SW(L)       Volumetric soil water content in layer L
@@ -682,14 +684,14 @@ C-----------------------------------------------------------------------
 !               layer L (cm3 [water] / cm3 [soil])
 ! T           Number of days into Stage 2 evaporation (WATBAL); or time 
 !               factor for hourly temperature calculations 
-! TA          Daily normal temperature (°C)
+! TA          Daily normal temperature (ï¿½C)
 ! TAMP        Amplitude of temperature function used to calculate soil 
-!               temperatures (°C)
+!               temperatures (ï¿½C)
 ! TAV         Average annual soil temperature, used with TAMP to calculate 
-!               soil temperature. (°C)
-! TAVG        Average daily temperature (°C)
-! TMAX        Maximum daily temperature (°C)
-! TMIN        Minimum daily temperature (°C)
+!               soil temperature. (ï¿½C)
+! TAVG        Average daily temperature (ï¿½C)
+! TMAX        Maximum daily temperature (ï¿½C)
+! TMIN        Minimum daily temperature (ï¿½C)
 ! TRWU        Actual daily root water uptake over soil profile (cm/d)
 ! TRWUP       Potential daily root water uptake over soil profile (cm/d)
 ! U           Evaporation limit (cm)
