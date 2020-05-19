@@ -798,11 +798,26 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C     Shell nitrogen senescence, abortion and pest damage loss
 C-----------------------------------------------------------------------
-      NSHOFF = (WTABRT+WSHIDT) * (PCNSH/100.)
+!new Alwin Hopf: added shell nitrogen removal      
+!! WTABRT   Weight of shells aborted on a day (g[shell] / m2 / d)
+!! WSHIDT   Weight of shell tissue consumed by pests today (g[shell]/m2-d)
+!RTDSH      Harvest Basket Shell Weight for fruit > xmpage at day before harvest occurs
+!! PCNSH    Percentage of N in shell tissue (100 g[N] / g[shell])
+      IF (HARV_AH == 1) THEN
+            NSHOFF = (WTABRT+WSHIDT+RTDSH) * (PCNSH/100.)
+      ELSE
+            NSHOFF = (WTABRT+WSHIDT) * (PCNSH/100.)
+      ENDIF
       NLPEST = NLPEST + WSHIDT * PCNSH/100.
       IF (NSHOFF < 0.0) THEN
          NSHOFF = 0.0
       ENDIF
+!original version. will result in accumulation of shell nitrogen with multiharvest --> too high N
+!      NSHOFF = (WTABRT+WSHIDT) * (PCNSH/100.)
+!      NLPEST = NLPEST + WSHIDT * PCNSH/100.
+!      IF (NSHOFF < 0.0) THEN
+!         NSHOFF = 0.0
+!      ENDIF
 
 C-----------------------------------------------------------------------
 C     Net growth rate of nitrogen in shells
@@ -812,10 +827,17 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C     Seed nitrogen senescence, abortion and pest damage loss
 C-----------------------------------------------------------------------
-      NSDOFF = SWIDOT * PCNSD/100.
-      IF (NSDOFF < 0.0) THEN
-         NSDOFF = 0.0
-      ENDIF
+!new Alwin Hopf:    
+      IF (HARV_AH == 1) THEN
+            NSDOFF = (SWIDOT+RTDSD) * (PCNSD/100.)
+      ELSE
+            NSDOFF = SWIDOT * PCNSD/100.
+      ENDIF   
+!original version. will result in accumulation of seed nitrogen with multiharvest --> too high N
+!      NSDOFF = SWIDOT * PCNSD/100.
+!      IF (NSDOFF < 0.0) THEN
+!         NSDOFF = 0.0
+!      ENDIF
 
 C-----------------------------------------------------------------------
 C     Net growth rate of nitrogen in seeds
