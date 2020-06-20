@@ -463,7 +463,7 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !cRTFPW = NINT(RTFPW * 10.0)
    !cRTDPW = NINT(RTDPW*10.0)
    !Calculation
-   Integer :: COHAGE, RAPID_GROWTH
+   Integer :: COHAGE, RAPID_GROWTH, TMIN
    COHAGE = NR2TIM - NPP !age of cohort in calendar days, add +1 if 0 is a problem
    !Alwin Hopf - WTFRT
    !weight of 1 fruit. divide shell weight / shell number. 1 cohort can have less than one shell
@@ -474,6 +474,11 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    else
    WTFRT = 0
    End IF
+   !TMEAN = (TMIN+TMAX) / 2
+   !TMEAN = 0
+   TMIN = 1
+   !TYPE (WeatherType)  WEATHER
+   !TMIN   = WEATHER % TMIN
    !Alwin Hopf - end
    !Real,Intent(IN) :: WTFRT
    !weight of 1 fruit. divide shell weight / shell number. 1 cohort can have less than one shell
@@ -483,9 +488,9 @@ Subroutine CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, &
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
    !Write(tmp,'(11(g0,","))') YEAR, DOY, DAP, NPP, PAGE, WTSD, & 
    !WTSHE, NR2TIM, HARV_AH, HARVESTED, Last_Day
-   Write(tmp,'(19(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
+   Write(tmp,'(20(g0,","))') YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, & 
    WTSHE, SDNO, SHELN, NR2TIM, HARV_AH, HARVESTED, Last_Day, COHAGE, & 
-   RAPID_GROWTH, WTFRT, EO, EOP
+   RAPID_GROWTH, WTFRT, EO, EOP, TMIN
    
    !CALL CsvOut_Cohort(YEAR, DOY, DAP, NPP, PAGE, NAGE, WTSD, WTSHE, 
    !  &NR2TIM, HARV_AH, HARVESTED, Last_Day,  

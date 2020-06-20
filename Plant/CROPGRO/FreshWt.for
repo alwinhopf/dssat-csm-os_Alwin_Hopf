@@ -478,7 +478,7 @@
                SDNO(NPP) = 0
                !AH: correction multiharvest. Shell number should not be resetted to 0
                !otherwise total pod number is not correct
-               !SHELN(NPP)= 0
+               SHELN(NPP)= 0
                WTSD(NPP) = 0.0
                WTSHE(NPP)= 0.0  
             end if

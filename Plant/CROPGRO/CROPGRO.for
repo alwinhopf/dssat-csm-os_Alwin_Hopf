@@ -36,8 +36,8 @@ C  07/08/2003 CHP Added KSEVAP for export to soil evaporation routines.
 C=======================================================================
 
       SUBROUTINE CROPGRO(CONTROL, ISWITCH, 
-     &    EO, EOP, HARVFRAC, NH4, NO3, SOILPROP, SPi_AVAIL,   !Input
-     &    ST, SW, TRWUP, WEATHER, YREND, YRPLT,           !Input
+     &    EO, EOP, TAVG, HARVFRAC, NH4, NO3, SOILPROP,   !Input
+     &    SPi_AVAIL,ST, SW, TRWUP, WEATHER, YREND, YRPLT,  !Input
      &    CANHT, EORATIO, HARVRES, KSEVAP, KTRANS, MDATE, !Output
      &    NSTRES, PSTRES1,                                !Output
      &    PUptake, PORMIN, RLV, RWUMX, SENESCE,           !Output
@@ -78,6 +78,9 @@ C=======================================================================
      &    CRUSSH, CADLF, CADST, CANHT, CANWH, CMINEA
       REAL DAYL, DWNOD
       REAL DWNODA, DISLA, DRPP, DTX, DXR57
+      !new Alwin Hopf. TMIN is already declared below
+      REAL TMAX
+      !
       REAL EO, EOP, EP1, EXCESS
       REAL FNINSH, FRACDN, FRCNOD,
      &    F, FNINL, FNINR, FNINS, FNINSD,
@@ -310,7 +313,7 @@ C-----------------------------------------------------------------------
      &    NSTRES, PGAVL, PHTHRS, PHTIM, PNTIM, PUNCSD,    !Input
      &    PUNCTR, RNITP, SDDES, SDGR, SHELWT, SW, SWFAC,  !Input
      &    TDUMX, TGRO, TURADD, XFRT, YRDOY, YRNR1, YRNR2, !Input
-     &    PStres2, YRPLT, EO, EOP,                                !Input
+     &    PStres2, YRPLT, EO, EOP,                              !Input
      &    AGRSD3, LAGSD, LNGPEG, NGRSD, NGRSH, PCTMAT,    !Output
      &    PODNO, POTCAR, POTLIP, SDNO, SDVAR, SEEDNO,     !Output
      &    SHELN, SHVAR, WSDDTN, WSHDTN, WTABRT, WTSD,     !Output
@@ -577,6 +580,7 @@ C     Initialize pest coupling point and damage variables
      &    NODGR, WTNFX, SENNOD)                           !Output
 
 !-----------------------------------------------------------------------
+          !new Alwin Hopf: EO, EOP, TMIN, TMAX 
       CALL PODS(SEASINIT, 
      &    AGRSD1, AGRSH1, DLAYR, DRPP, DUL, FILECC,       !Input
      &    FILEGC,FILEIO, FNINL, FNINSD, FNINSH, GDMSD,    !Input
@@ -584,7 +588,7 @@ C     Initialize pest coupling point and damage variables
      &    NSTRES, PGAVL, PHTHRS, PHTIM, PNTIM, PUNCSD,    !Input
      &    PUNCTR, RNITP, SDDES, SDGR, SHELWT, SW, SWFAC,  !Input
      &    TDUMX, TGRO, TURADD, XFRT, YRDOY, YRNR1, YRNR2, !Input
-     &    PStres2, YRPLT, EO, EOP,                                !Input
+     &    PStres2, YRPLT, EO, EOP,                               !Input
      &    AGRSD3, LAGSD, LNGPEG, NGRSD, NGRSH, PCTMAT,    !Output
      &    PODNO, POTCAR, POTLIP, SDNO, SDVAR, SEEDNO,     !Output
      &    SHELN, SHVAR, WSDDTN, WSHDTN, WTABRT, WTSD,     !Output

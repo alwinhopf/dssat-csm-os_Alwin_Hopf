@@ -447,11 +447,11 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
       !IF (PHTIM(NPP) .GE. 0 .AND. PHTIM(NPP) .LE. 50) THEN
       !IF (NPP .LE. 299 .AND. PHTIM(NPP) .LE. 50) THEN
 !V5
-      IF (NPP .LE. 300) THEN
-            IF (PHTIM(NPP) .LE. 60) THEN
-            XFRUIT = XFRUIT2/60*PHTIM(NPP)*0.80+0.20*XFRUIT2
-            ENDIF
-      ENDIF
+!      IF (NPP .LE. 300) THEN
+!            IF (PHTIM(NPP) .LE. 60) THEN
+!            XFRUIT = XFRUIT2/60*PHTIM(NPP)*0.80+0.20*XFRUIT2
+!            ENDIF
+!      ENDIF
         
 !Alwin Hopf - dynamic adjustment of XFRUIT for Strawberry
 

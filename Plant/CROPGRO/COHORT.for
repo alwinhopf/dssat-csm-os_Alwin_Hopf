@@ -13,7 +13,7 @@ C=======================================================================
 
 
       SUBROUTINE COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD,WTSHE,NPP,
-     & NR2TIM,SDNO,SHELN,LNGPEG,EO,EOP)
+     & NR2TIM,SDNO,SHELN,LNGPEG,EO,EOP,TMIN,TMAX)
 
 !-----------------------------------------------------------------------
       USE ModuleDefs     !Definitions of constructed variable types, 
@@ -31,9 +31,9 @@ C=======================================================================
       INTEGER DAS, YRDOY, YRPLT, DAP, DOY, YEAR, TIMDIF, NPP, NR2TIM, NAGE
       REAL PAGE, WTSD, WTSHE
       REAL SDNO, SHELN
-      !Alwin Hopf - new variable
+      !Alwin Hopf - new variable. Evapotranspiration
       REAL LNGPEG
-      REAL EO,EOP
+      REAL EO,EOP,TMIN,TMAX
 
       !output array
       !seed numer, shell numer, page, 
@@ -89,7 +89,7 @@ C=======================================================================
        !NPP       Cohort number used as index in loops 
        !
 
-       !Alwin Hopf - indicator for las tday of fruit cohort.
+       !new Alwin Hopf - indicator for last day of fruit cohort.
        !if Last_Day = 1, means that next day this fruit will be gone 
       If ((page >= xmpage).AND.(HARV_AH==1).AND.(WTSD>0)) THEN
             LAST_DAY = 1
@@ -109,7 +109,7 @@ C=======================================================================
       Else
             RAPID_GROWTH = 0
       End IF
-      !Alwin Hopf - end
+      !new Alwin Hopf - end
       
       IF (NR2TIM .EQ. 1) THEN
       WRITE (LUN,120)

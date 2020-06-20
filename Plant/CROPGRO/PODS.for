@@ -28,7 +28,7 @@
 !                ERROR, FIND, IGNORE
 !                COHORT
 !=======================================================================
-
+     !new ALwin Hopf: EO, EOP, TMIN, TMAXdisk
       SUBROUTINE PODS(DYNAMIC,  
      &    AGRSD1, AGRSH1, DLAYR, DRPP, DUL, FILECC,       !Input
      &    FILEGC,FILEIO, FNINL, FNINSD, FNINSH, GDMSD,    !Input
@@ -36,7 +36,7 @@
      &    NSTRES, PGAVL, PHTHRS, PHTIM, PNTIM, PUNCSD,    !Input
      &    PUNCTR, RNITP, SDDES, SDGR, SHELWT, SW, SWFAC,  !Input
      &    TDUMX, TGRO, TURADD, XFRT, YRDOY, YRNR1, YRNR2, !Input
-     &    PStres2, YRPLT, EO, EOP,                                !Input
+     &    PStres2, YRPLT, EO, EOP,           !Input
      &    AGRSD3, LAGSD, LNGPEG, NGRSD, NGRSH, PCTMAT,    !Output
      &    PODNO, POTCAR, POTLIP, SDNO, SDVAR, SEEDNO,     !Output
      &    SHELN, SHVAR, WSDDTN, WSHDTN, WTABRT, WTSD,     !Output
@@ -77,7 +77,7 @@
       REAL PROLFF, FNINL, SEEDNO, PODNO, XMPAGE
       REAL WTPSD, SFDUR, PROSHF
 
-      REAL EO, EOP !Alwin Hopf
+      REAL EO, EOP, TAVG, TMIN, TMAX !Alwin Hopf
 
       REAL NAVPOD, ADDSHL, FLWADD
       REAL PGLEFT, PODMAT, AFLW, FLWRDY, PODADD, SHMINE, ACCAGE, PGAVLR
@@ -670,7 +670,7 @@ C 24 changed to TS on 3Jul17 by Bruce Kimball
               WTABRT = WTABRT + WTABR
             ENDIF
           CALL COHORT(DAS,YRDOY,YRPLT,PAGE,NAGE,WTSD(NPP),WTSHE(NPP),
-     &      NPP,NR2TIM,SDNO(NPP),SHELN(NPP),LNGPEG,EO,EOP) 
+     &      NPP,NR2TIM,SDNO(NPP),SHELN(NPP),LNGPEG,EO,EOP,TMIN,TMAX) 
  2200     ENDDO
 !-----------------------------------------------------------------------
         ENDIF         !End of DAS>NR2 Shell growth section
