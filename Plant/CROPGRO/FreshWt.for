@@ -222,7 +222,7 @@
           CASE ('SR')       ! Strawberry
                         !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.  !original
             !DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 34.  !changed Alwin Hopf. Ratio Dry:Fresh Weight was about 3 times too high
-            DMC(NPP) = 0.16 !fixed value for Strwawberry. From Code from Ken Boote / VSH
+            DMC(NPP) = 0.16 !fixed value for Strawberry. From Code from Ken Boote / VSH
           CASE ('GB')       ! Snap bean
 !           DMC(NPP) = 0.0465 + 0.0116 * EXP(0.161 * PAGE)
             DMC(NPP) = 0.023 + 0.0277 * EXP(0.116 * PAGE)

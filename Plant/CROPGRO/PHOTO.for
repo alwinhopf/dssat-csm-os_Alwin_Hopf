@@ -190,8 +190,13 @@ C-----------------------------------------------------------------------
         E_FAC = MIN(AGEFCC, PStres1)
       ENDIF
 
+      !Alwin Hopf 
+      !adjustment of photosynthesis to simulate transplant shock
+      !using soil fertility factor (SLPF). Stepwise increase from 0.1 to 1 after transplanting
+      !original version below:
       PG =  PTSMAX * SLPF * PGFAC * TPGFAC * E_FAC * 
      &            PGSLW * PRATIO * PGLFMX * SWFAC
+      !new version below":
 
 !From WDB (chp 10/21/03):
 !        PG = PG * MIN(SWFAC ,2*(1-SATFAC) )
@@ -394,7 +399,7 @@ C-----------------------------------------------------------------------
 !            at a CO2 concentration of 330 vpm 
 ! CCMP     Canopy CO2 compensation point (CO2 at which daily PG is 0.0) 
 ! CHAR     Contains the contents of last record read 
-! CO2      Atmospheric carbon dioxide concentration (µmol[CO2] / mol[air])
+! CO2      Atmospheric carbon dioxide concentration (ï¿½mol[CO2] / mol[air])
 ! COLDSTR  Cold weather stress factor for photosynthesis (not currently 
 !            used) 
 ! CUMSTR   Cumulative stress factor for photosynthesis after start of seed 
@@ -446,7 +451,7 @@ C-----------------------------------------------------------------------
 ! PGLFMX   Multiplier for daily canopy photosynthesis to account for 
 !            cultivar differences in leaf photosynthesis capabilities 
 ! PGREF    Reference value for leaf level photosynthesis used in canopy 
-!            light response curve (µmol[CO2] / m2-s)
+!            light response curve (ï¿½mol[CO2] / m2-s)
 ! PGSLW    Relative effect of leaf thickness (SLW) on daily canopy PG 
 ! PHTHRS10 Threshold time that must accumulate in phase 10 for the next 
 !            stage to occur.  Equivalent to PHTHRS(10) in Subroutine 
@@ -473,7 +478,7 @@ C-----------------------------------------------------------------------
 ! SWFAC    Effect of soil-water stress on photosynthesis, 1.0=no stress, 
 !            0.0=max stress 
 ! TABEX    Function subroutine - Lookup utility 
-! TDAY     Average temperature during daylight hours (°C)
+! TDAY     Average temperature during daylight hours (ï¿½C)
 ! TIMDIF   Integer function which calculates the number of days between two 
 !            Julian dates (da)
 ! TPGFAC   Reduction in specific leaf area due to daytime temperature being 
