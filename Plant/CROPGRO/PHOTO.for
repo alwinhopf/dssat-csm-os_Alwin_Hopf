@@ -189,7 +189,6 @@ C-----------------------------------------------------------------------
       ELSE
         E_FAC = MIN(AGEFCC, PStres1)
       ENDIF
-
       !Alwin Hopf 
       !adjustment of photosynthesis to simulate transplant shock
       !using soil fertility factor (SLPF). Stepwise increase from 0.1 to 1 after transplanting

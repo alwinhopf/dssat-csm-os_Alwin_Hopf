@@ -714,9 +714,9 @@ C-----------------------------------------------------------------------
           !Alwin Hopf - new
           !Transplant shock: reduce PG after transplanting, when DAS >= NVEG0
           !
-          IF ((DAS-NVEG0) .LE. 50) THEN
-          PG = PG / (50-(DAS-NVEG0))
-          ENDIF
+            IF ((DAS-NVEG0) .LE. 39 .AND. (DAS-NVEG0) .GE. 1 ) THEN
+            PG = PG / (40-(DAS-NVEG0))
+            ENDIF
         ELSEIF (MEPHO .EQ. 'C') THEN
           CALL PHOTO(CONTROL, 
      &    BETN, CO2, DXR57, EXCESS, KCAN, KC_SLOPE,       !Input
