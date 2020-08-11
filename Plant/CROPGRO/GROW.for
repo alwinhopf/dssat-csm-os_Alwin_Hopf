@@ -495,6 +495,16 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C       WSDOT = Net stem growth rate
 C-----------------------------------------------------------------------
+!alwin hopf explanations
+!shutmob = amount of leaf mass lost due to N and C mobilization
+!CRUSST = C mobilized from stem tissue per day
+!NRUSST = N mobilized
+!WSIDOT = pest damage to stem mass
+!SSDOT = senescense of petioles
+!WSDOTN = dry weight growth rate of stem
+!
+!--> net stem growth = growth - petiole senescense - pest damage - C/N mobilization
+!alwin hopf end
       WSDOT = WSDOTN - SSDOT - WSIDOT - NRUSST / 0.16 - CRUSST
       ShutMob = ShutMob + (NRUSST / 0.16 + CRUSST) * 10.      !kg/ha
 
