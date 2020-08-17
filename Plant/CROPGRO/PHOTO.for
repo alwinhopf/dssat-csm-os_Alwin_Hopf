@@ -193,8 +193,8 @@ C-----------------------------------------------------------------------
       !adjustment of photosynthesis to simulate transplant shock
       !using soil fertility factor (SLPF). Stepwise increase from 0.1 to 1 after transplanting
       !original version below:
-      PG =  PTSMAX * SLPF * PGFAC * TPGFAC * E_FAC * 
-     &            PGSLW * PRATIO * PGLFMX * SWFAC
+      !PG =  PTSMAX * SLPF * PGFAC * TPGFAC * E_FAC * 
+      !&            PGSLW * PRATIO * PGLFMX * SWFAC
       !new version below":
 
 !From WDB (chp 10/21/03):

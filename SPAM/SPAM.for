@@ -55,7 +55,7 @@ C=======================================================================
       INTEGER DYNAMIC, L, NLAYR
 
       REAL CANHT, CO2, SRAD, TAVG, 
-     &    TMAX, TMIN, WINDSP, XHLAI, XLAI
+     &    TMAX, TMIN, WINDSP, XHLAI, XLAI, YRPLT
       REAL CEF, CEM, CEO, CEP, CES, CET, EF, EM, EO, EP, ES, ET, EVAP, 
      &    TRWU, TRWUP, U
       REAL EOS, EOP, WINF, MSALB, ET_ALB
@@ -423,6 +423,7 @@ C       and total potential water uptake rate.
           CALL ETPHOT(CONTROL, ISWITCH,
      &    PORMIN, PSTRES1, RLV, RWUMX, SOILPROP, ST, SW,  !Input
      &    WEATHER, XLAI,                                 !Input
+     &    YRPLT,                            !Input, new Alwin Hopf for transplant shock
      &    EOP, EP, ES, RWU, TRWUP)                        !Output
           EVAP = ES  !CHP / BK 7/13/2017
         ENDIF

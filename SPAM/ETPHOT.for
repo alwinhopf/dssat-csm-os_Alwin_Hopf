@@ -47,7 +47,7 @@ C========================================================================
 
       SUBROUTINE ETPHOT (CONTROL, ISWITCH,
      &    PORMIN, PSTRES1, RLV, RWUMX, SOILPROP, ST, SW,  !Input
-     &    WEATHER, XLAI,                                  !Input
+     &    WEATHER, XLAI, YRPLT,                           !Input
      &    EOP, EP, ES, RWU, TRWUP)                        !Output
 C     &    Enoon, Tnoon, WINDN, TCANn, CSHnn, CSLnn,        !Output
 C     &    LSHnn, LSLnn, ETnit, TEMnit, Enit, Tnit, WINnit,!Output
@@ -85,7 +85,7 @@ C-----------------------------------------------------------------------
      &  SW(NL),SW2(NL),SWFAC,SWE,SWEF,T0HR,TAIRHR(TS),TA,
      &  TCAN(TS),TCANAV,TCANDY,TDAY,TEMPN,THR,TINCR,TRWUP,
      &  TSHR(NL), TSRF(3),TSRFN(3),TSURF(3,1),HOLDWH,WINDHR(TS),
-     &  XLAI, TSHRn(NL),
+     &  XLAI, YRPLT, TSHRn(NL),
      &  XLMAXT(6),XSW(NL,3),YLMAXT(6),YSCOND(NL,3),YSHCAP(NL,3),TMIN
       REAL SAT(NL),TGRO(TS),TGROAV,TGRODY,TAV,TAMP
       REAL PGXX,DXR57,EXCESS,XPOD,CUMSTR,COLDSTR
@@ -455,7 +455,7 @@ C            added by BAK on 10DEC2015
      &      CCNEFF, CICAD, CMXSF, CQESF, PGPATH,          !Input
      &      AGEQESL, CO2QESL, QEFFSL)                     !Output
 
-C         Integrate instantaneous canopy photoynthesis (µmol CO2/m2/s)
+C         Integrate instantaneous canopy photoynthesis (ï¿½mol CO2/m2/s)
 C         and evapotranspiration (mm/h) to get daily values (g CO2/m2/d
 C         and mm/d).
 
@@ -694,6 +694,13 @@ C         Post-processing for some stress effects (duplicated in PHOTO).
             COLDSTR = 0.0
           ENDIF
           PG = PG * EXCESS
+
+          !Alwin Hopf - new
+          !Transplant shock: reduce PG after transplanting, when DAS >= NVEG0
+          !
+          !IF ((DAS-NVEG0) .LE. 39 .AND. (DAS-NVEG0) .GE. 1 ) THEN
+          !PG = PG / (40-(DAS-NVEG0))
+          !ENDIF
 
           CALL OpETPhot(CONTROL, ISWITCH,
      &        PCINPD, PG, PGNOON, PCINPN, SLWSLN, SLWSHN,
