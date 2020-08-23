@@ -711,19 +711,6 @@ C-----------------------------------------------------------------------
           !Retrieve AGEFAC and PG from ETPHOT routine.
           CALL GET('SPAM', 'AGEFAC', AGEFAC)
           CALL GET('SPAM', 'PG'    , PG)
-          !Alwin Hopf - Transplant shock
-          !Transplant shock: reduce PG after transplanting, when DAS >= NVEG0
-<<<<<<< HEAD
-          !
-            !IF ((DAS-NVEG0) .LE. 39 .AND. (DAS-NVEG0) .GE. 1 ) THEN
-            !PG = PG / (40-(DAS-NVEG0))
-            !ENDIF
-=======
-            IF ((DAS-NVEG0) .LE. 40 .AND. (DAS-NVEG0) .GE. 1 ) THEN
-            PG = (PG / 40) * (DAS-NVEG0)
-            ENDIF
-           !Alwin Hopf - Transplant shock end
->>>>>>> 9b1e5ad50c5bc0a3083483cc8ffc2ef91fd8c52f
         ELSEIF (MEPHO .EQ. 'C') THEN
           CALL PHOTO(CONTROL, 
      &    BETN, CO2, DXR57, EXCESS, KCAN, KC_SLOPE,       !Input
@@ -731,6 +718,12 @@ C-----------------------------------------------------------------------
      &    SWFAC, TDAY, XHLAI, XPOD,                       !Input
      &    AGEFAC, PG)                                     !Output
         ENDIF
+      !Alwin Hopf - Transplant shock
+      !Transplant shock: reduce PG for 40 days after transplanting, when DAS >= NVEG0
+        IF ((DAS-NVEG0) .LE. 50 .AND. (DAS-NVEG0) .GE. 1 ) THEN
+              PG = (PG / 50) * (DAS-NVEG0)
+        ENDIF
+      !Alwin Hopf - Transplant shock end
       ENDIF
 
 !***********************************************************************
