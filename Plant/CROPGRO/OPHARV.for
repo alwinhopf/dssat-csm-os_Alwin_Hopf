@@ -227,7 +227,7 @@ C-----------------------------------------------------------------------
       PlantStres % StageName = '                       '
       SELECT CASE (CROP)
       CASE ('BN','CH','CN','CO','CP','FB','PE',
-     &      'PN','PP','PR','SB','TM','VB','GB','LT')
+     &      'PN','PP','PR','SB','TM','SR','VB','GB','LT')
         PlantStres % NSTAGES = 4
         PlantStres % StageName(1)  = 'Emergence -First Flower'
         PlantStres % StageName(2)  = 'First Flower-First Seed'
@@ -271,7 +271,7 @@ C-----------------------------------------------------------------------
 !     Set ACTIVE variable to indicate that current phase is active
       SELECT CASE (CROP)
       CASE ('BN','CH','CN','CO','CP','FB','PE',
-     &      'PN','PP','PR','SB','TM','VB','GB','LT','SF','SU')
+     &      'PN','PP','PR','SB','TM','SR','VB','GB','LT','SF','SU')
         IF (YRDOY > STGDOY(1) .AND. YRDOY <= STGDOY(5)) THEN
           PlantStres % ACTIVE(1) = .TRUE.
         ENDIF
@@ -535,7 +535,7 @@ C     Byproduct not harvested is incorporated
          PSPP  = 0.
       ENDIF
 
-      IF ((CROP .EQ. 'TM') .OR. (CROP .EQ. 'PR')) THEN
+      IF ((CROP .EQ. 'TM') .OR. (CROP .EQ. 'SR') .OR. (CROP .EQ. 'PR')) THEN
         HWAM = PODWT * 10.
         HWAH = PODWT * 10.
       ELSE
@@ -627,7 +627,7 @@ C-----------------------------------------------------------------------
 
       SELECT CASE (CROP)
       CASE ('BN','CH','CN','CP','FB','GB','PE','PP',
-     &      'PR','SB','TM','VB','LT')
+     &      'PR','SB','TM','SR','VB','LT')
 !     For stage-dependant irrigation - send GSTAGE back to irrig routine
         STNAME(1) = 'Emergence '    !; GSTAGE(1) = "GS001"
         STNAME(2) = 'Unifoliate'

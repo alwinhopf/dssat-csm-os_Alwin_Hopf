@@ -617,6 +617,7 @@ C=======================================================================
 !     CROPGRO
       CASE ('CRGRO','PRFRM')
 !      IF (INDEX (MODEL, 'CRGRO') > 0) THEN
+
         IF (INDEX ('BN,PN,SB,PE,CH,PP,VB,CP,BR,FB,NP,GB,PE,LT',CROP) 
      &    > 0) THEN
            WRITE (HEADER(I), 850) CSDVAR,PPSEN,PH2T5,

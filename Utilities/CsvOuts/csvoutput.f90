@@ -282,6 +282,8 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    Integer :: cWTLF1, cSTMWT1, cSDWT1, cRTWT1, cTOPWT1, cSEEDNO1, cPODWT1
    Integer :: cPODNO1, cPODWTD1, cPodSum, cCUMSENSURF1, cCUMSENSOIL1 
    Real :: cDWNOD1, cRTDEP1
+   !new AH
+   Real :: cPLEAF, cPSTEM
   
    Integer :: i, size
   
@@ -308,13 +310,22 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    cRTDEP1 = RTDEP / 100.0
    cCUMSENSURF1 = NINT(CUMSENSURF)  
    cCUMSENSOIL1 = NINT(CUMSENSOIL) 
+
+   !new AH
+   !TOPWT = CWAD in output
+   !SWAD = stem weight in output
+   !leaf weight = LWAD in output
+   cPLEAF = NINT(WTLF * 10.0) / NINT(TOPWT * 10.0)
+   cPLEAF = 1.0
+   cPSTEM = NINT(STMWT * 10.0) / NINT(TOPWT * 10.0)
+   cPSTEM = 2.0
    
    ! Unformatted string output
-   Write(tmp,'(42(g0,","))') RUN, EXCODE, TN, ROTNUM, REPNO, YEAR, DOY, DAS,DAP,&
+   Write(tmp,'(44(g0,","))') RUN, EXCODE, TN, ROTNUM, REPNO, YEAR, DOY, DAS,DAP,&
       VSTAGE, RSTAGE, XLAI, cWTLF1, cSTMWT1, cSDWT1, cRTWT1, VWAD, cTOPWT1, &
       cSEEDNO1, SDSIZE, HI, cPODWT1, cPODNO1, SWF_AV, TUR_AV, NST_AV, PS1_AV, &
       PS2_AV, KST_AV, EXW_AV, PCNLP, SHELPC, HIP, cPODWTD1, cPodSum, SLAP, &
-      CANHT, CANWH, cDWNOD1, cRTDEP1, cCUMSENSURF1, cCUMSENSOIL1 
+      CANHT, CANWH, cDWNOD1, cRTDEP1, cCUMSENSURF1, cCUMSENSOIL1,cPLEAF,cPSTEM 
    
    Write(fmt,'(I2)') N_LYR - 1
    fmt = '('//Trim(Adjustl(fmt))//'(g0,","),g0)'
