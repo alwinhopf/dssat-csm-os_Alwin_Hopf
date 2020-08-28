@@ -66,7 +66,7 @@ C=======================================================================
 !     &      ('BNPNSBTMPECHPPPRC3C4BHG1G2G3G4G5G6G7G8BRSCVBCPCBFBCOCT'
 !     &      ,CROP).GT. 0 .OR. INDEX('WH,BA,MZ,SG,ML',CROP) .GT. 0) THEN
           SELECT CASE(CROP)
-            CASE('BN','PN','SB','TM','PE','CH','PP','PR','C3','C4','BH',
+            CASE('BN','PN','SB','TM','SR','PE','CH','PP','PR','C3','C4','BH',
      &              'BR','SC','VB','CP','CB','FB','CO','CT','NP','GB',
 c**WDB 12/2015     &              'WH','BA','MZ','SG','ML','LT','CS')
 C**WDB   Added sugarbeet crop code BS           

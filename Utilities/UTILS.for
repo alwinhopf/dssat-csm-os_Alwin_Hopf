@@ -867,7 +867,7 @@ C-----------------------------------------------------------------------
 !      CASE ('SC'); CROPD = 'SUGARCANE '
 !      CASE ('SG'); CROPD = 'SORGHUM   '
 !      CASE ('SU'); CROPD = 'SUNFLOWER '
-!      CASE ('ST'); CROPD = 'STRAWBERRY '
+!      CASE ('SR'); CROPD = 'STRAWBERRY '
 !      CASE ('TM'); CROPD = 'TOMATO    '
 !      CASE ('TN'); CROPD = 'TANIER    '
 !      CASE ('TR'); CROPD = 'TARO      '

@@ -728,6 +728,24 @@ C-----------------------------------------------------------------------
         STNAME(15)= 'Sowing    '
         STNAME(16)= 'Harvest   '
 
+      CASE ('SR')
+        STNAME(1) = 'Emergence '
+        STNAME(2) = 'Unifoliate'
+        STNAME(3) = 'End Juven.'
+        STNAME(4) = 'Flower Ind'
+        STNAME(5) = 'First Flwr'
+        STNAME(6) = 'Frst Fruit'
+        STNAME(7) = 'Frst Fruit'
+        STNAME(8) = 'First Seed'
+        STNAME(9) = 'End Fruit '
+        STNAME(10)= 'Phys. Mat '
+        STNAME(11)= 'Harv. Mat '
+        STNAME(12)= 'End Msnode'
+        STNAME(13)= 'End Leaf  '
+        STNAME(14)= 'Start Sim '
+        STNAME(15)= 'Sowing    '
+        STNAME(16)= 'Harvest   '
+
       CASE ('VB')
         STNAME(1) = 'Emergence '
         STNAME(2) = 'Unifoliate'
