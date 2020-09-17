@@ -1298,7 +1298,7 @@ C-----------------------------------------------------------------------
 ! FNINSR    Maximum fraction of N for growing storage tissue 
 !                  (g[N] / g[storage])
 ! FNSDT(I)  Temperature values which describe function for modifying seed 
-!             growth rate with temperature (°C)
+!             growth rate with temperature (ï¿½C)
 ! FRACDN    Relative time between flowering (NR1) and last leaf appearance 
 !             (NDLEAF) 
 ! FRLF      Fraction of vegetative tissue growth that goes to leaves on a 
@@ -1355,8 +1355,8 @@ C-----------------------------------------------------------------------
 !           NDMOLD when PG is low
 ! LAGSD     Time required between shell growth and seed growth, per cohort
 !             (Photo-thermal days)
-! LIPOPT    Temperature above which lipid composition is at a maximum (°C)
-! LIPTB     Temperature below which lipid composition is zero (°C)
+! LIPOPT    Temperature above which lipid composition is at a maximum (ï¿½C)
+! LIPTB     Temperature below which lipid composition is zero (ï¿½C)
 ! LNGPEG    Time between start of peg and rapid shell formation (for 
 !             peanuts only).  Defines slow growth period. (Photo-thermal days)
 ! LNGSH     Time required for shell growth (Photo-thermal days)
@@ -1526,7 +1526,7 @@ C-----------------------------------------------------------------------
 !             temperature. 
 ! SWFAC     Effect of soil-water stress on photosynthesis, 1.0=no stress, 
 !             0.0=max stress 
-! TAVG      Average daily temperature (°C)
+! TAVG      Average daily temperature (ï¿½C)
 ! TDUMX     Photo-thermal time that occurs in a real day based on early 
 !             reproductive development temperature function
 !             (photo-thermal days / day)
@@ -1535,7 +1535,7 @@ C-----------------------------------------------------------------------
 !             (photo-thermal days / day)
 ! TEMXFR    Temperature effect on partitioning to pods, high temp. 
 !             increases fraction of growth to vegetative tissue (0-1) 
-! TGRO(I)   Hourly air temperature (°C)
+! TGRO(I)   Hourly air temperature (ï¿½C)
 ! THRESH    The maximum ratio mass of seed to mass of seed plus shell at 
 !             maturity.  Causes seed to stop growing as their dry weights 
 !             increase until shells are filled in a cohort. 
@@ -1596,7 +1596,7 @@ C-----------------------------------------------------------------------
 ! XPOD      Growth partitioning to pods which slows node appearance
 !             (fraction)
 ! XSLATM(I) Temperature values for function that reduces specific leaf area 
-!             (SLA) (°C)
+!             (SLA) (ï¿½C)
 ! XSTR        Difference between partitioning fraction to storage organ at 
 !             beginning bloom (R1) and at the day on which the maximum  
 !             number of V-stages occurs (NDLEAF)       
@@ -1608,7 +1608,7 @@ C-----------------------------------------------------------------------
 !             bloom (R1) and at the day on which the maximum number of 
 !             V-stages occurs (NDLEAF) 
 ! XXFTEM(I) Array of temperature values in table lookup describing effect 
-!             of temperature on partitioning to pods (YXFTEM = 0 TO 1). (°C)
+!             of temperature on partitioning to pods (YXFTEM = 0 TO 1). (ï¿½C)
 ! YLEAF(I)  Partitioning fraction to leaves at V-stage XLEAF(I)
 !             ( g[leaf] / g[veg. plant])
 ! YRDOY     Current day of simulation (YYDDD)
