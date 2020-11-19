@@ -187,7 +187,7 @@
       ELSEIF (DYNAMIC .EQ. EMERG) THEN
 !-----------------------------------------------------------------------
         XFRT   = XFRUIT
-        XFRUIT2 = XFRUIT
+        XFRUIT2 = XFRUIT !AH, variable for dynamic adjustment of XFRUIT
         ADDSHL = 0.0
         TURXFR = 0.0
         GDMSD  = 0.0
@@ -416,45 +416,12 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !     but turgor effect adds to the partitioning
 !-----------------------------------------------------------------------
 !Alwin Hopf - adjustemnt of XFRUIT for Strawberry
-!      IF ( DAS .LE. 90) THEN
-!            XFRUIT = 0.40
-!          ENDIF
-!      IF ( DAS .GE. 90 .AND. DAS .LE. 135) THEN
-!            XFRUIT = 0.65
-!          ENDIF
-!Alwin Hopf - adjustemnt of XFRUIT for Strawberry - end
 !based on days after first flower NR1TIM
-!V1
-!      IF ( (DAS-NR1) .LE. 99) THEN
-!            XFRUIT = ((XFRUIT2/99)*(DAS-NR1))
-!        ENDIF
-!V2
-!      IF ( (DAS-NR1) .LE. 66) THEN
-!            XFRUIT = ((XFRUIT2/99)*(DAS-NR1))+0.33*XFRUIT2
-!        ENDIF
-!V3
-!      IF ( (DAS-NR1) .LE. 100) THEN
-!          XFRUIT = ((XFRUIT2/100)*(DAS-NR1)*0.90)+0.10*XFRUIT2
-!      ENDIF
-!V4
-!      IF ( (DAS-NR1) .LE. 160) THEN
-!            XFRUIT = ((XFRUIT2/160)*(DAS-NR1))
-!        ENDIF
-!V5
-!      IF (PHTIM(DAS - NR2) .LE. 50) THEN
-!            XFRUIT = XFRUIT2/100*PHTIM(DAS - NR2)*2
-!        ENDIF
-      !IF (PHTIM(NPP) .GE. 0 .AND. PHTIM(NPP) .LE. 50) THEN
-      !IF (NPP .LE. 299 .AND. PHTIM(NPP) .LE. 50) THEN
-!V5
       IF (NPP .LE. 300) THEN
             IF (PHTIM(NPP) .LE. 60) THEN
             XFRUIT = XFRUIT2/60*PHTIM(NPP)*0.80+0.20*XFRUIT2
             ENDIF
       ENDIF
-        
-!Alwin Hopf - dynamic adjustment of XFRUIT for Strawberry
-
 !Alwin Hopf - dynamic adjustment of XFRUIT for Strawberry - end
 
       XFRT = XFRUIT * TEMXFR + XFRUIT * TURXFR
@@ -1306,6 +1273,7 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 ! XFRUIT    Maximum fraction of daily available gross photosynthate (PG) 
 !             which is allowed to go to seeds plus shells, varies from 0 to 
 !             1.0. 
+! XFRUIT2   Helper variable for dynamic adustment of XFRUIT
 ! XLEAF(I)  V-stage at which partitioning to leaves is YLEAF(I).
 !            (leaf nodes)
 ! XPOD      Growth partitioning to pods which slows node appearance
