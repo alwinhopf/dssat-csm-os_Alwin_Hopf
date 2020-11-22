@@ -282,7 +282,7 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    Integer :: cWTLF1, cSTMWT1, cSDWT1, cRTWT1, cTOPWT1, cSEEDNO1, cPODWT1
    Integer :: cPODNO1, cPODWTD1, cPodSum, cCUMSENSURF1, cCUMSENSOIL1 
    Real :: cDWNOD1, cRTDEP1
-   !new AH
+   !new Alwin Hopf
    Real :: cPLEAF, cPSTEM
   
    Integer :: i, size
@@ -311,7 +311,7 @@ Subroutine CsvOut_crgro(EXCODE, RUN, TN, ROTNUM, REPNO, YEAR, DOY, DAS, DAP, &
    cCUMSENSURF1 = NINT(CUMSENSURF)  
    cCUMSENSOIL1 = NINT(CUMSENSOIL) 
 
-   !new AH
+   !new Alwin Hopf
    !TOPWT = CWAD in output
    !SWAD = stem weight in output
    !leaf weight = LWAD in output

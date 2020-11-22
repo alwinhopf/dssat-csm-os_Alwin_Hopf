@@ -476,7 +476,7 @@
             PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
             if ((page >= xmpage).AND.(HARV==1))then 
                SDNO(NPP) = 0
-               !AH: correction multiharvest. Shell number should not be resetted to 0
+               !Alwin Hopf: correction multiharvest. Shell number should not be resetted to 0
                !otherwise total pod number is not correct
                SHELN(NPP)= 0
                WTSD(NPP) = 0.0

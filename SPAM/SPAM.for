@@ -260,7 +260,7 @@ C=======================================================================
 !-----------------------------------------------------------------------
 !     POTENTIAL ROOT WATER UPTAKE
 !-----------------------------------------------------------------------
-      !Alwin Hopf - this if is preventing all folloing calculations 
+      !Alwin Hopf - this is preventing all following calculations 
       !when ISWWAT (water simulation) is not turned on (incl. pot. evapotrans)
       IF (ISWWAT .EQ. 'Y') THEN
 !       Calculate the availability of soil water for use in SOILEV.
@@ -423,7 +423,7 @@ C       and total potential water uptake rate.
           CALL ETPHOT(CONTROL, ISWITCH,
      &    PORMIN, PSTRES1, RLV, RWUMX, SOILPROP, ST, SW,  !Input
      &    WEATHER, XLAI,                                 !Input
-     &    YRPLT,                            !Input, new Alwin Hopf for transplant shock
+     &    YRPLT,                                          !Input, new Alwin Hopf for transplant shock
      &    EOP, EP, ES, RWU, TRWUP)                        !Output
           EVAP = ES  !CHP / BK 7/13/2017
         ENDIF

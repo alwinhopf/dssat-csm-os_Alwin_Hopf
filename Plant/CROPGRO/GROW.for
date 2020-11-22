@@ -495,7 +495,7 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C       WSDOT = Net stem growth rate
 C-----------------------------------------------------------------------
-!alwin hopf explanations
+!Alwin Hopf explanations
 !shutmob = amount of leaf mass lost due to N and C mobilization
 !CRUSST = C mobilized from stem tissue per day
 !NRUSST = N mobilized
@@ -504,7 +504,7 @@ C-----------------------------------------------------------------------
 !WSDOTN = dry weight growth rate of stem
 !
 !--> net stem growth = growth - petiole senescense - pest damage - C/N mobilization
-!alwin hopf end
+!Alwin Hopf end
       WSDOT = WSDOTN - SSDOT - WSIDOT - NRUSST / 0.16 - CRUSST
       ShutMob = ShutMob + (NRUSST / 0.16 + CRUSST) * 10.      !kg/ha
 
@@ -613,7 +613,7 @@ C-----------------------------------------------------------------------
          !SHELWT = SHELWT - RTDSH 
          !PODWT  = PODWT  - RTDPW
          !PODWT  = PODWT - RTDPW
-         !AH = correction 2
+         !Alwin Hopf = correction 2
          !TOPWT  = TOPWT - RTDPW 
          !TOPWT  = TOPWT - RTDPW
 
@@ -808,7 +808,7 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C     Shell nitrogen senescence, abortion and pest damage loss
 C-----------------------------------------------------------------------
-!new Alwin Hopf: added shell nitrogen removal      
+!Alwin Hopf: new code for added shell nitrogen removal      
 !! WTABRT   Weight of shells aborted on a day (g[shell] / m2 / d)
 !! WSHIDT   Weight of shell tissue consumed by pests today (g[shell]/m2-d)
 !RTDSH      Harvest Basket Shell Weight for fruit > xmpage at day before harvest occurs
@@ -828,7 +828,7 @@ C-----------------------------------------------------------------------
 !      IF (NSHOFF < 0.0) THEN
 !         NSHOFF = 0.0
 !      ENDIF
-
+!Alwin Hopf: changes end
 C-----------------------------------------------------------------------
 C     Net growth rate of nitrogen in shells
 C-----------------------------------------------------------------------

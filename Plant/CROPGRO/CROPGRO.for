@@ -719,7 +719,7 @@ C-----------------------------------------------------------------------
      &    AGEFAC, PG)                                     !Output
         ENDIF
       !Alwin Hopf - Transplant shock
-      !Transplant shock: reduce PG for 40 days after transplanting, when DAS >= NVEG0
+      !Transplant shock: reduce Photosynthesis (PG) for 40 days after transplanting, when DAS >= NVEG0
         IF ((DAS-NVEG0) .LE. 50 .AND. (DAS-NVEG0) .GE. 1 ) THEN
               PG = (PG / 50) * (DAS-NVEG0)
         ENDIF

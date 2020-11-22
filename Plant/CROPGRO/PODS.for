@@ -28,7 +28,7 @@
 !                ERROR, FIND, IGNORE
 !                COHORT
 !=======================================================================
-     !new ALwin Hopf: EO, EOP, TMIN, TMAXdisk
+     !new Alwin Hopf: EO, EOP, TMIN, TMAXdisk
       SUBROUTINE PODS(DYNAMIC,  
      &    AGRSD1, AGRSH1, DLAYR, DRPP, DUL, FILECC,       !Input
      &    FILEGC,FILEIO, FNINL, FNINSD, FNINSH, GDMSD,    !Input

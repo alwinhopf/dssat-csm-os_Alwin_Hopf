@@ -695,13 +695,6 @@ C         Post-processing for some stress effects (duplicated in PHOTO).
           ENDIF
           PG = PG * EXCESS
 
-          !Alwin Hopf - new
-          !Transplant shock: reduce PG after transplanting, when DAS >= NVEG0
-          !
-          !IF ((DAS-NVEG0) .LE. 39 .AND. (DAS-NVEG0) .GE. 1 ) THEN
-          !PG = PG / (40-(DAS-NVEG0))
-          !ENDIF
-
           CALL OpETPhot(CONTROL, ISWITCH,
      &        PCINPD, PG, PGNOON, PCINPN, SLWSLN, SLWSHN,
      &        PNLSLN, PNLSHN, LMXSLN, LMXSHN, TGRO, TGROAV,
