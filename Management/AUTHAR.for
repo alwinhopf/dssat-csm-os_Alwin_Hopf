@@ -146,6 +146,7 @@ C-----------------------------------------------------------------------
       ELSE IF (IHARI .EQ. 'R') THEN
 !        IF (YRDOY .GE. HDATE(1)) THEN
 !     VSH
+!multiharvest?   
         IF (YRDOY .GE. HDATE1(Lindex)) THEN
 !C-GH    IF (YRDOY .GE. HDATE(1) .OR. MDATE .EQ. YRDOY) THEN
 !           YREND     = YRDOY

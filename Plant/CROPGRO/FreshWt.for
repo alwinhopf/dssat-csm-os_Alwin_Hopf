@@ -24,7 +24,7 @@
       USE ModuleData
 
 !      VSH
-      !multiharvest
+!multiharvest
       Use MultiHar
 
 !Alwin Hopf - Fresh Weight CSV Output
@@ -147,6 +147,7 @@
       TFPW   = 0.0
       
 !     VSH initialization at the begining
+!multiharvest  
       TWTSH  = 0.0
       RTDSD   = 0.0 
       RTDSH   = 0.0
@@ -181,6 +182,7 @@
       TDSW   = 0.0
 
       !      VSH initialization at the begining
+      !multiharvest  
       TWTSH = 0.0
       RTDSD   = 0.0 
       RTDSH   = 0.0
@@ -203,6 +205,7 @@
         SELECT CASE (CROP)
           CASE ('TM')       ! Tomato
             DMC(NPP) = (5. + 7.2 * EXP(-7.5 * PAGE / 40.)) / 100.
+            !strawberry
           CASE ('SR')       ! Strawberry
             DMC(NPP) = 0.16 !fixed value for Strawberry. From Code from Ken Boote / VSH
           CASE ('GB')       ! Snap bean

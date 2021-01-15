@@ -609,7 +609,8 @@ C=======================================================================
       CHARACTER*1  IHARI
       CHARACTER*2  CROP
 
-!      VSH     
+!      VSH
+!multiharvest     
 !      CHARACTER*5  HSTG(3),HCOM(3),HSIZ(3)
       CHARACTER*5  HSTG(35),HCOM(35),HSIZ(35)
 
@@ -618,6 +619,7 @@ C=======================================================================
       CHARACTER*80 CHARTEST
 
 !      VSH
+!multiharvest  
 !      INTEGER      LNHAR,LUNEXP,ISECT,LINEXP,HDATE(3),NHAR
       INTEGER      LNHAR,LUNEXP,ISECT,LINEXP,HDATE(35),NHAR
 
@@ -629,6 +631,7 @@ C=======================================================================
 !      REAL         HPC(35),HBPC(35)
       !previous version below, 2nd below = combined with VSH edits
 !      REAL         HPC(3),HBPC(3),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
+!multiharvest  
       REAL         HPC(35),HBPC(35),FREQ,CUHT !NEW FORAGE VARIABLES (DIEGO-2/14/2017)
 
       PARAMETER   (ERRKEY='IPHAR ')
@@ -640,6 +643,7 @@ C=======================================================================
 !     VSH      
 !      DO J = 1, 3
                !HAGE(J) = -99 !AH
+!multiharvest  
       DO J = 1, 35         
         HSTG(J)  = '     '
         HCOM(J)  = '     '
@@ -701,6 +705,7 @@ C
          NHAR = NHAR + 1
 !        VSH
 !         IF (NHAR .GE. 4) GO TO 120
+!multiharvest  
          IF (NHAR .GE. 36) GO TO 120
        ELSE
          IF (NHAR .EQ. 1) THEN
