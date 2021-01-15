@@ -20,6 +20,7 @@ C=======================================================================
                          ! which contain control information, soil
                          ! parameters, hourly weather data.
       !Alwin Hopf - for cohort output
+      !multiharvest
       USE Multihar
       !Alwin Hopf - end
       USE CsvOutput !for csv output
@@ -90,6 +91,7 @@ C=======================================================================
        !
 
        !new Alwin Hopf - indicator for last day of fruit cohort.
+       !cohorttracking
        !if Last_Day = 1, means that next day this fruit will be gone 
       If ((page >= xmpage).AND.(HARV_AH==1).AND.(WTSD>0)) THEN
             LAST_DAY = 1

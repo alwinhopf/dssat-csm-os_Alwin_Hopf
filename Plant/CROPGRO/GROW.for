@@ -61,6 +61,7 @@ C=======================================================================
                          ! parameters, hourly weather data.
                          
       !      VSH
+      !multiharvest
       Use MultiHar
       
       IMPLICIT NONE
@@ -495,16 +496,7 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C       WSDOT = Net stem growth rate
 C-----------------------------------------------------------------------
-!Alwin Hopf explanations
-!shutmob = amount of leaf mass lost due to N and C mobilization
-!CRUSST = C mobilized from stem tissue per day
-!NRUSST = N mobilized
-!WSIDOT = pest damage to stem mass
-!SSDOT = senescense of petioles
-!WSDOTN = dry weight growth rate of stem
-!
-!--> net stem growth = growth - petiole senescense - pest damage - C/N mobilization
-!Alwin Hopf end
+!net stem growth = growth - petiole senescense - pest damage - C/N mobilization
       WSDOT = WSDOTN - SSDOT - WSIDOT - NRUSST / 0.16 - CRUSST
       ShutMob = ShutMob + (NRUSST / 0.16 + CRUSST) * 10.      !kg/ha
 
@@ -544,17 +536,13 @@ C     Net shell growth rate
 C-----------------------------------------------------------------------
       WSHIDT = MIN(WSHIDT,SHELWT)     ! pest damage to shells
       WSHDOT = WSHDTN - WSHIDT - WTABRT - NRUSSH / 0.16 - CRUSSH
-      !      VSH
-      !If (HARV==1) WSHDOT = WSHDOT - RTDSH
       ShelMob = (NRUSSH / 0.16 + CRUSSH) * 10.    !kg/ha
 
 C-----------------------------------------------------------------------
 C     Net seed growth rate
 C-----------------------------------------------------------------------
       SWIDOT = MIN(SWIDOT,SDWT)       ! pest damage to seeds
-      WSDDOT = WSDDTN - SWIDOT     
-!      VSH
-      !If (HARV==1) WSDDOT = WSDDOT - RTDSD     
+      WSDDOT = WSDDTN - SWIDOT         
       WTLSD  = WTLSD + WSDDOT * POTLIP    !lipids in seed
       WTCSD  = WTCSD + WSDDOT * POTCAR    !carbohydrates in seed
 
@@ -597,54 +585,15 @@ C-----------------------------------------------------------------------
       DWNOD  = DWNOD  + WNDOT
       TGROW  = TGROW  + GROWTH
       
-      !if (HARV_AH==0) Then
-      !   RTFPW   = 0.0
-      !   RTDPW   = 0.0
-      !   RTDSD   = 0.0 
-      !   RTDSH   = 0.0
-      !   RPODNO  = 0.0
-      !   RSEEDNO = 0.0
-      !end if
-
-!     VSH
-      !if (HARV==1) Then
-!        removing when harvested, seed / shell / pod / top
-         !SDWT   = SDWT   - RTDSD
-         !SHELWT = SHELWT - RTDSH 
-         !PODWT  = PODWT  - RTDPW
-         !PODWT  = PODWT - RTDPW
-         !Alwin Hopf = correction 2
-         !TOPWT  = TOPWT - RTDPW 
-         !TOPWT  = TOPWT - RTDPW
-
-
-         !original VSH
-         !     VSH
+      !     VSH
+      !multiharvest
       if (HARV_AH==1) Then
-            !        removing when harvested
-                     SDWT   = SDWT   - RTDSD
-                     SHELWT = SHELWT - RTDSH 
-                     PODWT  = PODWT  - RTDPW
-                     TOPWT  = TOPWT  - RTDPW
-         
-!        empting baskets after harvesting  
-         !RTFPW   = 0.0
-         !RTDPW   = 0.0
-         !RTDSD   = 0.0 
-         !RTDSH   = 0.0
-         !RPODNO  = 0.0
-         !RSEEDNO = 0.0
+      !     removing seed/shell/pod/top from pool when harvested
+            SDWT   = SDWT   - RTDSD
+            SHELWT = SHELWT - RTDSH 
+            PODWT  = PODWT  - RTDPW
+            TOPWT  = TOPWT  - RTDPW
       end if
-
-      !if (HARV==0) Then
-!        empting baskets after harvesting  
-      !   RTFPW   = 0.0
-      !   RTDPW   = 0.0
-      !   RTDSD   = 0.0 
-      !   RTDSH   = 0.0
-      !   RPODNO  = 0.0
-      !   RSEEDNO = 0.0
-      !end if
 
 C-----------------------------------------------------------------------
 C     Cumulative leaf and stem growth
@@ -808,11 +757,8 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C     Shell nitrogen senescence, abortion and pest damage loss
 C-----------------------------------------------------------------------
-!Alwin Hopf: new code for added shell nitrogen removal      
-!! WTABRT   Weight of shells aborted on a day (g[shell] / m2 / d)
-!! WSHIDT   Weight of shell tissue consumed by pests today (g[shell]/m2-d)
-!RTDSH      Harvest Basket Shell Weight for fruit > xmpage at day before harvest occurs
-!! PCNSH    Percentage of N in shell tissue (100 g[N] / g[shell])
+!Alwin Hopf: new code for added shell nitrogen removal
+!multiharvest      
       IF (HARV_AH == 1) THEN
             NSHOFF = (WTABRT+WSHIDT+RTDSH) * (PCNSH/100.)
       ELSE
@@ -837,7 +783,8 @@ C-----------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C     Seed nitrogen senescence, abortion and pest damage loss
 C-----------------------------------------------------------------------
-!new Alwin Hopf:    
+!Alwin Hopf: new code for added seed nitrogen removal
+!multiharvest
       IF (HARV_AH == 1) THEN
             NSDOFF = (SWIDOT+RTDSD) * (PCNSD/100.)
       ELSE
@@ -848,6 +795,7 @@ C-----------------------------------------------------------------------
 !      IF (NSDOFF < 0.0) THEN
 !         NSDOFF = 0.0
 !      ENDIF
+!Alwin Hopf - end
 
 C-----------------------------------------------------------------------
 C     Net growth rate of nitrogen in seeds

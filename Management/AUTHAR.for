@@ -27,6 +27,7 @@ C=======================================================================
                          
       
       ! VSH
+      !multiharvest
        Use MultiHar
       
       IMPLICIT NONE
@@ -152,6 +153,7 @@ C-----------------------------------------------------------------------
         ENDIF
 
 !      VSH
+!multiharvest 
        HARV = 0
         
        IF (YRDOY .GE. HDATE1(iHARV)) THEN
@@ -306,11 +308,12 @@ C-----------------------------------------------------------------------
                          ! which contain control information, soil
                          ! parameters, hourly weather data.
       ! VSH
+      !multiharvest
       Use MultiHar
       
       IMPLICIT NONE
 
-      CHARACTER*5 HCOM(35), HSIZ(35)
+      CHARACTER*5 HCOM(35), HSIZ(35) !multiharvest. max. number of harvests = 35
       CHARACTER*6 SECTION, ERRKEY 
       PARAMETER (ERRKEY = 'IPAHAR')
       CHARACTER*30 FILEIO 
@@ -322,7 +325,7 @@ C-----------------------------------------------------------------------
       INTEGER LUNIO
 
       REAL HPP, HRP, SWPLTL, SWPLTH, SWPLTD
-      REAL HPC(35), HBPC(35)
+      REAL HPC(35), HBPC(35) !multiharvest. max. number of harvests = 35
 
 !     The variable "CONTROL" is of constructed type "ControlType" as 
 !     defined in ModuleDefs.for, and contains the following variables.
@@ -377,6 +380,7 @@ C-----------------------------------------------------------------------
  4102   CONTINUE
  
 !       VSH count harvesting dates
+!multiharvest
         Rewind(LUNIO)
         SECTION = '*HARVE'
         CALL FIND(LUNIO, SECTION, LINC, FOUND)
@@ -389,6 +393,7 @@ C-----------------------------------------------------------------------
         Lindex = NHAR1
         
 !       VSH Get harvest dates
+!multiharvest
         Allocate(HDATE1(NHAR1))
         Rewind(LUNIO)
         SECTION = '*HARVE'

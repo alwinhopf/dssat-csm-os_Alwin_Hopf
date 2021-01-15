@@ -24,9 +24,11 @@
       USE ModuleData
 
 !      VSH
+      !multiharvest
       Use MultiHar
 
 !Alwin Hopf - Fresh Weight CSV Output
+!strawberry, but maybe also for other crops where fresh weight is of interest
       USE CsvOutput
       
       IMPLICIT NONE
@@ -53,6 +55,7 @@
       REAL, DIMENSION(NCOHORTS) :: SDNO, SHELN, WTSD, WTSHE, XPAGE
       
       ! VSH
+      !strawberry, but maybe also for other crops where fresh weight is of interest
       !new variables for FreshWt.out file 
       Real :: TWTSH
       Real :: AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP
@@ -120,14 +123,6 @@
             WRITE (NOUTPF,231)
         END SELECT
         
-!       VSH
-!  230 FORMAT('@YEAR DOY   DAS   DAP',
-!     &    '   FPWAD   PDMCD   AFPWD',
-!     &    '   ADPWD   PAGED')
-! Alwin Hopf - previous .out output version
-!  230 FORMAT('@YEAR DOY   DAS   DAP',
-!     &    '   FPWAD   PDMCD   AFPWD',
-!     &    '   ADPWD   PAGED   RTFPW    HARV   RTDPW   HARV_AH')
   230 FORMAT('@YEAR DOY   DAS   DAP',
      &    '   FPWAD   PDMCD   AFPWD',
      &    '   ADPWD   PAGED   HARV   HARV_AH   P#AD     G#AD   TWTSH    TDSW', 
@@ -168,17 +163,6 @@
       HRPN = 0.0
       HRDSD = 0.0
       HRDSH = 0.0
-
-
-            !alwin new
-      !RTFPW =  0
-      !RTDPW =   0
-      !RTDSD =   0
-      !RTDSH =   0
-
-      !RPODNO =  0
-      !RSEEDNO =  0
-      !alwin new end 
 
 !***********************************************************************
 !***********************************************************************
@@ -270,11 +254,13 @@
         TDSW = TDSW + WTSD(NPP)
 
         ! VSH
+        !multiharvest
         TWTSH = TWTSH + WTSHE(NPP)
         PODNO = PODNO + SHELN(NPP)
         SEEDNO = SEEDNO + SDNO(NPP)
         
         ! VSH accumulating in the basket for harvesting
+        !multiharvest 
         If (page >= xmpage) Then
 
            RTFPW = RTFPW + (WTSD(NPP) + WTSHE(NPP)) / DMC(NPP) !fresh weight of mature fruits
@@ -314,6 +300,7 @@
       ENDIF
 
 !     VSH
+! multiharvest
 !     for new FreshWt.for output
       IF (RPODNO > 1.E-6) THEN
         AvgRFPW = RTFPW / RPODNO
@@ -340,7 +327,8 @@
       ENDIF
 
 !     VSH
-! Alwin Hopf new
+! Alwin Hopf
+!multiharvest
       if (HARV_AH==1) Then
         HRVD = RTDPW 
         HRVF = RTFPW 
@@ -360,7 +348,7 @@
         HRDSH = 0.0
       end if
       RUDPW = TDPW - RTDPW
-! Alwin Hopf new
+! Alwin Hopf end
 
 !***********************************************************************
 !***********************************************************************
@@ -399,19 +387,8 @@
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.)
 
-!          CASE ('SR')       ! Strawberry
-      !          VSH added additional outputs
-      !            WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-      !     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-      !     &      PodAge
-
-!            !old output - Alwin Hopf
-!                  WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
-!     &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
-!     &      PodAge, NINT(RTFPW*10.), HARV, NINT(RTDPW*10.), HARV_AH
-!            !old output - Alwin Hopf
-
-!           new Strawberry output - from DSSAT 4.6 files from VSH
+!new output - from DSSAT 4.6 files from VSH
+!strawberry 
           CASE ('SR')       ! Strawberry
             WRITE(NOUTPF, 1000) YEAR, DOY, DAS, DAP, 
      &      NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
@@ -421,7 +398,7 @@
      &      HRVD*10.0, CHRVD*10.0, AvgRFPW, 
      &      AvgRDPW, AvgRDSD, PRDSH, PRDSD, AvgRDSP, AvgRSNP, 
      &      HRSN, HRPN, HRDSD*10.0, HRDSH*10.0, NR2TIM
-!           new output end - from DSSAT 4.6 files from VSH
+!           new output end
      
           CASE ('GB')       ! Snap bean
             WRITE(NOUTPF, 2000) YEAR, DOY, DAS, DAP, 
@@ -440,6 +417,7 @@
 !     &    I8,F8.3,F8.1,F8.2,F8.1,I8,I8, I8, I8)
 
 ! Alwin Hopf / VSH - for FreshWt output
+! strawberry, but maybe also for other crops where fresh weight is of interest
  1000   FORMAT(1X,I4,1X,I3.3,2(1X,I5),
      &    I8,F8.3,F8.1,F8.2,F8.1,I7,I10,F7.2,F9.2,3(F8.1),7(F8.2),
      &    2(F10.2),2(F8.2),2(F6.1),
@@ -451,10 +429,6 @@
    
  !    Alwin Hopf - CSV output corresponding to FreshWt.OUT
       IF (FMOPT == 'C') THEN    
-!      CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, TFPW, AvgDMC,
-!     &AvgFPW, AvgDPW, PodAge, RTFPW, HARV, RTDPW, HARV_AH,  
-!     &vCsvlineFreshWt, vpCsvlineFreshWt, vlngthFreshWt)
-!
       CALL CsvOut_FreshWt(YEAR, DOY, DAS, DAP, 
      &NINT(TFPW * 10.), AvgDMC, AvgFPW, AvgDPW, 
      &PodAge, HARV, HARV_AH, PODNO, SEEDNO, TWTSH*10.,TDSW*10.,TDPW*10., 
@@ -470,6 +444,7 @@
       !Alwin Hopf - end
 
 !       VSH  removing cohorts when harvesting
+!multiharvest
         Do NPP = 1, NR2TIM + 1
             PAGE = PHTIM(NR2TIM + 1) - PHTIM(NPP)
             if ((page >= xmpage).AND.(HARV==1))then 

@@ -718,12 +718,16 @@ C-----------------------------------------------------------------------
      &    SWFAC, TDAY, XHLAI, XPOD,                       !Input
      &    AGEFAC, PG)                                     !Output
         ENDIF
-      !Alwin Hopf - Transplant shock
+      !Alwin Hopf: Transplant shock
+      !Strawberry specific
+      SELECT CASE (CROP)
+      CASE ('SR')
       !Transplant shock: reduce Photosynthesis (PG) for 40 days after transplanting, when DAS >= NVEG0
-        IF ((DAS-NVEG0) .LE. 50 .AND. (DAS-NVEG0) .GE. 1 ) THEN
-              PG = (PG / 50) * (DAS-NVEG0)
+        IF ((DAS-NVEG0) .LE. 40 .AND. (DAS-NVEG0) .GE. 1 ) THEN
+              PG = (PG / 40) * (DAS-NVEG0)
         ENDIF
-      !Alwin Hopf - Transplant shock end
+      END SELECT
+      !Alwin Hopf: Transplant shock end
       ENDIF
 
 !***********************************************************************
