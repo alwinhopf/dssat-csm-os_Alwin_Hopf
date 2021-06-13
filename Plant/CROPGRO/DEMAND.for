@@ -188,6 +188,10 @@
 !-----------------------------------------------------------------------
         XFRT   = XFRUIT
         XFRUIT2 = XFRUIT !AH, variable for dynamic adjustment of XFRUIT
+<<<<<<< Updated upstream
+=======
+        !number of days required to reach max XFRUIT should be in ecotype 
+>>>>>>> Stashed changes
         ADDSHL = 0.0
         TURXFR = 0.0
         GDMSD  = 0.0
@@ -417,6 +421,11 @@ C 24 changed to TS by Bruce Kimball on 3Jul17
 !-----------------------------------------------------------------------
 !Alwin Hopf - adjustemnt of XFRUIT for Strawberry
 !based on days after first flower NR1TIM
+<<<<<<< Updated upstream
+=======
+!number of days has to come from ecotye file. make so that only effects strawberry
+!e.g. try to read value, of not there then keep static xfruit
+>>>>>>> Stashed changes
       IF (NPP .LE. 300) THEN
             IF (PHTIM(NPP) .LE. 60) THEN
             XFRUIT = XFRUIT2/60*PHTIM(NPP)*0.80+0.20*XFRUIT2
