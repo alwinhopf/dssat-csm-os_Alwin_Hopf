@@ -221,7 +221,7 @@ C
 
 !        IF (INDEX ('BNSBPNPECHPPVBCPCBFB',CROP) .EQ. 0) THEN
          SELECT CASE (CROP)
-         CASE ('BN','SB','PN','PE','CH','PP',
+         CASE ('BN','SB','HM','PN','PE','CH','PP',
      &          'VB','CP','CB','FB','GB','LT','AL','BG')
 C     &          'VB','CP','CB','FB','GB','LT')
 !          Do nothing -- these crops fix N and can have Y or N
@@ -802,7 +802,7 @@ C-----------------------------------------------------------------------
         CASE('CRGRO','MZCER','SGCER')
           SELECT CASE(CONTROL % CROP)
 !         CASE('SB','FA','MZ','RI','PN','SG') 
-          CASE('SB','FA','MZ','PN','SG') 
+          CASE('SB','HM','FA','MZ','PN','SG') 
 !           Phosphorus model has been enabled and tested for these crops, do nothing
 
           CASE DEFAULT
@@ -1592,7 +1592,7 @@ C-----------------------------------------------------------------------
 
       ISWSYM_SAVE = ISWSYM
       SELECT CASE (CONTROL % CROP)
-      CASE ('BN','SB','PN','PE','CH','PP',
+      CASE ('BN','SB','HM','PN','PE','CH','PP',
      &          'VB','CP','CB','FB','GB','LT','AL')
 C     &          'VB','CP','CB','FB','GB','LT')
 C  KJB, ADDED AL TO THIS, SO N-FIXATION WORKS FOR ALFALFA
