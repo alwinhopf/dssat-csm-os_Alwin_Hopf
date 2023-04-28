@@ -56,7 +56,7 @@ C-----------------------------------------------------------------------
 
 !      ELSE IF (CROP .EQ. 'BN') THEN
       CASE ('BN','CH','CP','CT','FB','LT','PE',
-     &      'PN','PP','PR','SB','TM','VB')
+     &      'PN','PP','PR','SB', 'HM','TM','VB')
          STNAME( 1) = 'Emergence '
          STNAME( 2) = 'Unifoliate'
          STNAME( 3) = 'End Juven.'

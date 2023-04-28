@@ -447,6 +447,7 @@ C=======================================================================
 !  CRGRO    QU   CROPGRO-Quinoa
 !  CRGRO    SF   CROPGRO-Safflower
 !  CRGRO    SB   CROPGRO-Soybean
+!  CRGRO    HM   CROPGRO-Hemp
 !  CRGRO    SU   CROPGRO-Sunflower
 !  CRGRO    TM   CROPGRO-Tomato
 !  CRGRO    VB   CROPGRO-Velvetbean
