@@ -5,6 +5,7 @@ Install cmake, point to source and build directory and "configure"
 Install mingw, add base, gcc, gcc-fortran packages
 
 Add both paths to environmental variables in Windows, for example:
+
     C:\MinGW\mingw32\bin
     
     C:\Program Files\CMake\bin
