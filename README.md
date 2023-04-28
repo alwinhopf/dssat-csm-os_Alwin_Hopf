@@ -1,10 +1,14 @@
 # Quick Install of Developer Version
 #Tested on Windows 11 ARM on MacOS (via Parallels) 
-Install cmake, point to source and build directory and "configure" 
+Install cmake, point to source and build directory and "configure"
+
 Install mingw, add base, gcc, gcc-fortran packages
+
 Add both paths to environmental variables in Windows, for example:
     C:\MinGW\mingw32\bin
+    
     C:\Program Files\CMake\bin
+    
 Compile in Visual Studio Code via "Terminal" --> "Run Build Task" 
 # end
 
