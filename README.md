@@ -1,5 +1,7 @@
 # Quick Install of Developer Version
+
 #Tested on Windows 11 ARM on MacOS (via Parallels) 
+
 Install cmake, point to source and build directory and "configure"
 
 Install mingw, add base, gcc, gcc-fortran packages
