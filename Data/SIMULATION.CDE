@@ -1,5 +1,5 @@
 *Codes for Simulations Options
-! DSSAT v4.8; 07/27/2021
+! DSSAT v4.8; 08/09/2024
 !
 ! Codes currently used for simulation options for the DSSAT crop simulation
 ! models.
@@ -47,8 +47,8 @@ F        FAO-56                                                               IB
 !P       FAO-24/(old Penman)                                                  IB
 R        Priestley-Taylor/Ritchie                                             IB
 !Z       Hourly energy bal. method                                            IB
-S        ASCE Standardized Reference ET - Short reference                     IB
-T        ASCE Standardized Reference ET - Tall reference                      IB
+S        ASCE Std Ref ET, Short ref                                           IB
+T        ASCE Std Ref ET, Tall ref                                            IB
 !H       Hourly Priestley-Taylor/Ritchie                                      IB
 
 *Simulation/Methods/Infiltration
@@ -122,6 +122,10 @@ A        Automatic                                                            IB
 M        At maturity                                                          IB
 R        On reported date(s)                                                  IB
 D        Days after planting                                                  IB
+W        AutoMOW using days as harvest frequency                              IB
+X        AutoMOW using GDD as harvest frequency                               IB
+Y        SmartMOW using days as harvest frequency                             IB
+Z        SmartMOW using GDD as harvest frequency                              IB
 
 *Simulation/Outputs
 @CDE     DESCRIPTION                                                          SO
@@ -149,6 +153,8 @@ C        Comma Separated Values (CSV)                                         IB
 *Simulation/Crop Models
 @MODEL  CROP  Description
 BSCER    BS   CERES-Sugarbeet
+CRGRO    BC   CROPGRO-Carinata
+BGGRO    BG   CROPGRO-Bambara groundnut
 CRGRO    BH   CROPGRO-Bahia
 CRGRO    BN   CROPGRO-Dry bean
 CRGRO    BR   CROPGRO-Brachiaria
@@ -161,6 +167,7 @@ CRGRO    CP   CROPGRO-Cowpea
 CRGRO    FA   CROPGRO-Fallow
 CRGRO    FB   CROPGRO-Faba bean
 CRGRO    GB   CROPGRO-Grean bean
+CRGRO    GY   CROPGRO-Guar
 CRGRO    LT   CROPGRO-Lentil
 CRGRO    NP   CROPGRO-Napier grass
 CRGRO    PE   CROPGRO-Pea
@@ -171,8 +178,7 @@ CRGRO    PR   CROPGRO-Bellpepper
 CRGRO    QU   CROPGRO-Quinoa
 CRGRO    SF   CROPGRO-Safflower
 CRGRO    SB   CROPGRO-Soybean
-CRGRO    HM   CROPGRO-Hemp
-CRGRO    SR   CRGRO-Strawberry
+CRGRO    SR   CROPGRO-Strawberry
 CRGRO    SU   CROPGRO-Sunflower
 CRGRO    TM   CROPGRO-Tomato
 CRGRO    VB   CROPGRO-Velvetbean
@@ -202,4 +208,6 @@ PRFRM    BM   FORAGE-Bermudagrass
 PRFRM    BR   FORAGE-Brachiaria
 PRFRM    BH   FORAGE-Bahiagrass
 PRFRM    AL   FORAGE-Alfalfa
+PRFRM    GG   FORAGE-Guinea grass
 SUOIL    SU   OILCROP-Sunflower
+
