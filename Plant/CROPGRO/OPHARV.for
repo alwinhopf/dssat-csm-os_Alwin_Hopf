@@ -30,7 +30,7 @@ C=======================================================================
      &    AGEFAC, CANHT, CANNAA, CANWAA, CROP,            !Input
      &    HARVFRAC, LAIMX, MDATE, NSTRES, PCLSD, PCNSD,   !Input
      &    PODNO, PODWT, PStres1, PStres2, SDRATE, SDWT,   !Input
-     &    SEEDNO, STGDOY, SWFAC, TOPWT, TURFAC,           !Input
+     &    SEEDNO, STGDOY, SWFAC, TOPWT, STMWT, TURFAC,    !Input !Alwin Hopf. added new STMWT for stem weight 
      &    VSTAGE, WTNCAN, WTNFX, WTNSD, WTNST, WTNUP,     !Input
      &    XLAI, RSTAGE, YREMRG, YRNR1, YRNR3, YRNR5,      !Input
      &    YRNR7, YRPLT,                                   !Input
@@ -67,7 +67,7 @@ C-----------------------------------------------------------------------
       REAL BIOMAS, BWAH, CANHT, CANNAA, CANWAA, HI, HWAH, HWAM
       REAL LAIMX, PCLSD, PCNSD, PODWT, PODNO, PSDWT, PSPP
       REAL SDRATE, SDWT, SDWTAH, SEEDNO, EYLDH, ROUND
-      REAL THRES, TOPWT, VSTAGE
+      REAL THRES, TOPWT, STMWT, VSTAGE                              !Alwin Hopf. added new STMWT for stem weight 
       REAL WTNCAN, WTNFX, WTNSD, WTNST, WTNUP, XLAI
       REAL, DIMENSION(2) :: HARVFRAC
 
@@ -351,6 +351,16 @@ C-----------------------------------------------------------------------
       ! 2024-06-20 FO - Economic Yield for Cotton.
       IF(CROP .EQ. 'CO') THEN
         EYLDH = -99.0
+      ENDIF
+
+!Alwin Hopf - economic yield for fiber hemp. fiber as portion of stem weight
+      IF(CROP .EQ. 'HM') THEN
+        !test with fixed value
+        !EYLDH = 495.2
+        !text with percentage of aboveground weight (tops weight)
+        !EYLDH = 0.2 * (TOPWT*10)
+        !test with newly imported stem weight
+        EYLDH = 0.2 * (STMWT*10)
       ENDIF
       
       ! 2024-07-11 FO - Economic standard output format
