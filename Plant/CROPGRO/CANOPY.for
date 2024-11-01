@@ -216,9 +216,17 @@ C-----------------------------------------------------------------------
       WPAR = TABEX(YHWPAR,XHWPAR,PAR,8)
 C-----------------------------------------------------------------------
 !     Nitogen effect on canopy height and width by KJB
+!Alwin Hopf; increased 1.4 to 5.0 to achieve desired effect
+!KJB:
+!As for the HNHGT and CUMNHT, you are missing something.  
+!Look for the carry-over of CUMNHT (takes past running average)* 0.75 +0.25*HNGHT (today’s value)
+!CUMNHT = 0.75*CUMNHT + 0.25*HNHGT
+!This is meant to be a 4-day running average to smooth things out (that is back when NSTRES was daily).  
+!Since that time NSTRES itself at least for output is now a 2-day running average.
+!But where does CUMNHT actually affect internode length?  Look at that.
 C-----------------------------------------------------------------------
-      IF(NHGT .GT. 1.4)THEN                     !To limit NGHT to 1.4
-          NHGT = 1.4 
+      IF(NHGT .GT. 5.0)THEN                     !To limit NGHT to 1.4
+          NHGT = 5.0 
       ENDIF
       HNHGT = MAX(0.1, (1.0 - (1.0 - NSTRES)*NHGT))
       CUMNHT = 0.75*CUMNHT + 0.25*HNHGT
